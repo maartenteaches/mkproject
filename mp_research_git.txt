@@ -1,0 +1,15 @@
+dir docu
+dir rawdata
+dir analysis
+dir txt
+
+file readme readme.md
+file ignore .ignore
+file rlogmd docu/research_log.md
+file main   docu/`abbrev'_main.do
+file dta    docu/`abbrev'_dta01.do
+file ana    docu/`abbrev'_ana01.do
+
+cmd !git init
+cmd !git add .
+cmd !git commit -m "initial commit"

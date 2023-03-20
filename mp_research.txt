@@ -1,0 +1,16 @@
+dir docu
+dir posted
+dir posted/data
+dir posted/analysis
+dir posted/txt
+dir work
+dir work/analysis
+dir work/txt
+
+file rlog docu/research_log.txt
+file main docu/`abbrev'_main.do
+file dta  docu/`abbrev'_dta01.do
+file ana  docu/`abbrev'_ana01.do
+
+cmd qui cd work/analysis
+cmd projmanager `abbrev'.stpr

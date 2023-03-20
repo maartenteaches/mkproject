@@ -1,0 +1,8 @@
+dir source
+dir handout
+dir presentation
+
+file smclpres source/presentation.do
+
+cmd qui cd source
+cmd doedit presentation.do
