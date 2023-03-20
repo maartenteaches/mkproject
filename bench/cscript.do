@@ -1,5 +1,5 @@
 cscript
-cd "D:\Mijn documenten\projecten\stata\mkproject\1.1.0"
+cd "c:\Mijn documenten\projecten\stata\mkproject\1.2.0"
 capture erase c:\temp\bla\work\bla_main.do
 capture erase c:\temp\bla\work\bla_dta01.do
 capture erase c:\temp\bla\work\bla_ana01.do
@@ -29,7 +29,6 @@ capture rmdir c:\temp\foo
 
 
 run boilerplate.ado
-run mkproject.ado
 
 Parsedirs using working/foo_bla.do
 assert `"`s(abbrev)'"' == `"foo"'
@@ -52,4 +51,5 @@ boilerplate foo_dta02.do
 boilerplate foo_dta03
 boilerplate foo_ana02.do, ana
 
-
+cd c:/temp
+mkproject smcl, smclpres
