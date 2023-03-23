@@ -84,7 +84,7 @@ void mkproject::mpfget(real scalar fh)
 
 void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 {
-	string scalar orig, EOF
+	string scalar orig, EOF, fn, stub
 	real scalar oh, dh
 	
 	EOF = J(0,0,"")
@@ -94,18 +94,22 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 		errprintf("{p}{err}boilerplate " + boiler +  " does not exist{p_end}")
 		exit(601)
 	}
+
+	fn = pathbasename(dest)
+	stub = pathrmsuffix(fn)
+	
 	
 	oh = mpfopen(orig, "r")
 	dh = mpfopen(dest, "w")
 	
 	while ((line=mpfget(oh))!=EOF) {
+		line = usubinstr(line, "<fn>", fn,.)
+		line = usubinstr(line, "<stub>", stub,.)
 		mpfput(dh, line)
     }
 	mpfclose(oh)
 	mpfclose(dh)
 }
-
-real scalar mkproject::
 	
 void mkproject::read_dir(string scalar dir)
 {
