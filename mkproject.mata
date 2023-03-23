@@ -3,14 +3,84 @@ mata clear
 
 class mkproject 
 {
-	string colvector dirs
-	void             read_dir()
-	void             mk_dirs()
-	void             copy_boiler()
-	real   scalar    mpfopen()
-	void             mpfput()
-	void             mpfclose()
+	class AssociativeArray scalar    fhs
+	string                 colvector dirs
+	void                             read_dir()
+	void                             mk_dirs()
+	void                             copy_boiler()
+	real                   scalar    mpfopen()
+	void                             mpfput()
+	void                             mpfclose()
+	void                             mpferror()
+	void                             mpfclose_all()
+	void                             new()
 }	
+
+void mkproject::new() {
+	fhs.reinit("real")
+}
+
+void mkproject::mpfclose_all()
+{
+	real colvector K
+	real scalar i, fh
+	
+	K = fhs.keys()
+	for (i=1; i<=rows(K); i++) {
+		fh = K[i]
+		if (fhs.get(fh)!="closed") {
+			mpfclose(fh)
+		}
+	}
+	
+}
+
+void mkproject::mpferror(real scalar errcode)
+{
+	errprintf("%s\n", ferrortext(fh))
+    exit(freturncode(fh))
+}
+
+real scalar mkproject::mpfopen(string scalar fn, string scalar mode)
+{
+	real scalar fh
+	
+	fh = _fopen(fn, mode)
+    if ((fh < 0 ) {
+		mpferror(fh)
+    }
+	fhs.put(fh,"open")
+	return(fh)
+}
+
+void mkproject::mpfclose(real scalar fh)
+{
+	real scalar errcode
+	errcode = _fclose(fh)
+    if ((errcode < 0 ) {
+		mpferror(errcode)
+    }
+	fhs.put(fh,"closed")
+}
+
+void mkproject::mpfput(real scalar fh, string scalar s)
+{
+	real scalar errcode
+	errcode = _fput(fh, s)
+    if ((errcode < 0 ) {
+		mpferror(errcode)
+    }
+}
+
+void mkproject::mpfget(real scalar fh)
+{
+	real scalar errcode
+	errcode = _fget(fh)
+    if ((errcode < 0 ) {
+		mpferror(errcode)
+    }
+}
+
 
 void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 {
@@ -21,18 +91,18 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 	
 	orig = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + boiler + ".do")
 	if( !fileexists(orig)) {
-		printf("{p}{err}boilerplate " + boiler +  " does not exist{p_end}")
+		errprintf("{p}{err}boilerplate " + boiler +  " does not exist{p_end}")
 		exit(601)
 	}
 	
-	oh = fopen(orig, "r")
-	dh = fopen(dest, "w")
+	oh = mpfopen(orig, "r")
+	dh = mpfopen(dest, "w")
 	
-	while ((line=fget(oh))!=EOF) {
-		fput(dh, line)
+	while ((line=mpfget(oh))!=EOF) {
+		mpfput(dh, line)
     }
-	fclose(oh)
-	fclose(dh)
+	mpfclose(oh)
+	mpfclose(dh)
 }
 
 real scalar mkproject::
