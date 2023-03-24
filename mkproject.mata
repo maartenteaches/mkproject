@@ -6,18 +6,51 @@ mata set matastrict on
 class mkproject 
 {
 	class AssociativeArray scalar    fhs
+	
 	string                 colvector dirs
+	string                 colvector files
+	string                 colvector cmds
+	
 	void                             read_dir()
+	void                             read_template()
 	void                             mk_dirs()
 	void                             copy_boiler()
+	
 	real                   scalar    mpfopen()
 	void                             mpfput()
 	string                 scalar    mpfget()  
 	void                             mpfclose()
 	void                             mpferror()
 	void                             mpfclose_all()
+	
 	void                             new()
 }	
+
+void mkproject::read_template()
+{
+	string scalar abbrev, templ, EOF, template, line
+	real   scalar fh
+	
+	templ  = st_local("template")
+	abbrev = st_local("abbrev")
+	dir    = st_local("dir")
+	
+	EOF = J(0,0,"")
+	
+	template = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + templ + ".txt")
+	if( !fileexists(template)) {
+		errprintf("{p}{err}template " + templ +  " does not exist{p_end}")
+		exit(601)
+	}
+	
+	fh = mpfopen(template, "r")
+	
+	while ((line=mpfget(fh))!=EOF) {
+		line = usubinstr(line, "<abbrev>", abbrev,.)
+
+    }
+	mpfclose(fh)
+}
 
 void mkproject::new() {
 	fhs.reinit("real")
