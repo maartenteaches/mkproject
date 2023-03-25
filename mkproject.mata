@@ -8,7 +8,7 @@ class mkproject
 	class AssociativeArray scalar    fhs
 	
 	string                 colvector dirs
-	string                 colvector files
+	string                 matrix    files
 	string                 colvector cmds
 	
 	void                             read_dir()
@@ -28,32 +28,50 @@ class mkproject
 
 void mkproject::read_template()
 {
-	string scalar abbrev, templ, EOF, template, line
-	real   scalar fh
+	string       scalar abbrev, templ, EOF, templfile, line, first, boiler
+	real         scalar fh
+	transmorphic scalar t
 	
 	templ  = st_local("template")
 	abbrev = st_local("abbrev")
-	dir    = st_local("dir")
 	
 	EOF = J(0,0,"")
 	
-	template = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + templ + ".txt")
-	if( !fileexists(template)) {
+	templfile = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + templ + ".txt")
+	if( !fileexists(templfile)) {
 		errprintf("{p}{err}template " + templ +  " does not exist{p_end}")
 		exit(601)
 	}
 	
-	fh = mpfopen(template, "r")
+	fh = mpfopen(templfile, "r")
 	
+	t = tokeninit(" ")
 	while ((line=mpfget(fh))!=EOF) {
-		line = usubinstr(line, "<abbrev>", abbrev,.)
-
+		tokenset(t, line)
+		first = tokenget(t)
+		if (first == "<dir>") {
+			line = tokenrest(t)
+			line = usubinstr(line, "<abbrev>", abbrev,.)
+			read_dir(line)
+		}
+		else if (first == "<file>") {
+			boiler = tokenget(t)
+			line = tokenrest(t)
+			line = usubinstr(line, "<abbrev>", abbrev,.)
+			files = files \ (boiler, line)
+		} 
+		else if (first == "<cmd>"){
+			line = tokenrest(t)
+			line = usubinstr(line, "<abbrev>", abbrev,.)
+			cmds = cmds \ line
+		}
     }
 	mpfclose(fh)
 }
 
 void mkproject::new() {
 	fhs.reinit("real")
+	files = J(0,2,"")
 }
 
 void mkproject::mpfclose_all()
