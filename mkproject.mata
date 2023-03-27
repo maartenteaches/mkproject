@@ -2,6 +2,13 @@ mata:
 mata clear
 mata set matastrict on
 
+struct repl 
+{
+	string scalar abbrev
+	string scalar fn
+	string scalar basedir
+	string scalar stub
+}
 
 class mkproject 
 {
@@ -18,6 +25,7 @@ class mkproject
 	void                             read_template()
 	void                             mk_dirs()
 	void                             copy_boiler()
+	struct repl            scalar    parse_dest()
 	
 	real                   scalar    mpfopen()
 	void                             mpfput()
@@ -172,10 +180,38 @@ string scalar mkproject::mpfget(real scalar fh)
 }
 
 
+struct repl scalar mkproject::parse_dest(string scalar dest)
+{
+	struct repl scalar res
+	transmorphic scalar t
+	
+	res.fn = pathbasename(dest)
+	res.stub = pathrmsuffix(fn)
+	t = tokeninit("_")
+	tokenset(t,stub)
+	res.abbrev = tokenget(t)
+	if (!pathisabs(dest)) {
+		dest = pathresolve(pwd(),dest)
+	}
+	res.basedir = pathgetparent(dest)
+	return(res)
+}
+
+string scalar mkproject::parse_line(string scalar line, struct repl torepl)
+{
+	line = usubinstr(line, "<fn>"     , torepl.fn     , .)
+	line = usubinstr(line, "<stub>"   , torepl.stub   , .)
+	line = usubinstr(line, "<basedir>", torepl.basedir, .)
+	line = usubinstr(line, "<abbrev>" , torepl.abbrev , .)
+	return(line)
+}
+
 void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 {
-	string scalar orig, EOF, fn, stub, line
+	string scalar orig, EOF, line
+	struct repl scalar torepl
 	real scalar oh, dh
+	
 	
 	EOF = J(0,0,"")
 	
@@ -185,16 +221,13 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 		exit(601)
 	}
 
-	fn = pathbasename(dest)
-	stub = pathrmsuffix(fn)
-	
+	torepl = parse_dest(dest)
 	
 	oh = mpfopen(orig, "r")
 	dh = mpfopen(dest, "w")
 	
 	while ((line=mpfget(oh))!=EOF) {
-		line = usubinstr(line, "<fn>", fn,.)
-		line = usubinstr(line, "<stub>", stub,.)
+		line = parse_line(line,torepl)
 		mpfput(dh, line)
     }
 	mpfclose(oh)
