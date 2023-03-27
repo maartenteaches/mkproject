@@ -7,10 +7,10 @@
 <dir> work/analysis
 <dir> work/txt
 
-<file> rlog docu/research_log.txt
-<file> main work/analysis/`abbrev'_main.do
-<file> dta  work/analysis/`abbrev'_dta01.do
-<file> ana  work/analysis/`abbrev'_ana01.do
+<file> rlog docu/research_log.md
+<file> main work/analysis/<abbrev>_main.do
+<file> dta  work/analysis/<abbrev>_dta01.do
+<file> ana  work/analysis/<abbrev>_ana01.do
 
 <cmd> qui cd work/analysis
-<cmd> projmanager `abbrev'.stpr
+<cmd> projmanager <abbrev>.stpr
