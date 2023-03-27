@@ -26,8 +26,16 @@ class mkproject
 	void                             mpferror()
 	void                             mpfclose_all()
 	
+	void                             graceful_exit()
+	
 	void                             new()
 }	
+
+void mkproject::graceful_exit() 
+{
+	mpfclose_all()
+	chdir(odir)
+}
 
 void mkproject::parse_dir()
 {
