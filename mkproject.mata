@@ -10,7 +10,10 @@ class mkproject
 	string                 colvector dirs
 	string                 matrix    files
 	string                 colvector cmds
+	string                 scalar    odir
+	string                 scalar    ddir
 	
+	void                             parse_dir()
 	void                             read_dir()
 	void                             read_template()
 	void                             mk_dirs()
@@ -25,6 +28,27 @@ class mkproject
 	
 	void                             new()
 }	
+
+void mkproject::parse_dir()
+{
+	string scalar dir
+	real scalar errcode
+	
+	dir = st_local("dir")
+	if (dir == "") {
+		ddir = pwd()
+	}
+	else {
+		ddir = dir
+	}
+	odir = pwd()
+	
+	errcode = _chdir(ddir)
+	if (errcode != 0) {
+		errprintf("{p}{err}unable to change to directory " + dir + "{p_end}")
+		exit(errcode)
+	}
+}
 
 void mkproject::read_template()
 {
