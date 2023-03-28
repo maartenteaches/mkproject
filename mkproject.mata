@@ -23,6 +23,8 @@ class mkproject
 	void                             parse_dir()
 	
 	void                             read_template()
+    string                 scalar    find_file()
+	string                 scalar    parse_tline()    
 	void                             read_dir()
 	void                             mk_dirs()
 	void                             mk_files()
@@ -30,7 +32,7 @@ class mkproject
 	
 	void                             copy_boiler()
 	struct repl            scalar    parse_dest()
-	string                 scalar    parse_line()
+	string                 scalar    parse_bline()
 	
 	real                   scalar    mpfopen()
 	void                             mpfput()
@@ -102,45 +104,66 @@ void mkproject::parse_dir()
 	chdir(abbrev)
 }
 
-void mkproject::read_template()
+string scalar mkproject::find_file(string scalar what, string scalar extension)
 {
-	string       scalar abbrev, templ, EOF, templfile, line, first, boiler
-	real         scalar fh
+    string scalar path 
+    
+    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + what + extension)
+    if (!fileexists(path)) {
+        path = pathjoin(pathsubsysdir("PLUS"), "m/mp_" + what + extension) 
+        if (!fileexists(path)) {
+            errprintf("{p}{err}"+ (extension == ".txt" ? "template ": "boilerplate ") + what +  " cannot be found{p_end}")
+            exit(601)
+        }
+    }
+    return(path)
+}
+
+string scalar mkproject::parse_tline(string scalar line)
+{
+	string       scalar first, boiler, abbrev
 	transmorphic scalar t
-	
-	templ  = st_local("template")
+
 	abbrev = st_local("abbrev")
 	
+	t = tokeninit(" ")
+	tokenset(t, line)
+	first = tokenget(t)
+	
+	if (first == "<dir>") {
+		line = tokenrest(t)
+		line = usubinstr(line, "<abbrev>", abbrev,.)
+		read_dir(line)
+	}
+	else if (first == "<file>") {
+		boiler = tokenget(t)
+		line = tokenrest(t)
+		line = usubinstr(line, "<abbrev>", abbrev,.)
+		files = files \ (boiler, line)
+	} 
+	else if (first == "<cmd>"){
+		line = tokenrest(t)
+		line = usubinstr(line, "<abbrev>", abbrev,.)
+		cmds = cmds \ line
+	}
+}
+
+void mkproject::read_template()
+{
+	string       scalar templ, EOF, templfile, line
+	real         scalar fh
+	
+	
+	templ  = st_local("template")
+		
 	EOF = J(0,0,"")
 	
-	templfile = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + templ + ".txt")
-	if( !fileexists(templfile)) {
-		errprintf("{p}{err}template " + templ +  " does not exist{p_end}")
-		exit(601)
-	}
+	templfile = find_file(templ, ".txt")
 	
 	fh = mpfopen(templfile, "r")
 	
-	t = tokeninit(" ")
 	while ((line=mpfget(fh))!=EOF) {
-		tokenset(t, line)
-		first = tokenget(t)
-		if (first == "<dir>") {
-			line = tokenrest(t)
-			line = usubinstr(line, "<abbrev>", abbrev,.)
-			read_dir(line)
-		}
-		else if (first == "<file>") {
-			boiler = tokenget(t)
-			line = tokenrest(t)
-			line = usubinstr(line, "<abbrev>", abbrev,.)
-			files = files \ (boiler, line)
-		} 
-		else if (first == "<cmd>"){
-			line = tokenrest(t)
-			line = usubinstr(line, "<abbrev>", abbrev,.)
-			cmds = cmds \ line
-		}
+		parse_tline(line)
 	}
 	mpfclose(fh)
 }
@@ -233,7 +256,7 @@ struct repl scalar mkproject::parse_dest(string scalar dest)
 	return(res)
 }
 
-string scalar mkproject::parse_line(string scalar line, struct repl torepl)
+string scalar mkproject::parse_bline(string scalar line, struct repl torepl)
 {
 	line = usubinstr(line, "<fn>"     , torepl.fn     , .)
 	line = usubinstr(line, "<stub>"   , torepl.stub   , .)
@@ -251,11 +274,7 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 	
 	EOF = J(0,0,"")
 	
-	orig = pathjoin(pathsubsysdir("PLUS"), "m\mp_" + boiler + ".do")
-	if( !fileexists(orig)) {
-		errprintf("{p}{err}boilerplate " + boiler +  " does not exist{p_end}")
-		exit(601)
-	}
+	orig = find_file(boiler, ".do")
 
 	torepl = parse_dest(dest)
 	
