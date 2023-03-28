@@ -1,7 +1,7 @@
 *! version 1.2.0 13Nov2022 MLB 
 program define boilerplate
 	version 10
-    syntax anything(id="file name" name=fn), [dta ana smclpres git noopen creat(string) query]
+    syntax [anything(id="file name" name=fn)], [type(string) noopen create(string) query]
 	
 	opts_exclusive "`dta' `ana' `smclpres'"
 	if "`dta'`ana'`smclpres'" == "" local dta "dta"
@@ -15,6 +15,10 @@ program define boilerplate
     if "`query'" != "" {
         Query
         exit
+    }
+    if "`create'`query'`fn'" == "" {
+        di as err "{p}A file name is required{p_end}"
+        exit 198
     }
     
     

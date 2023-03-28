@@ -238,7 +238,6 @@ string scalar mkproject::mpfget(real scalar fh)
 	return(result)
 }
 
-
 struct repl scalar mkproject::parse_dest(string scalar dest)
 {
 	struct repl scalar res

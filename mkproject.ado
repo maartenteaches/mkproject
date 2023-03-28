@@ -19,7 +19,7 @@ program define mkproject
         Query
         exit
     }
-    if "`namelist'" == ""  & "`createboilerplate'`createtemplate'`query'" == "" {
+    if "`create'`query'`namelist'" == "" {
         di as err "{p}A name for your project is required{p_end}"
         exit 198
     }
