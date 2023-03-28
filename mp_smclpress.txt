@@ -1,3 +1,6 @@
+<mkproject template>
+<version> 2.0.0
+
 <dir> source
 <dir> handout
 <dir> presentation

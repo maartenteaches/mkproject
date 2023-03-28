@@ -1,3 +1,6 @@
+<mkproject template>
+<version> 2.0.0
+
 <dir> docu
 <dir> data
 <dir> ana

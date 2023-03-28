@@ -19,6 +19,8 @@ class mkproject
 	string                 colvector cmds
 	string                 scalar    odir
 	string                 scalar    ddir
+	real                   rowvector mp_version
+	real                   scalar    ignore
 	
 	void                             parse_dir()
 	
@@ -44,7 +46,25 @@ class mkproject
 	void                             new()
 	void                             run()
 	void                             graceful_exit()
+	
+	void                             parse_version()
 }	
+
+void mkproject::parse_version(string scalar ver)
+{
+	string rowvector verspl
+
+	verspl = tokens(ver, ".")
+	if (cols(verspl)!= 5){
+		errprintf("{p}A version has the form #.#.#{p_end}")
+		exit(198)
+	}
+	mp_version = strtoreal(verspl[(1,3,5)])
+	if (anyof(mp_version, .)){
+		errprintf("{p}A version has the form #.#.#{p_end}")
+		exit(198)
+	}
+}
 
 void mkproject::run(){
 	parse_dir()
@@ -126,22 +146,28 @@ string scalar mkproject::parse_tline(string scalar line)
 
 	abbrev = st_local("abbrev")
 	
-	t = tokeninit(" ")
+	t = tokeninit(" ", "", "<>")
 	tokenset(t, line)
 	first = tokenget(t)
-	
-	if (first == "<dir>") {
+
+	if (first == "<mkproject template>") {
+		ignore = 0
+	}
+	else if (first == "<version>" & !ignore) {
+		parse_version(tokenrest(t))
+	}
+	else if (first == "<dir>" & !ignore) {
 		line = tokenrest(t)
 		line = usubinstr(line, "<abbrev>", abbrev,.)
 		read_dir(line)
 	}
-	else if (first == "<file>") {
+	else if (first == "<file>" & !ignore) {
 		boiler = tokenget(t)
 		line = tokenrest(t)
 		line = usubinstr(line, "<abbrev>", abbrev,.)
 		files = files \ (boiler, line)
 	} 
-	else if (first == "<cmd>"){
+	else if (first == "<cmd>" & !ignore){
 		line = tokenrest(t)
 		line = usubinstr(line, "<abbrev>", abbrev,.)
 		cmds = cmds \ line
@@ -153,7 +179,6 @@ void mkproject::read_template()
 	string       scalar templ, EOF, templfile, line
 	real         scalar fh
 	
-	
 	templ  = st_local("template")
 		
 	EOF = J(0,0,"")
@@ -162,10 +187,16 @@ void mkproject::read_template()
 	
 	fh = mpfopen(templfile, "r")
 	
+	ignore = 1
+	
 	while ((line=mpfget(fh))!=EOF) {
 		parse_tline(line)
 	}
 	mpfclose(fh)
+	if (ignore == 1) {
+		errprintf("{p}"+ templ + " is not valid mkproject template file{p_end}")
+		exit(198)
+	}
 }
 
 void mkproject::new() {
