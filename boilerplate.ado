@@ -1,11 +1,23 @@
 *! version 1.2.0 13Nov2022 MLB 
 program define boilerplate
 	version 10
-    syntax anything(id="file name" name=fn), [dta ana smclpres git noopen]
+    syntax anything(id="file name" name=fn), [dta ana smclpres git noopen creat(string) query]
 	
 	opts_exclusive "`dta' `ana' `smclpres'"
 	if "`dta'`ana'`smclpres'" == "" local dta "dta"
-		
+	
+	if "`create'" != "" {
+        confirm file "`create'"
+        mata: boilername()
+        copy `create' `newpath'
+        if "`query'" == "" exit 
+    }
+    if "`query'" != "" {
+        Query
+        exit
+    }
+    
+    
     // adds .do if fn has no suffix and makes locals stub and abbrev
 	mata: Parsedirs(`"`fn'"')
 	
@@ -134,4 +146,40 @@ void Parsedirs(string scalar fn)
         st_local("abbrev", abbrev)
     }
 }
+end
+
+program define Query
+    version 10
+    
+    local personal : dir `"`c(sysdir_personal)'/m/"' files "mp_*.do"
+    local plus     : dir `"`c(sysdir_plus)'/m/"'     files "mp_*.do"
+    local all = `"`personal' `plus'"'
+    local all : list uniq all
+    local all : list sort all
+    
+    foreach file of local alll {
+        local name = usubinstr("`file'", "mp_" , "" ,1)
+        local name = ustrreverse("`name'")
+        local name = usubinstr("`name'", "od.","",1)
+        local name = ustrreverse("`name'")
+        if `: list file in personal' {
+            local path = `"`c(sysdir_personal)'/m/`file'"'
+            local where "personal"
+        }
+        else {
+            local path = `"`c(sysdir_plus)'/m/`file'"'
+            local where "plus"
+        }
+        display `"    {view "`path'":`name'}"' as txt "{col 19} `where'"
+    }
+end
+
+mata:
+void boilername()
+{
+    path = st_local("create")
+    path = pathrmsuffix(pathbasename(path)) + ".do"
+    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
+    st_local("newpath", path)
+}   
 end
