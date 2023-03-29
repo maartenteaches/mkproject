@@ -35,7 +35,7 @@ class mkproject
 	void                             copy_boiler()
 	struct repl            scalar    parse_dest()
     real                   scalar    parse_bheader()
-	string                 scalar    parse_bline()
+	void                             parse_bline()
 	
 	real                   scalar    mpfopen()
 	void                             mpfput()
@@ -307,13 +307,41 @@ real scalar mkproject::parse_bheader(string scalar line) {
     return(header)
 }
 
-string scalar mkproject::parse_bline(string scalar line, struct repl torepl)
+void mkproject::parse_bline(string scalar line, struct repl torepl, real scalar dh)
 {
-	line = usubinstr(line, "<fn>"     , torepl.fn     , .)
-	line = usubinstr(line, "<stub>"   , torepl.stub   , .)
-	line = usubinstr(line, "<basedir>", torepl.basedir, .)
-	line = usubinstr(line, "<abbrev>" , torepl.abbrev , .)
-	return(line)
+    
+    transmorphic scalar t
+    string scalar first
+    string rowvector asof
+    real scalar minversion, tocopy
+    
+    line = usubinstr(line, "<stata_version>", st_numscalar("c(stata_version)"), .)
+	line = usubinstr(line, "<fn>"           , torepl.fn                       , .)
+	line = usubinstr(line, "<stub>"         , torepl.stub                     , .)
+	line = usubinstr(line, "<basedir>"      , torepl.basedir                  , .)
+	line = usubinstr(line, "<abbrev>"       , torepl.abbrev                   , .)
+    
+    tocopy = 1
+    t = tokeninit(" ", "", "<>")
+    tokenset(t, line)
+    first = tokenget(t)
+    if (strmatch(first, "<as of *>")) {
+        asof = tokens(first)
+        asof = asof[3]
+        asof = usubinstr(asof, ">", "",.)
+        minversion = strtoreal(asof)
+        if (minversion == .) {
+            errprintf("{p}Tried to parse <as of #>, and # is not a number{p_end}")
+            exit(198)
+        }
+        if (st_numscalar("c(stata_version)")<minversion) {
+            tocopy = 0
+        }
+        else {
+            line = tokenrest(t)
+        }
+    }
+    if (tocopy) mpfput(dh, line)
 }
 
 void mkproject::copy_boiler(string scalar boiler, string scalar dest)
@@ -336,8 +364,7 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 	while ((line=mpfget(oh))!=EOF) {
         header = parse_bheader(line)
 		if (!ignore & !header) {
-            line = parse_line(line,torepl)
-            mpfput(dh, line)
+            parse_line(line,torepl, dh)
         }
 	}
     if (ignore == 1) {
