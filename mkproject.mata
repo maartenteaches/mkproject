@@ -34,6 +34,7 @@ class mkproject
 	
 	void                             copy_boiler()
 	struct repl            scalar    parse_dest()
+    real                   scalar    parse_bheader()
 	string                 scalar    parse_bline()
 	
 	real                   scalar    mpfopen()
@@ -286,6 +287,26 @@ struct repl scalar mkproject::parse_dest(string scalar dest)
 	return(res)
 }
 
+real scalar mkproject::parse_bheader(string scalar line) {
+    transmorphic scalar t
+    string scalar first
+    real scalar header
+    
+    t = tokeninit(" ", "", "<>")
+    tokenset(t, line)
+    first = tokenget(t)
+    header = 0
+    if (first == "<mkproject boilerplate>") {
+        header = 1
+        ignore = 0
+    }
+    if (first == "<version>") {
+        parse_version(tokenrest(t))
+        header = 1
+    }
+    return(header)
+}
+
 string scalar mkproject::parse_bline(string scalar line, struct repl torepl)
 {
 	line = usubinstr(line, "<fn>"     , torepl.fn     , .)
@@ -299,7 +320,7 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 {
 	string scalar orig, EOF, line
 	struct repl scalar torepl
-	real scalar oh, dh
+	real scalar oh, dh, header
 	
 	
 	EOF = J(0,0,"")
@@ -311,10 +332,19 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 	oh = mpfopen(orig, "r")
 	dh = mpfopen(dest, "w")
 	
+    ignore = 1
 	while ((line=mpfget(oh))!=EOF) {
-		line = parse_line(line,torepl)
-		mpfput(dh, line)
+        header = parse_bheader(line)
+		if (!ignore & !header) {
+            line = parse_line(line,torepl)
+            mpfput(dh, line)
+        }
 	}
+    if (ignore == 1) {
+		errprintf("{p}"+ boiler + " is not valid mkproject boilerplate file{p_end}")
+		exit(198)
+	}
+        
 	mpfclose(oh)
 	mpfclose(dh)
 }

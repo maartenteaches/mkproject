@@ -1,6 +1,8 @@
-version 17
+<mkproject boilerplate>
+<version> 2.0.0
+version <stata_version>
 clear all
-frames reset
+<as of 16>frames reset
 macro drop _all
 cd "<basedir>"
 
