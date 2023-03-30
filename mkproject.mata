@@ -64,12 +64,75 @@ string scalar mkproject::newname(string scalar what)
     path = st_local("create")
     path = pathrmsuffix(pathbasename(path)) + (what == "template" ? ".txt" : ".do")
     path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
+    
+    if (st_local("replace") == "" & fileexists(path)) {
+        errprintf(what + " " + pathrmsuffix(pathbasename(st_local("create"))) + " already exists" )
+        exit(198)
+    }
+    else {
+        unlink(path)
+    }
     return(path)
 }   
 
 void mkproject::create(string scalar what)
 {
+    string scalar fn_in, fn_out, EOF, line, first, second, garbage
+    real scalar fh_in, fh_out, ignore
+    transmorphic scalar t
     
+    fn_in = st_local("create")
+    fn_out = newname(what)
+    EOF = J(0,0,"")
+    ignore = 1
+    t = tokeninit(" ", "", "<>")
+    
+    fh_in = mpfopen(fn_in, "r")
+    fh_out = mpfopen(fn_out, "w")
+        
+    while((line=mpfget(fh_in))!=EOF) {
+        tokenset(t,line)
+        first = tokenget(t)
+        if (first == "<mkproject " + what + ">") {
+            ignore = 0
+            mpfput(fh_out, line)
+            
+            line=mpfget(fh_in)
+            tokenset(t, line)
+            first = tokenget(t)
+            if (!strmatch(first, "<version *>")) {
+                mpfput(fh_out, "<version " + invtokens(strofreal(current_version), ".")+">")
+            }
+            else {
+                parse_version(line)
+            }
+            
+            line = mpfget(fh_in)
+            tokenset(t, line)
+            first = tokenget(t)
+            if (first != "<label>") {
+                mpfput(fh_out, "<label>")
+                if (first == "<file>") {
+                    second = tokenget(t)
+                    garbage = find_file(second, ".do")
+                }
+                mpfput(fh_out, line)
+            }
+        }
+        else if (first == "<file>" & !ignore) {
+            second = tokenget(t)
+            garbage = find_file(second, ".do")
+        }
+        
+        if (!ignore) {
+            mpfput(fh_out, line)
+        }
+    }
+    mpfclose(fh_in)
+    mpfclose(fh_out)
+    if (ignore) {
+        
+    }
 }
 void mkproject::parse_version(string scalar ver)
 {
