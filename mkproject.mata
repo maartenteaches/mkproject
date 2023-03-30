@@ -20,6 +20,7 @@ class mkproject
 	string                 scalar    odir
 	string                 scalar    ddir
 	real                   rowvector mp_version
+    real                   rowvector current_version
 	real                   scalar    ignore
 	
 	void                             parse_dir()
@@ -49,6 +50,9 @@ class mkproject
 	void                             graceful_exit()
 	
 	void                             parse_version()
+    void                             read_default()
+    string                 colvector read_defaults()
+    void                             write_default()
 }	
 
 void mkproject::parse_version(string scalar ver)
@@ -130,17 +134,121 @@ void mkproject::parse_dir()
 
 string scalar mkproject::find_file(string scalar what, string scalar extension)
 {
-    string scalar path 
+    string scalar path , thing
     
     path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + what + extension)
     if (!fileexists(path)) {
         path = pathjoin(pathsubsysdir("PLUS"), "m/mp_" + what + extension) 
         if (!fileexists(path)) {
-            errprintf("{p}{err}"+ (extension == ".txt" ? "template ": "boilerplate ") + what +  " cannot be found{p_end}")
+            if (what == "defaults") {
+                thing = ""
+            }
+            else if (extension == ".txt") {
+                thing = "template "
+            }
+            else if (extension == ".do") {
+                thing = "boilerplate"
+            }
+            errprintf("{p}{err}"+ thing + what + " cannot be found{p_end}")
             exit(601)
         }
     }
     return(path)
+}
+
+string colvector mkproject::read_defaults(string scalar what, string scalar val)
+{
+    string scalar path, line, EOF, first, fn
+    string colvector res
+    real scalar ignore, fh
+    transmorphic scalar t
+    
+    what = "<"+what+">"
+    res = J(0,1,"")
+    fn = find_file("defaults", ".txt")
+    ignore = 1
+    EOF = J(0,0,"")
+    t = tokeninit(" ", "", "<>")
+    fh = mpfopen(fn, "r")
+    
+    while( (line=mpfget(fh)) != EOF) {
+        tokenset(t,line)
+        first = tokenget()
+        if (first == "<mkproject defaults>") {
+            ignore = 0
+        }
+       	else if (strmatch(first, "<version *>") & !ignore) {
+            parse_version(first)
+        }
+        else if (first == what) {
+            res = res \ (what + " " + val)
+        }
+        else {
+            res = res\line
+        }
+    }
+    if (ignore) {
+        errprintf("{p}not a valid mkproject defaults file{p_end}")
+        exit(198)
+    }
+    mpfclose(fh)
+    return(res)
+}
+
+void mkproject::write_default(string scalar what, string scalar val)
+{
+    string scalar path
+    string matrix newdefs
+    real scalar fh, i
+    
+    newdefs = read_defaults(what,val)
+    
+    path = pathjoin(pathsubsysdir("PERSONAL"), "/m")
+    if (!direxists(path)) {
+        mkdir(path)
+    }
+    path = pathjoin(path, "mp_defaults.txt")
+    unlink(path)
+    
+    fh = mpfopen(path, "w")
+    mpfput(fh, "<makeproject defaults>")
+    mpfput(fh, "<version " + invtokens(strofreal(current_version, ".")) + ">")
+    for(i=1; i<= rows(newdefs); i++) {
+        mpfput(fh, newdefs[i])
+    }
+    mpfclose(fh)
+}
+
+void mkproject::read_default(string scalar what)
+{
+    string scalar EOF, first, line, fn
+    real scalar fh, ignore
+    transmorphic scalar t
+  
+    fn = find_file("defaults", ".txt")
+    what = "<" + what + ">"
+    ignore = 1
+    EOF = J(0,0,"")
+    fh = mpfopen(fn, "r")
+    t = tokeninit(" ", "", "<>")
+    while( (line=mpfget(fh)) != EOF) {
+        tokenset(t,line)
+        first = tokenget()
+        if (first == "<mkproject defaults>") {
+            ignore = 0
+        }
+       	else if (strmatch(first, "<version *>") & !ignore) {
+            parse_version(first)
+        }
+        else if (first == what & !ignore) {
+            st_local("default", tokenrest(t))
+        }
+    }
+    if (ignore) {
+        errprintf("{p}not a valid mkproject defaults file{p_end}")
+        exit(198)
+    }
+    mpfclose(fh)
 }
 
 string scalar mkproject::parse_tline(string scalar line)
@@ -206,6 +314,7 @@ void mkproject::read_template()
 void mkproject::new() {
 	fhs.reinit("real")
 	files = J(0,2,"")
+    current_version = (2,0,0)
 }
 
 void mkproject::mpfclose_all()
