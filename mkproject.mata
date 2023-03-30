@@ -303,7 +303,7 @@ real scalar mkproject::parse_bheader(string scalar line) {
         header = 1
         ignore = 0
     }
-    if (strmatch(first "<version *>")) {
+    if (strmatch(first, "<version *>")) {
         parse_version(first)
         header = 1
     }
@@ -319,6 +319,7 @@ void mkproject::parse_bline(string scalar line, struct repl torepl, real scalar 
     real scalar minversion, tocopy
     
     line = usubinstr(line, "<stata_version>", st_numscalar("c(stata_version)"), .)
+    line = usubinstr(line, "<date>"         , st_global("c(current_date)")    , .)
 	line = usubinstr(line, "<fn>"           , torepl.fn                       , .)
 	line = usubinstr(line, "<stub>"         , torepl.stub                     , .)
 	line = usubinstr(line, "<basedir>"      , torepl.basedir                  , .)
