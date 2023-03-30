@@ -5,14 +5,9 @@ program define mkproject
 	
 	local proj mkproject__class_instance
 	mata: `proj' = mkproject()
-	if  {
-        di as err "{p}{p_end}"
-        exit 198
-    }
+
     if "`create'" != "" {
-        confirm file "`create'"
-        mata: templname()
-        copy `create' `newpath'
+        Create `create', proj(`proj')
         if "`query'" == "" exit
     }
     if "`query'" != "" {
@@ -48,6 +43,11 @@ program define cleanup
 	if "`debug'" == "" {
 		mata: mata drop `proj'
 	}
+end
+
+program define Create
+    syntax anything(name=create), proj(string) [replace]
+    mata: `proj'.create("template")
 end
 
 program define Query

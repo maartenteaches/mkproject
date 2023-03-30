@@ -7,9 +7,7 @@ program define boilerplate
 	if "`dta'`ana'`smclpres'" == "" local dta "dta"
 	
 	if "`create'" != "" {
-        confirm file "`create'"
-        mata: boilername()
-        copy `create' `newpath'
+        Create `create', proj(`proj')
         if "`query'" == "" exit 
     }
     if "`query'" != "" {
@@ -178,12 +176,8 @@ program define Query
     }
 end
 
-mata:
-void boilername()
-{
-    path = st_local("create")
-    path = pathrmsuffix(pathbasename(path)) + ".do"
-    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
-    st_local("newpath", path)
-}   
+program define Create
+    syntax anything(name=create), proj(string) [replace]
+    mata: `proj'.create("boilerplate")
 end
+

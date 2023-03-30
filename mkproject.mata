@@ -53,8 +53,24 @@ class mkproject
     void                             read_default()
     string                 colvector read_defaults()
     void                             write_default()
+    
+    void                             create()
+    string                 scalar    newname()
+     
 }	
 
+string scalar mkproject::newname(string scalar what)
+{
+    path = st_local("create")
+    path = pathrmsuffix(pathbasename(path)) + (what == "template" ? ".txt" : ".do")
+    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
+    return(path)
+}   
+
+void mkproject::create(string scalar what)
+{
+    
+}
 void mkproject::parse_version(string scalar ver)
 {
 	string rowvector verspl
@@ -197,10 +213,11 @@ string colvector mkproject::read_defaults(string scalar what, string scalar val)
 
 void mkproject::write_default(string scalar what, string scalar val)
 {
-    string scalar path
+    string scalar path, garbage
     string matrix newdefs
     real scalar fh, i
     
+    garbage = find_file(what, (what=="template"?".txt":".do"))
     newdefs = read_defaults(what,val)
     
     path = pathjoin(pathsubsysdir("PERSONAL"), "/m")
