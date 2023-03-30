@@ -55,7 +55,10 @@ void mkproject::parse_version(string scalar ver)
 {
 	string rowvector verspl
 
-	verspl = tokens(ver, ".")
+    verspl = tokens(ver)
+    verspl = verspl[2]
+    verspl = usubinstr(verspl, ">", "", .)
+	verspl = tokens(verspl, ".")
 	if (cols(verspl)!= 5){
 		errprintf("{p}A version has the form #.#.#{p_end}")
 		exit(198)
@@ -154,8 +157,8 @@ string scalar mkproject::parse_tline(string scalar line)
 	if (first == "<mkproject template>") {
 		ignore = 0
 	}
-	else if (first == "<version>" & !ignore) {
-		parse_version(tokenrest(t))
+	else if (strmatch(first, "<version *>") & !ignore) {
+		parse_version(first)
 	}
 	else if (first == "<dir>" & !ignore) {
 		line = tokenrest(t)
@@ -300,8 +303,8 @@ real scalar mkproject::parse_bheader(string scalar line) {
         header = 1
         ignore = 0
     }
-    if (first == "<version>") {
-        parse_version(tokenrest(t))
+    if (strmatch(first "<version *>")) {
+        parse_version(first)
         header = 1
     }
     return(header)
@@ -367,13 +370,12 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
             parse_line(line,torepl, dh)
         }
 	}
+	mpfclose(oh)
+	mpfclose(dh)
     if (ignore == 1) {
 		errprintf("{p}"+ boiler + " is not valid mkproject boilerplate file{p_end}")
 		exit(198)
 	}
-        
-	mpfclose(oh)
-	mpfclose(dh)
 }
 	
 void mkproject::read_dir(string scalar dir)
