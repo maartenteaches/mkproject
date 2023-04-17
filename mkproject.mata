@@ -25,6 +25,7 @@ class mkproject
 	
 	void                             parse_dir()
 	
+    string                 colvector read_header() 
 	void                             read_template()
     string                 scalar    find_file()
 	string                 scalar    parse_tline()    
@@ -61,6 +62,8 @@ class mkproject
 
 string scalar mkproject::newname(string scalar what)
 {
+    string scalar path
+
     path = st_local("create")
     path = pathrmsuffix(pathbasename(path)) + (what == "template" ? ".txt" : ".do")
     path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
@@ -74,6 +77,59 @@ string scalar mkproject::newname(string scalar what)
     }
     return(path)
 }   
+
+string colvector mkproject::read_header(real scalar fh, string scalar what)
+{
+    real scalar header
+    string scalar line, EOF, errmsg, first, second
+    string colvector result
+    transmorphic scalar t
+    
+    EOF = J(0,0,"")
+    t = tokeninit(" ", "", "<>")
+    result = J(3,1,"")
+    header = 0
+    
+    while ((line=mpfget(fh))!= EOF) {
+        tokenset(t,line)
+        first = tokenget(t)
+        if (first == "<header>") {
+            if (header == 1) {
+                errprintf("{p}A header is started when one was already open{p_end}")
+                exit(198)
+            }
+            header = 1
+        }
+        else if (first == "</header>") {
+            if (header == 0) {
+                errprintf("{p}A header was closed when none was open{p_end}")
+                exit(198)
+            }
+            break
+        }
+        else if (header) {
+            if (first == "<mkproject") {
+                if ((second=tokenget(t)) != what) {
+                    errmsg = "{p}Expected to find a mkproject file of type " + what + 
+                             " but found a mkproject file of type " + second + "{p_end}"
+                    errprintf(errmsg)
+                    exit(198)
+                }
+                result[1] = second
+            }
+            if (first == "<version>") {
+                second = tokenget(t)
+                parse_version(second)
+                result[2] = second
+            }
+            if (first == "<label>") {
+                second = tokenrest(t)
+                result[3] = second
+            }
+        }
+    }
+    return(result)
+}
 
 void mkproject::create(string scalar what)
 {
@@ -138,10 +194,7 @@ void mkproject::parse_version(string scalar ver)
 {
 	string rowvector verspl
 
-    verspl = tokens(ver)
-    verspl = verspl[2]
-    verspl = usubinstr(verspl, ">", "", .)
-	verspl = tokens(verspl, ".")
+  	verspl = tokens(verspl, ".")
 	if (cols(verspl)!= 5){
 		errprintf("{p}A version has the form #.#.#{p_end}")
 		exit(198)
