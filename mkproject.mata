@@ -620,7 +620,7 @@ void mkproject::copy_boiler(string scalar boiler, string scalar dest)
 	while ((line=mpfget(oh))!=EOF) {
         header = parse_bheader(line)
 		if (!ignore & !header) {
-            parse_line(line,torepl, dh)
+            parse_bline(line,torepl, dh)
         }
 	}
 	mpfclose(oh)
