@@ -38,6 +38,7 @@ class mptools extends mpfile{
     void                             graceful_exit()
     string                 scalar    find_file()
     string                 colvector read_header() 
+    void                             write_header()
     void                             parse_dir()
 }
 ```
@@ -76,7 +77,6 @@ class mkproject extends boilerplate{
 class mpcreate extends mptools{
     void                             run()
     void                             create()
-    void                             write_header()
 }
 ```
 
