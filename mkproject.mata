@@ -1,3 +1,12 @@
+/*
+boilerplate
+boilerplate, create
+boilerplate, default
+mkproject
+mkproject, create
+mkproject, default
+*/
+
 mata:
 mata clear
 mata set matastrict on
@@ -28,7 +37,7 @@ class mkproject
     string                 colvector read_header() 
 	void                             read_template()
     string                 scalar    find_file()
-	string                 scalar    parse_tline()    
+	void                             parse_tline()    
 	void                             read_dir()
 	void                             mk_dirs()
 	void                             mk_files()
@@ -204,6 +213,7 @@ void mkproject::parse_version(string scalar ver)
 		errprintf("{p}A version has the form #.#.#{p_end}")
 		exit(198)
 	}
+    
 }
 
 void mkproject::run(){
@@ -384,7 +394,7 @@ void mkproject::read_default(string scalar what)
     mpfclose(fh)
 }
 
-string scalar mkproject::parse_tline(string scalar line)
+void mkproject::parse_tline(string scalar line)
 {
 	string       scalar first, boiler, abbrev
 	transmorphic scalar t
