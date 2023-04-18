@@ -40,6 +40,7 @@ class mptools extends mpfile{
     string                 colvector read_header() 
     void                             write_header()
     void                             parse_dir()
+    void                             new() // sets default for odir
 }
 ```
 
