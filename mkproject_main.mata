@@ -1,28 +1,25 @@
-# Flow for `mkproject`
+mata: 
+mata set matastrict on
 
-## Class inheritance
+struct repl 
+{
+	string scalar abbrev
+	string scalar fn
+	string scalar basedir
+	string scalar stub
+}
 
-```mermaid
-flowchart LR
-A[mpversion] --> B[mpfile] -->C[mptools] --> D[mpdefaults] --> E[boilerplate] --> F[mkproject]
-C --> G[mpcreate]
-```
-
-## Class definitions
-
-```
 class mpversion{
     real                   rowvector current_version
     real                   rowvector proj_version
 
-    void                             parse_version()
+	void                             proj_version()
+    real                   rowvector parse_version()
     void                             new()
     real                   scalar    lt()
     void                             toonew()
 }
-```
 
-```
 class mpfile extends mpversion{
     class AssociativeArray scalar    fhs
 
@@ -34,9 +31,7 @@ class mpfile extends mpversion{
     void                             mpfclose_all()
     void                             new()
 }
-```
 
-```
 class mptools extends mpfile{
    string                  scalar    odir
     void                             graceful_exit()
@@ -46,26 +41,20 @@ class mptools extends mpfile{
     void                             parse_dir()
     void                             new() // sets default for odir
 }
-```
 
-```
 class mpdefaults extends mptools{
     string                 scalar    read_default()
     string                 colvector read_defaults()
     void                             write_default()
 }
-```
 
-```
 class boilerplate extends mpdefaults{
     void                             run()
     void                             copy_boiler()
     struct repl           scalar     parse_dest()
     void                             parse_bline()
 }
-```
 
-```
 class mkproject extends boilerplate{
     void                             run()
     void                             new()
@@ -76,55 +65,11 @@ class mkproject extends boilerplate{
     void                             mk_files()
     void                             do_cmds()
 }
-```
 
-```
 class mpcreate extends mptools{
     void                             run()
     void                             create()
 }
-```
+end
 
-### `mkproject`
-
-* `run("mkproject")`
-  
-  * `parse_dir()` --> *ddir*, *odir*
-  
-  * `read_default()` --> 1x1 string
-  
-  * `read_template()`
-    
-    * `find_file()`  --> 1x1 string
-    * `read_header()` --> 3x1 string
-      * `parse_version()` --> *mp_version*
-    * `parse_tline()` --> *files*, *cmds*
-      * `read_dir()` --> *dirs*
-  
-  * `mk_dirs()` <-- *dirs*
-  
-  * `mk_files()` <-- *files*
-  
-  * `do_cmds()` <-- *cmds*
-  
-  * (`graceful_exit()` <-- * odir*)
-    
-    ## `mkproject, create()`
-
-* `run(mkproject create)`
-  
-  * `newname()` --> 1x1 string
-  * `read_hearder()` --> 3x1 string
-    * `parse_version()` --> *mp_version*
-
-## `mkproject, default()`
-
-## `boilerplate`
-
-## `boilerplate, create()`
-
-## `boilerplate, default`
-
-```
-
-```
+do mkproject_version.mata

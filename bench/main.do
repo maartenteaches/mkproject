@@ -1,8 +1,7 @@
-cscript "mkproject"
-*cd "c:\Mijn documenten\projecten\stata\mkproject\1.2.0"
-cd h:\1.2.0
+cscript
+mata: mata clear
 
-do bench/mkproject.do
-do bench/boilerplate.do
-do bench/sub_mkproject.do
-do bench/sub_boilerplate.do
+cd "c:\mijn documenten\projecten\stata\mkproject"
+do mkproject_main.mata
+
+do bench/version.do
