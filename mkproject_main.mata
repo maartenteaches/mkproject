@@ -33,10 +33,14 @@ class mpfile extends mpversion{
 }
 
 class mptools extends mpfile{
-   string                  scalar    odir
+    string                 scalar    odir
+	string                 scalar    header_label
+	string                 scalar    header_type
+	
     void                             graceful_exit()
     string                 scalar    find_file()
-    string                 colvector read_header() 
+    void                             read_header() 
+	void                             header_ok()
     void                             write_header()
     void                             parse_dir()
     void                             new() // sets default for odir
