@@ -25,7 +25,7 @@ class mpfile extends mpversion{
 
     real                   scalar    mpfopen()
     void                             mpfput()
-    string                 scalar    mpfget()  
+    string                 matrix    mpfget()  
     void                             mpfclose()
     void                             mpferror()
     void                             mpfclose_all()

@@ -38,14 +38,14 @@ void mpfile::mpfput(real scalar fh, string scalar s)
 	}
 }
 
-string scalar mpfile::mpfget(real scalar fh)
+string matrix mpfile::mpfget(real scalar fh)
 {
 	real   scalar errcode
 	string scalar result
 	
 	result = _fget(fh)
 	errcode = fstatus(fh)
-	if (errcode < 0 ) {
+	if (errcode < -1 ) {
 		mpferror(errcode)
 	}
 	return(result)
@@ -56,7 +56,7 @@ void mpfile::new()
 	fhs.reinit("real")	
 }
 
-void mkproject::mpfclose_all()
+void mpfile::mpfclose_all()
 {
 	real colvector K
 	real scalar i, fh
