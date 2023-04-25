@@ -77,3 +77,4 @@ class mpcreate extends mptools{
 end
 
 do mkproject_version.mata
+do mkproject_mpfile.mata
