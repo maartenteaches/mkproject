@@ -13,9 +13,9 @@ C --> G[mpcreate]
 ```
 class mpversion{
     real                   rowvector current_version
-    real                   rowvector proj_version
+    real                   rowvector header_version
 
-    void                             parse_version()
+    void                             header_version()
     void                             new()
     real                   scalar    lt()
     void                             toonew()
@@ -97,7 +97,7 @@ class mpcreate extends mptools{
     
     * `find_file()`  --> 1x1 string
     * `read_header()` --> 3x1 string
-      * `parse_version()` --> *mp_version*
+      * `parse_version()` --> *header_version*
     * `parse_tline()` --> *files*, *cmds*
       * `read_dir()` --> *dirs*
   

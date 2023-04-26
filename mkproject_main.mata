@@ -39,8 +39,9 @@ class mptools extends mpfile{
 	
     void                             graceful_exit()
     string                 scalar    find_file()
-    void                             read_header() 
-	void                             header_ok()
+    void                             read_header()
+    void                             parse_header()
+ 	void                             header_ok()
     void                             write_header()
     void                             parse_dir()
     void                             new() // sets default for odir
@@ -78,3 +79,5 @@ end
 
 do mkproject_version.mata
 do mkproject_mpfile.mata
+
+do mkproject_mptools.mata
