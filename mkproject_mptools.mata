@@ -1,6 +1,21 @@
 mata:
 mata set matastrict on
 
+void mptools::write_header(real scalar fh, string scalar what)
+{
+	if (header_type == "") {
+		header_type = what
+	}
+	if (header_version == J(1,0,.)) {
+		header_version = current_version 
+	}
+	mpfput(fh, "<header>")
+	mpfput(fh, "<mkproject> " + header_type)
+	mpfput(fh, "<version> " + invtokens(strofreal(header_version), "."))
+	mpfput(fh, "<label> " + header_label)
+	mpfput(fh, "</header>")
+}
+
 void mptools::read_header(real scalar fh, string scalar what, | string scalar relax)
 {
     real scalar header
@@ -35,16 +50,14 @@ void mptools::read_header(real scalar fh, string scalar what, | string scalar re
             parse_header(first, second, what)
         }
     }
+    mpfclose(fh)
     if (header == 1) {
         errprintf("{p}Started a header but never closed it{p_end}")
-        mpfclose(fh)
         exit(198)
     }
     if (header == 0 & args() == 2) {
         errprintf("{p}No header found{p_end}")
-        mpfclose(fh)
         exit(198)
-        
     }
 }
 
