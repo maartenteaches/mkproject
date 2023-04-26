@@ -20,9 +20,9 @@ real rowvector mpversion::parse_version(string scalar toparse)
 	return(result)
 }
 
-void mpversion::proj_version(string scalar value)
+void mpversion::header_version(string scalar value)
 {
-	proj_version = parse_version(value)
+	header_version = parse_version(value)
 }
 
 real scalar mpversion::lt(real rowvector a, real rowvector b)

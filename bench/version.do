@@ -15,8 +15,8 @@ rcof `"noisily mata totest.parse_version("2.1.0")"' == 198
 // proj_version()
 mata:
 totest = mpversion()
-totest.proj_version("1.22.7")
-assert(totest.proj_version==(1,22,7))
+totest.header_version("1.22.7")
+assert(totest.header_version==(1,22,7))
 end
 
 // lt()

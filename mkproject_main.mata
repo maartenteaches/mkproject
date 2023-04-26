@@ -11,9 +11,9 @@ struct repl
 
 class mpversion{
     real                   rowvector current_version
-    real                   rowvector proj_version
+    real                   rowvector header_version
 
-	void                             proj_version()
+	void                             header_version()
     real                   rowvector parse_version()
     void                             new()
     real                   scalar    lt()
