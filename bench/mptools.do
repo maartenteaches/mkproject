@@ -1,3 +1,4 @@
+args home
 // read_header
 mata:
 totest = mptools()
@@ -63,8 +64,20 @@ end
 // findfile
 mata:
 totest = mptools()
-assert(totest.find_file("certify1", ".do") == "c:\ado\plus/m\mp_certify1.do")
-assert(totest.find_file("certify2", ".do") == "c:\ado\personal/m\mp_certify2.do")
+assert(totest.find_file("certify1", ".do") == strlower("`home'" + ":\ado\plus/m\mp_certify1.do"))
+assert(totest.find_file("certify2", ".do") == strlower("`home'" + ":\ado\personal/m\mp_certify2.do"))
 end
 
 rcof `"noisily mata: totest.find_file("certify2", ".txt")"' == 601
+
+//parse_dir
+local dir bench
+local abbrev test
+mata:
+totest = mptools()
+totest.parse_dir()
+assert(pwd() == "`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\")
+end
+cd ..
+rmdir test
+cd ..

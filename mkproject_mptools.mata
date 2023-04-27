@@ -104,6 +104,32 @@ string scalar mptools::find_file(string scalar what, string scalar extension)
     return(path)
 }
 
+void mptools::parse_dir()
+{
+	string scalar dir, abbrev
+	real scalar errcode
+	
+	dir = st_local("dir")
+	if (dir == "") {
+		dir = pwd()
+	}
+	odir = pwd()
+	
+	errcode = _chdir(dir)
+	if (errcode != 0) {
+		errprintf("{p}{err}unable to change to directory " + dir + "{p_end}")
+		exit(errcode)
+	}
+	abbrev = st_local("abbrev")
+	abbrev
+	errcode = _mkdir(abbrev)
+	if (errcode != 0) {
+		errprintf("{p}{err}unable to create directory " + pathjoin(pwd(),abbrev) + "{p_end}")
+		exit(errcode)
+	}
+	chdir(abbrev)
+}
+
 void mptools::new() 
 {
     odir = pwd()
