@@ -1,14 +1,8 @@
 mata:
 mata set matastrict on
 
-void mptools::write_header(real scalar fh, string scalar what)
+void mptools::write_header(real scalar fh)
 {
-	if (header_type == "") {
-		header_type = what
-	}
-	if (header_version == J(1,0,.)) {
-		header_version = current_version 
-	}
 	mpfput(fh, "<header>")
 	mpfput(fh, "<mkproject> " + header_type)
 	mpfput(fh, "<version> " + invtokens(strofreal(header_version), "."))
@@ -31,7 +25,7 @@ void mptools::read_header(real scalar fh, string scalar what, | string scalar re
         first = tokenget(t)
         if (first == "<header>") {
             if (header == 1) {
-                errprintf("{p}A header is started when one was already open{p_end}")
+                errprintf("{p}A header is started when one was already open; not a valide mkproject " + what + " file {p_end}")
                 mpfclose(fh)
                 exit(198)
             }
@@ -39,7 +33,7 @@ void mptools::read_header(real scalar fh, string scalar what, | string scalar re
         }
         else if (first == "</header>") {
             if (header == 0) {
-                errprintf("{p}A header was closed when none was open{p_end}")
+                errprintf("{p}A header was closed when none was open; not a valide mkproject " + what + " file {p_end}")
                 mpfclose(fh)
                 exit(198)
             }
@@ -56,8 +50,12 @@ void mptools::read_header(real scalar fh, string scalar what, | string scalar re
         exit(198)
     }
     if (header == 0 & args() == 2) {
-        errprintf("{p}No header found{p_end}")
+        errprintf("{p}No header found; Not a valid mkproject "+ what + " file{p_end}")
         exit(198)
+    }
+    if (args()==3) {
+        header_version = current_version
+        header_type = what
     }
 }
 
