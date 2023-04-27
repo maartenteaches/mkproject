@@ -80,6 +80,30 @@ void mptools::parse_header(string scalar first, string scalar second, string sca
     }
 }
 
+string scalar mptools::find_file(string scalar what, string scalar extension)
+{
+    string scalar path , thing
+    
+    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + what + extension)
+    if (!fileexists(path)) {
+        path = pathjoin(pathsubsysdir("PLUS"), "m/mp_" + what + extension) 
+        if (!fileexists(path)) {
+            if (what == "defaults") {
+                thing = ""
+            }
+            else if (extension == ".txt") {
+                thing = "template "
+            }
+            else if (extension == ".do") {
+                thing = "boilerplate"
+            }
+            errprintf("{p}{err}"+ thing + " " +  what + " cannot be found{p_end}")
+            exit(601)
+        }
+    }
+    return(path)
+}
+
 void mptools::new() 
 {
     odir = pwd()

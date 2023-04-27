@@ -58,5 +58,13 @@ assert(totest.mpfget(fh)==`"<label> something interesting"')
 assert(totest.mpfget(fh)==`"</header>"')
 totest.mpfclose(fh)
 unlink("bench/test_write_header.txt")
-
 end
+
+// findfile
+mata:
+totest = mptools()
+assert(totest.find_file("certify1", ".do") == "c:\ado\plus/m\mp_certify1.do")
+assert(totest.find_file("certify2", ".do") == "c:\ado\personal/m\mp_certify2.do")
+end
+
+rcof `"noisily mata: totest.find_file("certify2", ".txt")"' == 601
