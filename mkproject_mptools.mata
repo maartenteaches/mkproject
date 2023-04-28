@@ -136,6 +136,12 @@ void mptools::parse_dir()
 	chdir(abbrev)
 }
 
+void mptools::graceful_exit() 
+{
+	mpfclose_all()
+	chdir(odir)
+}
+
 void mptools::new() 
 {
     odir = pwd()

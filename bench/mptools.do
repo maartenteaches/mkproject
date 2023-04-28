@@ -86,3 +86,17 @@ end
 cd ..
 rmdir test
 cd ..
+
+
+// graceful_exit
+mata:
+orig = pwd()
+totest = mptools()
+chdir("bench")
+fh1 = totest.mpfopen("test_header.do", "r")
+fh2 = totest.mpfopen("test_header2.do", "r")
+totest.graceful_exit()
+assert(pwd()==orig)
+assert(totest.fhs.get(fh1)== "closed")
+assert(totest.fhs.get(fh2)== "closed")
+end
