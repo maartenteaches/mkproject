@@ -4,26 +4,27 @@ mata set matastrict on
 void mpdefaults::read_defaults()
 {
     string scalar fn, EOF, line, first, second
-    real scalar fh, lnr
     transmorphic scalar t
     
     EOF = J(0,0,"")
     t = tokeninit(" ", "", "<>")
     
     fn = find_file("defaults")
-    fh = mpfopen(fn, "r")
+    mpfread(fn)
+ 
+    read_header("defaults")
     
-    lnr = read_header(fh, fn, "defaults")
-    
-    while ((line=mpfget(fh, fn , ++lnr))!= EOF) {
+    while ((line=mpfget())!= EOF) {
+        reading.lnr = reading.lnr+1
         tokenset(t,line)
         first = tokenget(t)
         second = tokenget(t)
+        fn = find_file(second)
         if (first == "<template>") {
-            def_template = second
+            defaults.mptemplate = second
         }
         else if (first == "<boilerplate>") {
-            def_boiler = second
+            defaults.boilerplate = second
         }
     }
 }

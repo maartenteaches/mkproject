@@ -18,6 +18,11 @@ struct reading_file
     real   scalar    fh
     real   scalar    lnr
 }
+struct defaults
+{
+    string scalar boilerplate
+    string scalar mptemplate
+}
 
 class mpversion{
     real                   rowvector current_version
@@ -59,8 +64,7 @@ class mptools extends mpfile{
 }
 
 class mpdefaults extends mptools{
-    string                 scalar    def_template
-    string                 scalar    def_boiler
+    struct defaults       scalar     defaults
     
     void                             read_defaults()
     void                             write_default()
@@ -92,5 +96,5 @@ end
 
 do mkproject_version.mata
 do mkproject_mpfile.mata
-
 do mkproject_mptools.mata
+do mkproject_mpdefaults.mata
