@@ -19,6 +19,17 @@ real scalar mpfile::mpfopen(string scalar fn, string scalar mode)
 	return(fh)
 }
 
+void mpfile::mpfread(string scalar fn)
+{
+    reading.fn = fn
+    reading.fh = mpfopen(fn, "r")
+    reading.lnr = 0
+    reading.label = ""
+    reading.fversion = J(1,0,.)
+    reading.type = ""
+    
+}
+
 void mpfile::mpfclose(real scalar fh)
 {
 	real scalar errcode
@@ -38,7 +49,7 @@ void mpfile::mpfput(real scalar fh, string scalar s)
 	}
 }
 
-string matrix mpfile::mpfget(real scalar fh, | string scalar fn, real scalar lnr)
+string matrix mpfile::mpfget(real scalar fh)
 {
 	real   scalar errcode
 	string scalar result
@@ -46,9 +57,7 @@ string matrix mpfile::mpfget(real scalar fh, | string scalar fn, real scalar lnr
 	result = _fget(fh)
 	errcode = fstatus(fh)
 	if (errcode < -1 ) {
-        if (args() > 1) {
-            where_err(fn, lnr)
-        }
+        where_err()
 		mpferror(errcode)
 	}
 	return(result)

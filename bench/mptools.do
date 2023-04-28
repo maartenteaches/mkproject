@@ -3,54 +3,56 @@ args home
 mata:
 totest = mptools()
 fn = "bench/test_header.txt"
-fh = totest.mpfopen(fn, "r")
-totest.read_header(fh, fn, "boilerplate")
+totest.mpfread(fn)
+totest.read_header("boilerplate")
+assert(totest.reading.lnr == 5)
 assert(totest.fhs.get(fh) == "open")
-assert(totest.mpfget(fh) == "some other text after the header")
-assert(totest.header_label == "something to test")
-assert(totest.header_type == "boilerplate")
-assert(totest.header_version == (2,0,0))
-totest.mpfclose(fh)
+assert(totest.mpfget(totest.reading.fh) == "some other text after the header")
+assert(totest.reading.label == "something to test")
+assert(totest.reading.type == "boilerplate")
+assert(totest.reading.fversion == (2,0,0))
+totest.mpfclose(totest.reading.fh)
 
 fn = "bench/test_header2.txt"
-fh = totest.mpfopen(fn, "r")
-totest.read_header(fh,fn, "boilerplate", "relax")
-assert(totest.header_label == "something to test")
-assert(totest.header_type == "boilerplate")
-assert(totest.header_version == (2,0,0))
-assert(totest.fhs.get(fh) == "closed")
+totest.mpfread(fn)
+totest.read_header("boilerplate", "relax")
+assert(totest.reading.lnr == 3)
+assert(totest.reading.label == "")
+assert(totest.reading.type == "boilerplate")
+assert(totest.reading.fversion == (2,0,0))
+assert(totest.fhs.get(totest.reading.fh) == "closed")
 
-fh = totest.mpfopen(fn, "r")
+totest.mpfread(fn)
 end
 
-rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header("boilerplate")"' == 198
 
 mata:
-assert(totest.fhs.get(fh) == "closed")
+assert(totest.fhs.get(totest.reading.fh) == "closed")
 fn = "bench/test_header3.txt"
-fh = totest.mpfopen(fn, "r")
+totest.mpfread(fn)
 end
 
-rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header("boilerplate")"' == 198
 
 mata:
-assert(totest.fhs.get(fh) == "closed")
+assert(totest.fhs.get(totest.reading.fh) == "closed")
 fn = "bench/test_header4.txt"
-fh = totest.mpfopen(fn, "r")
+totest.mpfread(fn)
 end
 
-rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header("boilerplate")"' == 198
 
 mata:
-assert(totest.fhs.get(fh) == "closed")
+assert(totest.fhs.get(totest.reading.fh) == "closed")
 end
 
 // write_header
 mata:
 totest = mptools()
-totest.header_type = "template"
-totest.header_version = (2,0,0)
-totest.header_label = "something interesting"
+totest.reading.type = "template"
+totest.reading.fversion = (2,0,0)
+totest.reading.label = "something interesting"
 fh = totest.mpfopen("bench/test_write_header.txt", "w")
 totest.write_header(fh)
 totest.mpfclose(fh)

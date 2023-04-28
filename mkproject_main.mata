@@ -9,12 +9,22 @@ struct repl
 	string scalar stub
 }
 
+struct reading_file
+{
+    real   rowvector fversion
+    string scalar    type
+    string scalar    label
+    string scalar    fn
+    real   scalar    fh
+    real   scalar    lnr
+}
+
 class mpversion{
     real                   rowvector current_version
-    real                   rowvector header_version
+	struct reading_file    scalar    reading
 
-	void                             header_version()
     real                   rowvector parse_version()
+    void                             header_version()
   	void                             where_err()
     void                             new()
     real                   scalar    lt()
@@ -25,6 +35,7 @@ class mpfile extends mpversion{
     class AssociativeArray scalar    fhs
 
     real                   scalar    mpfopen()
+    void                             mpfread()
     void                             mpfput()
     string                 matrix    mpfget()  
     void                             mpfclose()
@@ -48,8 +59,10 @@ class mptools extends mpfile{
 }
 
 class mpdefaults extends mptools{
-    string                 scalar    read_default()
-    string                 colvector read_defaults()
+    string                 scalar    def_template
+    string                 scalar    def_boiler
+    
+    void                             read_defaults()
     void                             write_default()
 }
 

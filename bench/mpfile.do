@@ -92,3 +92,12 @@ unlink("bench/test1.txt")
 unlink("bench/test2.txt")
 unlink("bench/test3.txt")
 end
+
+// mpfread()
+mata:
+totest = mpfile()
+totest.mpfread("bench/test_header.txt")
+assert(totest.reading.lnr == 0)
+assert(totest.reading.fn == "bench/test_header.txt")
+totest.mpfclose_all()
+end
