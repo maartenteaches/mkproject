@@ -64,8 +64,8 @@ end
 // findfile
 mata:
 totest = mptools()
-assert(totest.find_file("certify1", ".do") == strlower("`home'" + ":\ado\plus/m\mp_certify1.do"))
-assert(totest.find_file("certify2", ".do") == strlower("`home'" + ":\ado\personal/m\mp_certify2.do"))
+assert(strlower(totest.find_file("certify1", ".do")) == strlower("C:\ado\plus/m\mp_certify1.do"))
+assert(strlower(totest.find_file("certify2", ".do")) == strlower("C:\ado\personal/m\mp_certify2.do"))
 end
 
 rcof `"noisily mata: totest.find_file("certify2", ".txt")"' == 601
@@ -76,7 +76,8 @@ local abbrev test
 mata:
 totest = mptools()
 totest.parse_dir()
-assert(pwd() == "`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\")
+assert(strlower(pwd()) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\"))
+assert(strlower(totest.odir) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\"))
 end
 cd ..
 rmdir test
