@@ -1,28 +1,42 @@
 mata:
 mata set matastrict on
 
-real rowvector mpversion::parse_version(string scalar toparse) 
+real rowvector mpversion::parse_version(string scalar toparse, string scalar fn, real scalar lnr) 
 {
 	string rowvector verspl
 	real rowvector result
 
   	verspl = tokens(toparse, ".")
 	if (cols(verspl)!= 5){
+        where_err(fn, lnr)
 		errprintf("{p}A version has the form #.#.#{p_end}")
 		exit(198)
 	}
 	result = strtoreal(verspl[(1,3,5)])
 	if (anyof(result, .)){
+        where_err(fn, lnr)
 		errprintf("{p}A version has the form #.#.#{p_end}")
 		exit(198)
 	}	
-	toonew(result)
+	toonew(result, fn, lnr)
 	return(result)
 }
 
-void mpversion::header_version(string scalar value)
+void mpversion::header_version(string scalar value, string scalar fn, real scalar lnr)
 {
-	header_version = parse_version(value)
+	header_version = parse_version(value, fn, lnr)
+}
+
+void mpversion::where_err(string scalar fn, | real scalar lnr)
+{
+    string scalar errmsg
+    
+    errmsg = "{p}A problem occured when reading " + fn 
+    if (args() == 2) {
+        errmsg = errmsg + " on line " + strofreal(lnr) 
+    }
+    errmsg = errmsg + "{p_end}"
+    errprintf(errmsg)
 }
 
 real scalar mpversion::lt(real rowvector a, real rowvector b)
@@ -49,14 +63,16 @@ void mpversion::new()
 	current_version = (2,0,0)
 }
 
-void mpversion::toonew(real rowvector val)
+void mpversion::toonew(real rowvector val, string scalar fn, real scalar lnr)
 {
 	string scalar rmsg
 	if (cols(val)!=3) {
+        where_err(fn, lnr)
 		errprintf("{p}val needs to have three columns{p_end}")
 		exit(198)
 	}
 	if (lt(current_version,val)) {
+        where_err(fn, lnr)
 		rmsg = "{p}current version of mkproject is " + 
 		       invtokens(strofreal(current_version),".") +
 			   " and it cannot handle versions larger than that{p_end}"

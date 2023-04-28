@@ -15,6 +15,7 @@ class mpversion{
 
 	void                             header_version()
     real                   rowvector parse_version()
+  	void                             where_err()
     void                             new()
     real                   scalar    lt()
     void                             toonew()
@@ -41,7 +42,6 @@ class mptools extends mpfile{
     string                 scalar    find_file()
     void                             read_header()
     void                             parse_header()
- 	void                             header_ok()
     void                             write_header()
     void                             parse_dir()
     void                             new() // sets default for odir

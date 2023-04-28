@@ -38,7 +38,7 @@ void mpfile::mpfput(real scalar fh, string scalar s)
 	}
 }
 
-string matrix mpfile::mpfget(real scalar fh)
+string matrix mpfile::mpfget(real scalar fh, | string scalar fn, real scalar lnr)
 {
 	real   scalar errcode
 	string scalar result
@@ -46,6 +46,9 @@ string matrix mpfile::mpfget(real scalar fh)
 	result = _fget(fh)
 	errcode = fstatus(fh)
 	if (errcode < -1 ) {
+        if (args() > 1) {
+            where_err(fn, lnr)
+        }
 		mpferror(errcode)
 	}
 	return(result)

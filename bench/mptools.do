@@ -2,8 +2,9 @@ args home
 // read_header
 mata:
 totest = mptools()
-fh = totest.mpfopen("bench/test_header.do", "r")
-totest.read_header(fh, "boilerplate")
+fn = "bench/test_header.do"
+fh = totest.mpfopen(fn, "r")
+totest.read_header(fh, fn, "boilerplate")
 assert(totest.fhs.get(fh) == "open")
 assert(totest.mpfget(fh) == "some other text after the header")
 assert(totest.header_label == "something to test")
@@ -11,31 +12,34 @@ assert(totest.header_type == "boilerplate")
 assert(totest.header_version == (2,0,0))
 totest.mpfclose(fh)
 
-fh = totest.mpfopen("bench/test_header2.do", "r")
-totest.read_header(fh, "boilerplate", "relax")
+fn = "bench/test_header2.do"
+fh = totest.mpfopen(fn, "r")
+totest.read_header(fh,fn, "boilerplate", "relax")
 assert(totest.header_label == "something to test")
 assert(totest.header_type == "boilerplate")
 assert(totest.header_version == (2,0,0))
 assert(totest.fhs.get(fh) == "closed")
 
-fh = totest.mpfopen("bench/test_header2.do", "r")
+fh = totest.mpfopen(fn, "r")
 end
 
-rcof `"noisily mata: totest.read_header(fh, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
 
 mata:
 assert(totest.fhs.get(fh) == "closed")
-fh = totest.mpfopen("bench/test_header3.do", "r")
+fn = "bench/test_header3.do"
+fh = totest.mpfopen(fn, "r")
 end
 
-rcof `"noisily mata: totest.read_header(fh, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
 
 mata:
 assert(totest.fhs.get(fh) == "closed")
-fh = totest.mpfopen("bench/test_header4.do", "r")
+fn = "bench/test_header4.do"
+fh = totest.mpfopen(fn, "r")
 end
 
-rcof `"noisily mata: totest.read_header(fh, "boilerplate")"' == 198
+rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
 
 mata:
 assert(totest.fhs.get(fh) == "closed")
