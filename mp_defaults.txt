@@ -1,0 +1,7 @@
+<header>
+<mkproject> defaults
+<version> 2.0.0
+<label> standard defaults
+</header>
+<template> long
+<boilerplate> dta
