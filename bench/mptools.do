@@ -2,7 +2,7 @@ args home
 // read_header
 mata:
 totest = mptools()
-fn = "bench/test_header.do"
+fn = "bench/test_header.txt"
 fh = totest.mpfopen(fn, "r")
 totest.read_header(fh, fn, "boilerplate")
 assert(totest.fhs.get(fh) == "open")
@@ -12,7 +12,7 @@ assert(totest.header_type == "boilerplate")
 assert(totest.header_version == (2,0,0))
 totest.mpfclose(fh)
 
-fn = "bench/test_header2.do"
+fn = "bench/test_header2.txt"
 fh = totest.mpfopen(fn, "r")
 totest.read_header(fh,fn, "boilerplate", "relax")
 assert(totest.header_label == "something to test")
@@ -27,7 +27,7 @@ rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
 
 mata:
 assert(totest.fhs.get(fh) == "closed")
-fn = "bench/test_header3.do"
+fn = "bench/test_header3.txt"
 fh = totest.mpfopen(fn, "r")
 end
 
@@ -35,7 +35,7 @@ rcof `"noisily mata: totest.read_header(fh, fn, "boilerplate")"' == 198
 
 mata:
 assert(totest.fhs.get(fh) == "closed")
-fn = "bench/test_header4.do"
+fn = "bench/test_header4.txt"
 fh = totest.mpfopen(fn, "r")
 end
 
@@ -68,11 +68,11 @@ end
 // findfile
 mata:
 totest = mptools()
-assert(strlower(totest.find_file("certify1", ".do")) == strlower("C:\ado\plus/m\mp_certify1.do"))
-assert(strlower(totest.find_file("certify2", ".do")) == strlower("C:\ado\personal/m\mp_certify2.do"))
+assert(strlower(totest.find_file("certify1")) == strlower("C:\ado\plus/m\mp_certify1.txt"))
+assert(strlower(totest.find_file("certify2")) == strlower("C:\ado\personal/m\mp_certify2.txt"))
 end
 
-rcof `"noisily mata: totest.find_file("certify2", ".txt")"' == 601
+rcof `"noisily mata: totest.find_file("certivy2")"' == 601
 
 //parse_dir
 local dir bench
@@ -93,8 +93,8 @@ mata:
 orig = pwd()
 totest = mptools()
 chdir("bench")
-fh1 = totest.mpfopen("test_header.do", "r")
-fh2 = totest.mpfopen("test_header2.do", "r")
+fh1 = totest.mpfopen("test_header.txt", "r")
+fh2 = totest.mpfopen("test_header2.txt", "r")
 totest.graceful_exit()
 assert(pwd()==orig)
 assert(totest.fhs.get(fh1)== "closed")
