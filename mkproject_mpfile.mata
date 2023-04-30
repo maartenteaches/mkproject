@@ -21,12 +21,17 @@ real scalar mpfile::mpfopen(string scalar fn, string scalar mode)
 
 void mpfile::mpfread(string scalar fn)
 {
-    reading.fn = fn
+    if (reading.open == 1) {
+		errprintf("{p}trying to read " + fn + " while " + reading.fn + " is still open{p_end}")
+		exit(198)
+	}
+	reading.fn = fn
     reading.fh = mpfopen(fn, "r")
     reading.lnr = 0
     reading.label = ""
-    reading.fversion = J(1,0,.)
+    reading.fversion = J(1,3,.)
     reading.type = ""
+	reading.open = 1
     
 }
 
@@ -37,6 +42,7 @@ void mpfile::mpfclose(real scalar fh)
 	if (errcode < 0 ) {
 		mpferror(errcode)
 	}
+	if (fh == reading.fh) reading.open = 0
 	fhs.put(fh,"closed")
 }
 

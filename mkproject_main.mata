@@ -17,6 +17,7 @@ struct reading_file
     string scalar    fn
     real   scalar    fh
     real   scalar    lnr
+	real   scalar    open
 }
 struct defaults
 {

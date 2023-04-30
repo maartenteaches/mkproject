@@ -99,5 +99,14 @@ totest = mpfile()
 totest.mpfread("bench/test_header.txt")
 assert(totest.reading.lnr == 0)
 assert(totest.reading.fn == "bench/test_header.txt")
+assert(totest.reading.label == "")
+assert(totest.reading.fversion == J(1,3,.))
+assert(totest.reading.type == "")
+assert(totest.reading.open == 1)
+end
+
+rcof `"noisily mata: totest.mpfread("bench/test_header2.txt")"'==198
+
+mata:
 totest.mpfclose_all()
 end
