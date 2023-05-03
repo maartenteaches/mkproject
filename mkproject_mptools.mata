@@ -10,6 +10,18 @@ void mptools::write_header(real scalar fh)
 	mpfput(fh, "</header>")
 }
 
+void mptools::header_ok(string scalar what, string scalar type) 
+{
+    string scalar fn 
+    
+    fn = find_file(what)
+    mpfread(fn)
+    read_header(type)
+    mpfclose(reading.fh)
+    
+}
+
+
 void mptools::read_header(string scalar what, | string scalar relax)
 {
     real scalar header

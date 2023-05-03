@@ -1,5 +1,8 @@
-<mkproject template>
+<header>
+<mkproject> stencil
 <version> 2.0.0
+<label> based on (Long 2009)
+</header>
 
 <dir> docu
 <dir> posted

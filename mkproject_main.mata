@@ -22,7 +22,7 @@ struct reading_file
 struct defaults
 {
     string scalar boilerplate
-    string scalar mptemplate
+    string scalar stencil
 }
 
 class mpversion{
@@ -61,6 +61,7 @@ class mptools extends mpfile{
     void                             parse_header()
     void                             write_header()
     void                             parse_dir()
+    void                             header_ok()
     void                             new() // sets default for odir
 }
 
@@ -81,8 +82,8 @@ class boilerplate extends mpdefaults{
 class mkproject extends boilerplate{
     void                             run()
     void                             new()
-    void                             read_template()
-    void                             parse_tline()
+    void                             read_stencil()
+    void                             parse_line()
     void                             read_dir()
     void                             mk_dirs()
     void                             mk_files()

@@ -19,14 +19,16 @@ void mpdefaults::read_defaults()
         tokenset(t,line)
         first = tokenget(t)
         second = tokenget(t)
-        fn = find_file(second)
-        if (first == "<template>") {
-            defaults.mptemplate = second
+        if (first == "<stencil>") {
+            defaults.stencil = second
         }
         else if (first == "<boilerplate>") {
             defaults.boilerplate = second
         }
     }
     mpfclose(reading.fh)
+    header_ok(defaults.stencil, "stencil")
+    header_ok(defaults.boilerplate, "boilerplate")
 }
+
 end
