@@ -27,5 +27,6 @@ void mpdefaults::read_defaults()
             defaults.boilerplate = second
         }
     }
+    mpfclose(reading.fh)
 }
 end

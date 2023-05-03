@@ -20,7 +20,7 @@ void mptools::read_header(string scalar what, | string scalar relax)
     t = tokeninit(" ", "", "<>")
     header = 0
     
-    while ((line=mpfget(reading.fh))!= EOF) {
+    while ((line=mpfget())!= EOF) {
         reading.lnr = reading.lnr + 1
         tokenset(t,line)
         first = tokenget(t)
