@@ -69,9 +69,44 @@ end
 
 // findfile
 mata:
+fn = pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.txt")
+unlink(fn)
+fh = fopen(fn,"w")
+fput(fh, "<header>")
+fput(fh, "<mkproject> certify")
+fput(fh, "<version> 2.0.0")
+fput(fh, "<label> used for certifying")
+fput(fh, "</header>")
+fclose(fh)
 totest = mptools()
-assert(strlower(totest.find_file("certify1")) == strlower("C:\ado\plus/m\mp_certify1.txt"))
-assert(strlower(totest.find_file("certify2")) == strlower("C:\ado\personal/m\mp_certify2.txt"))
+true = strlower(pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.txt"))
+assert(strlower(totest.find_file("certify1")) == true)
+unlink(fn)
+
+fn = pathjoin(pathsubsysdir("PLUS"), "m\mp_certify2.txt")
+unlink(fn)
+fh = fopen(fn,"w")
+fput(fh, "<header>")
+fput(fh, "<mkproject> certify")
+fput(fh, "<version> 2.0.0")
+fput(fh, "<label> used for certifying")
+fput(fh, "</header>")
+fclose(fh)
+
+fn2 = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_certify2.txt")
+unlink(fn2)
+fh = fopen(fn2,"w")
+fput(fh, "<header>")
+fput(fh, "<mkproject> certify")
+fput(fh, "<version> 2.0.0")
+fput(fh, "<label> used for certifying")
+fput(fh, "</header>")
+fclose(fh)
+
+true = strlower(pathjoin(pathsubsysdir("PERSONAL"), "m\mp_certify2.txt"))
+assert(strlower(totest.find_file("certify2")) == true)
+unlink(fn)
+unlink(fn2)
 end
 
 rcof `"noisily mata: totest.find_file("certivy2")"' == 601
