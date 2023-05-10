@@ -50,16 +50,13 @@ end
 // write_header
 mata:
 totest = mptools()
-totest.reading.type = "template"
-totest.reading.fversion = (2,0,0)
-totest.reading.label = "something interesting"
 fh = totest.mpfopen("bench/test_write_header.txt", "w")
-totest.write_header(fh)
+totest.write_header(fh, "stencil", "2.0.0", "something interesting")
 totest.mpfclose(fh)
 
 totest.mpfread(`"bench\test_write_header.txt"')
 assert(totest.mpfget()==`"<header>"')
-assert(totest.mpfget()==`"<mkproject> template"')
+assert(totest.mpfget()==`"<mkproject> stencil"')
 assert(totest.mpfget()==`"<version> 2.0.0"')
 assert(totest.mpfget()==`"<label> something interesting"')
 assert(totest.mpfget()==`"</header>"')

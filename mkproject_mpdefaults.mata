@@ -31,4 +31,40 @@ void mpdefaults::read_defaults()
     header_ok(defaults.boilerplate, "boilerplate")
 }
 
+void mpdefaults::write_default(string scalar what, string scalar value)
+{
+    string scalar fn
+    real scalar fh
+    
+    read_defaults()
+    header_ok(value, what)
+    if (what == "stencil") {
+        defaults.stencil = value
+    }
+    else if (what == "boilerplate") {
+        defaults.boilerplate = value
+    }
+    else {
+        errprintf("{p}" + what + " is not a valid default type{p_end}")
+        exit(198)
+    }
+ 
+    fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.txt")
+    unlink(fn)
+    fh = mpfopen(fn, "w")
+    write_header(fh, "defaults", 
+                     invtokens(strofreal(current_version),"."),
+                     "user specified defaults") 
+    mpfput(fh, "<stencil> " + defaults.stencil)
+    mpfput(fh, "<boilerplate> " + defaults.boilerplate)
+    mpfclose(fh)
+}
+
+void mpdefaults::reset()
+{
+    string scalar fn
+    fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.txt")
+    unlink(fn)
+}
+
 end

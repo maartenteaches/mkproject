@@ -70,6 +70,7 @@ class mpdefaults extends mptools{
     
     void                             read_defaults()
     void                             write_default()
+    void                             reset()
 }
 
 class boilerplate extends mpdefaults{

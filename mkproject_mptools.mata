@@ -1,12 +1,12 @@
 mata:
 mata set matastrict on
 
-void mptools::write_header(real scalar fh)
+void mptools::write_header(real scalar fh, string scalar type, string scalar strversion, string scalar label  )
 {
 	mpfput(fh, "<header>")
-	mpfput(fh, "<mkproject> " + reading.type)
-	mpfput(fh, "<version> " + invtokens(strofreal(reading.fversion), "."))
-	mpfput(fh, "<label> " + reading.label)
+	mpfput(fh, "<mkproject> " + type)
+	mpfput(fh, "<version> " + strversion)
+	mpfput(fh, "<label> " + label)
 	mpfput(fh, "</header>")
 }
 
