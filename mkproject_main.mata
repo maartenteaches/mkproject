@@ -74,10 +74,12 @@ class mpdefaults extends mptools{
 }
 
 class boilerplate extends mpdefaults{
+    struct repl           scalar     torepl
+    
     void                             run()
     void                             copy_boiler()
     string                scalar     remove_usuffix()
-    struct repl           scalar     parse_dest()
+    void                             parse_dest()
     void                             parse_bline()
 }
 

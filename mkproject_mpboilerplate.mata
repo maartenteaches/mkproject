@@ -1,15 +1,13 @@
 mata:
-struct repl scalar boilerplate::parse_dest(string scalar dest)
+void boilerplate::parse_dest(string scalar dest)
 {
-	struct repl scalar res
-	res.fn = pathbasename(dest)
-	res.stub = pathrmsuffix(res.fn)
-	res.abbrev = remove_usuffix(res.stub)
+	torepl.fn = pathbasename(dest)
+	torepl.stub = pathrmsuffix(torepl.fn)
+	torepl.abbrev = remove_usuffix(torepl.stub)
 	if (!pathisabs(dest)) {
 		dest = pathresolve(pwd(),dest)
 	}
-	res.basedir = pathgetparent(dest)
-	return(res)
+	torepl.basedir = pathgetparent(dest)
 }
 
 string scalar boilerplate::remove_usuffix(string scalar stub)
@@ -29,7 +27,7 @@ string scalar boilerplate::remove_usuffix(string scalar stub)
     return(result)
 }
 
-void boilerplate::parse_bline(string scalar line, struct repl torepl, real scalar dh)
+void boilerplate::parse_bline(string scalar line, real scalar dh)
 {
     
     transmorphic scalar t
@@ -37,12 +35,12 @@ void boilerplate::parse_bline(string scalar line, struct repl torepl, real scala
     string rowvector asof
     real scalar minversion, tocopy
     
-    line = usubinstr(line, "<stata_version>", st_numscalar("c(stata_version)"), .)
-    line = usubinstr(line, "<date>"         , st_global("c(current_date)")    , .)
-	line = usubinstr(line, "<fn>"           , torepl.fn                       , .)
-	line = usubinstr(line, "<stub>"         , torepl.stub                     , .)
-	line = usubinstr(line, "<basedir>"      , torepl.basedir                  , .)
-	line = usubinstr(line, "<abbrev>"       , torepl.abbrev                   , .)
+    line = usubinstr(line, "<stata_version>", strofreal(st_numscalar("c(stata_version)")), .)
+    line = usubinstr(line, "<date>"         , st_global("c(current_date)")               , .)
+	line = usubinstr(line, "<fn>"           , torepl.fn                                  , .)
+	line = usubinstr(line, "<stub>"         , torepl.stub                                , .)
+	line = usubinstr(line, "<basedir>"      , torepl.basedir                             , .)
+	line = usubinstr(line, "<abbrev>"       , torepl.abbrev                              , .)
     
     tocopy = 1
     t = tokeninit(" ", "", "<>")
@@ -70,7 +68,6 @@ void boilerplate::parse_bline(string scalar line, struct repl torepl, real scala
 void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 {
 	string scalar orig, EOF, line
-	struct repl scalar torepl
 	real scalar dh
 	
     if (args() == 1) {
@@ -82,14 +79,14 @@ void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 	
 	orig = find_file(boiler)
 
-	torepl = parse_dest(dest)
+	parse_dest(dest)
 	
 	mpfread(orig)
     read_header("boilerplate")
 	dh = mpfopen(dest, "w")
 	
 	while ((line=mpfget())!=EOF) {
-        parse_bline(line,torepl, dh)
+        parse_bline(line, dh)
 	}
 	mpfclose(reading.fh)
 	mpfclose(dh)
