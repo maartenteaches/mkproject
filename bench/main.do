@@ -11,3 +11,5 @@ do bench/version.do
 do bench/mpfile.do
 do bench/mptools.do "`home'"
 do bench/mpdefaults.do
+do bench/mpboilerplate.do
+

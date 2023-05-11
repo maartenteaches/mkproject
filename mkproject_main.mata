@@ -76,6 +76,7 @@ class mpdefaults extends mptools{
 class boilerplate extends mpdefaults{
     void                             run()
     void                             copy_boiler()
+    string                scalar     remove_usuffix()
     struct repl           scalar     parse_dest()
     void                             parse_bline()
 }
@@ -101,3 +102,4 @@ do mkproject_version.mata
 do mkproject_mpfile.mata
 do mkproject_mptools.mata
 do mkproject_mpdefaults.mata
+do mkproject_mpboilerplate.mata
