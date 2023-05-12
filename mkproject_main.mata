@@ -84,14 +84,21 @@ class boilerplate extends mpdefaults{
 }
 
 class mkproject extends boilerplate{
+    string                matrix     files
+   	string                colvector  dirs
+    string                colvector  cmds
+    string                scalar     dir
+    string                scalar     abbrev
+    string                scalar     stencil
+    
     void                             run()
-    void                             new()
     void                             read_stencil()
-    void                             parse_line()
+    void                             parse_sline()
     void                             read_dir()
     void                             mk_dirs()
     void                             mk_files()
     void                             do_cmds()
+    void                             new()
 }
 
 class mpcreate extends mptools{
@@ -105,3 +112,4 @@ do mkproject_mpfile.mata
 do mkproject_mptools.mata
 do mkproject_mpdefaults.mata
 do mkproject_mpboilerplate.mata
+do mkproject_mkproject.mata
