@@ -11,3 +11,12 @@ chdir("..")
 rmdir("foo")
 chdir("..")
 end
+
+//read_dir()
+mata:
+totest=mkproject()
+totest.read_dir("foo/bar")
+assert(totest.dirs == ("\foo\" \ "\foo\bar\"))
+totest.read_dir("foo/blup")
+assert(totest.dirs == ("\foo\" \ "\foo\bar\" \ "\foo\blup\"))
+end
