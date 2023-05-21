@@ -1,5 +1,5 @@
 <header>
-<mkproject> template
+<mkproject> stencil
 <version> 2.0.0
 <label> Research with git
 </header>

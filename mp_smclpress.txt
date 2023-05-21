@@ -1,5 +1,8 @@
-<mkproject template>
+<header>
+<mkproject> stencil
 <version> 2.0.0
+<label> a smclpres presentation
+</header>
 
 <dir> source
 <dir> handout
