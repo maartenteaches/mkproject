@@ -40,6 +40,14 @@ void mkproject::parse_dir()
 	chdir(abbrev)
 }
 
+string scalar mkproject::getrest(transmorphic scalar t) 
+{
+	string scalar line
+	line = tokenrest(t)
+	line = usubinstr(line, "<abbrev>", abbrev,.)
+	line = ustrltrim(line)
+	return(line)
+}
 void mkproject::parse_sline(string scalar line)
 {
 	string       scalar first, boiler
@@ -50,19 +58,16 @@ void mkproject::parse_sline(string scalar line)
 	first = tokenget(t)
 
 	if (first == "<dir>" ) {
-		line = tokenrest(t)
-		line = usubinstr(line, "<abbrev>", abbrev,.)
+		line = getrest(t)
 		read_dir(line)
 	}
 	else if (first == "<file>") {
 		boiler = tokenget(t)
-		line = tokenrest(t)
-		line = usubinstr(line, "<abbrev>", abbrev,.)
+		line = getrest(t)
 		files = files \ (boiler, line)
 	} 
 	else if (first == "<cmd>" ){
-		line = tokenrest(t)
-		line = usubinstr(line, "<abbrev>", abbrev,.)
+		line = getrest(t)
 		cmds = cmds \ line
 	}
 }

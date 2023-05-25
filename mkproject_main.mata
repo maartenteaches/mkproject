@@ -94,6 +94,7 @@ class mkproject extends boilerplate{
     void                             run()
     void                             read_stencil()
     void                             parse_sline()
+	string                scalar     getrest()
     void                             read_dir()
     void                             mk_dirs()
     void                             mk_files()
