@@ -21,6 +21,16 @@ totest.read_dir("foo/blup")
 assert(totest.dirs == ("\foo\" \ "\foo\bar\" \ "\foo\blup\"))
 end
 
+//getrest()
+mata:
+t=tokeninit(" ")
+tokenset(t,"denkend aan holland zie ik <abbrev> rivieren")
+tokenget(t)
+
+totest=mkproject()
+totest.abbrev = "kleine"
+assert(totest.getrest(t) == "aan holland zie ik kleine rivieren")
+
 //parse_sline()
 mata:
 //<dir>
