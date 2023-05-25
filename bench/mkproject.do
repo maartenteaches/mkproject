@@ -16,9 +16,9 @@ end
 mata:
 totest=mkproject()
 totest.read_dir("foo/bar")
-assert(totest.dirs == ("\foo\" \ "\foo\bar\"))
+assert(totest.dirs == ("foo\" \ "foo\bar\"))
 totest.read_dir("foo/blup")
-assert(totest.dirs == ("\foo\" \ "\foo\bar\" \ "\foo\blup\"))
+assert(totest.dirs == ("foo\" \ "foo\bar\" \ "foo\blup\"))
 end
 
 //getrest()
@@ -36,12 +36,12 @@ mata:
 //<dir>
 totest=mkproject()
 totest.parse_sline("<dir> foo/bar")
-assert(totest.dirs == ("\foo\" \ "\foo\bar\"))
+assert(totest.dirs == ("foo\" \ "foo\bar\"))
 totest.parse_sline("<dir> foo\blup")
-assert(totest.dirs == ("\foo\" \ "\foo\bar\" \ "\foo\blup\"))
+assert(totest.dirs == ("foo\" \ "foo\bar\" \ "foo\blup\"))
 totest.abbrev = "blup"
 totest.parse_sline("<dir> <abbrev>blup")
-assert(totest.dirs == ("\foo\" \ "\foo\bar\" \ "\foo\blup\" \ "\blupblup\"))
+assert(totest.dirs == ("foo\" \ "foo\bar\" \ "foo\blup\" \ "blupblup\"))
 
 //<file>
 totest.parse_sline("<file> dta <abbrev>_dta01.do")
@@ -70,14 +70,14 @@ totest.dir     = "bench"
 totest.abbrev  = "test"
 totest.stencil = "long"
 totest.read_stencil()
-assert(totest.dirs == ("\docu\" \
-                       "\posted\" \
-                       "\posted\data\" \
-                       "\posted\analysis\" \
-                       "\posted\txt\" \
-                       "\work\" \
-                       "\work\analysis\" \
-                       "\work\txt\"))
+assert(totest.dirs == ("docu\" \
+                       "posted\" \
+                       "posted\data\" \
+                       "posted\analysis\" \
+                       "posted\txt\" \
+                       "work\" \
+                       "work\analysis\" \
+                       "work\txt\"))
 
 assert(totest.cmds == ("qui cd work/analysis" \
  "projmanager test.stpr"))
@@ -193,5 +193,48 @@ totest.do_cmds()
 assert(st_local("foo")=="bar")
 assert(st_local("blup")=="bla")
 			   
+end
+
+// run
+local dir "bench"
+local abbrev "test"
+local stencil "long"
+mata:
+odir = pwd()
+totest = mkproject()
+totest.run()
+assert(pwd()== pathjoin(odir, "bench\test\work\analysis")+"\")
+
+assert(dir(".", "files", "*") == ("test.stpr" \
+                           "test_ana01.do" \
+                           "test_dta01.do" \
+                           "test_main.do" ))   
+unlink("test.stpr")
+unlink("test_ana01.do")
+unlink("test_dta01.do")
+unlink("test_main.do")						   
+chdir("..")
+assert(dir(".", "dirs", "*") == ("analysis" \ "txt"))
+rmdir("analysis")
+rmdir("txt")
+chdir("..")
+assert(dir(".", "dirs", "*") == ("docu" \ "posted" \ "work"))
+rmdir("work")
+chdir("posted")
+assert(dir(".", "dirs", "*") == ("analysis" \ "data" \ "txt"))
+rmdir("analysis")
+rmdir("data")
+rmdir("txt")
+chdir("..")
+rmdir("posted")
+chdir("docu")
+assert(dir(".", "files", "*") == "research_log.md")
+unlink("research_log.md")
+chdir("..")
+rmdir("docu")
+chdir("..")
+rmdir("test")
+chdir(odir)
+
 end
 

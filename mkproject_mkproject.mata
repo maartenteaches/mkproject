@@ -107,7 +107,7 @@ void mkproject::read_dir(string scalar newdir)
 	t = tokeninit("/\")
 	tokenset(t,newdir)
 	
-	past = "\"
+	past = ""
 	while ( (token = tokenget(t)) != "") {
 		past = past + token + "\"
 		if (!anyof(dirs, past)) {
