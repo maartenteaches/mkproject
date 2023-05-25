@@ -184,4 +184,14 @@ rmdir("test")
 chdir("..")
 end
 
+//do_cmds()
+mata:
+totest = mkproject()
+totest.cmds = (`"local foo = "bar""'\
+               `"local blup = "bla""')
+totest.do_cmds()
+assert(st_local("foo")=="bar")
+assert(st_local("blup")=="bla")
+			   
+end
 
