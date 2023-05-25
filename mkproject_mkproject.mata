@@ -89,7 +89,7 @@ void mkproject::read_stencil()
 	mpfread(fn)
 	read_header("stencil")
 	while ((line=mpfget())!=EOF) {
-		parse_tline(line)
+		parse_sline(line)
 	}
 	mpfclose(reading.fh)
 }
@@ -120,7 +120,7 @@ void mkproject::mk_files(){
 	real scalar i
 	
 	for(i=1; i<=rows(files); i++) {
-		copy_boiler(files[i,1], files[i,2])
+		copy_boiler(files[i,2], files[i,1])
 	}
 }
 
