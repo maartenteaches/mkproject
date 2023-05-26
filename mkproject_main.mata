@@ -106,6 +106,13 @@ class mpcreate extends mptools{
     void                             run()
     void                             create()
 }
+
+class mpquery extends mpdefaults {
+    string                matrix    files
+    
+    void                            findfiles()
+    void                            new()
+}
 end
 
 do mkproject_version.mata
@@ -114,3 +121,4 @@ do mkproject_mptools.mata
 do mkproject_mpdefaults.mata
 do mkproject_mpboilerplate.mata
 do mkproject_mkproject.mata
+do mkproject_mpquery.mata
