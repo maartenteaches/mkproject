@@ -104,7 +104,7 @@ void mpquery::file2path()
     string scalar path
     
     for(i=1; i<=rows(files);i++) {
-        path = pathjoin(files[i,`where'], "m")
+        path = pathjoin(pathsubsysdir(files[i,`where']), "m")
         path = pathjoin(path, files[i,`path'])
         files[i,`path'] = path
     }
