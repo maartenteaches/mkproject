@@ -1,4 +1,60 @@
 mata:
+
+string colvector mpquery::dupldrop(string scalar plus, string scalar personal)
+{
+    
+}
+
+string matrix mpquery::selecttype(string colvector files, string scalar what)
+{
+    
+}
+
+void mpquery::isdefault()
+{
+    
+}
+
+void mpquery::file2name()
+{
+    
+}
+
+void mpquery::file2path()
+{
+    
+}
+
+void mpquery::print_header()
+{
+    
+}
+
+void mpquery::print_footer()
+{
+    
+}
+
+void mpquery::print_line()
+{
+    
+}
+
+void mpquery::collect_info()
+{
+    
+}
+
+void mpquery::print_table()
+{
+    
+}
+
+void mpquery::run(string scalar what)
+{
+    
+}
+
 void mpquery::findfiles(string scalar what) {
     string scalar path
     real scalar i

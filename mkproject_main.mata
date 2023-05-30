@@ -111,6 +111,17 @@ class mpquery extends mpdefaults {
     string                matrix    files
     
     void                            findfiles()
+    string                colvector dupldrop()
+    string                matrix    selecttype()
+    void                            file2name()
+    void                            file2path()
+    void                            isdefault()
+    void                            print_header()
+    void                            print_line()
+    void                            print_footer()
+    void                            collect_info()
+    void                            print_table()
+    void                            run()
     void                            new()
 }
 end
