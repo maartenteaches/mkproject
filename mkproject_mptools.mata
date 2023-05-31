@@ -56,7 +56,7 @@ void mptools::read_header(string scalar what, | string scalar relax)
         }
         else if (header) {
             second = ustrtrim(tokenrest(t))
-            parse_header(first, second, what)
+            parse_header(first, second, what, relax)
         }
     }
     mpfclose(reading.fh)
@@ -76,12 +76,11 @@ void mptools::read_header(string scalar what, | string scalar relax)
     }
 }
 
-void mptools::parse_header(string scalar first, string scalar second, string scalar what)
+void mptools::parse_header(string scalar first, string scalar second, string scalar what, string scalar relax)
 {
     string scalar errmsg
-    
     if (first == "<mkproject>") {
-        if (second != what) {
+        if (second != what & relax == "") {
             where_err()
             errmsg = "{p}Expected to find a mkproject file of type " + what + 
                      " but found a mkproject file of type " + second + "{p_end}"

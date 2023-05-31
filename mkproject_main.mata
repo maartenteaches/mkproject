@@ -122,7 +122,6 @@ class mpquery extends mpdefaults {
     void                            collect_info()
     void                            print_table()
     void                            run()
-    void                            new()
 }
 end
 

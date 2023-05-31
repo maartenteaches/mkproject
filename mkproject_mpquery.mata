@@ -34,13 +34,13 @@ string matrix mpquery::selecttype(string colvector files, string scalar where, s
     for(i=1; i<=rows(files); i++) {
         mpfread(pathjoin(path,files[i]))
         read_header(what, "relax")
-        mpfclose(reading.fh)
+        if (reading.open) mpfclose(reading.fh)
         selection[i] = (reading.type == what)
         lab[i] = reading.label
     }
     files = select(files, selection)
     lab = select(lab, selection)
-    return((files,lab, where))
+    return((files,lab, J(rows(files),1,where)))
 }
 
 void mpquery::findfiles(string scalar what) {
