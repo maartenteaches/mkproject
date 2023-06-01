@@ -102,11 +102,6 @@ class mkproject extends boilerplate{
     void                             new()
 }
 
-class mpcreate extends mptools{
-    void                             run()
-    void                             create()
-}
-
 class mpquery extends mpdefaults {
     string                matrix    files
     string                scalar    cname
@@ -127,6 +122,12 @@ class mpquery extends mpdefaults {
     void                            run()
     void                            new()
 }
+
+class mpcreate extends mptools {
+    string                scalar    newname()
+    void                            chk_file()
+    void                            create()
+}
 end
 
 do mkproject_version.mata
@@ -136,3 +137,4 @@ do mkproject_mpdefaults.mata
 do mkproject_mpboilerplate.mata
 do mkproject_mkproject.mata
 do mkproject_mpquery.mata
+do mkproject_mpcreate.mata

@@ -1,12 +1,12 @@
 mata:
 mata set matastrict on
 
-void mptools::write_header(real scalar fh, string scalar type, string scalar strversion, string scalar label  )
+void mptools::write_header(real scalar fh )
 {
 	mpfput(fh, "<header>")
-	mpfput(fh, "<mkproject> " + type)
-	mpfput(fh, "<version> " + strversion)
-	mpfput(fh, "<label> " + label)
+	mpfput(fh, "<mkproject> " + reading.type)
+	mpfput(fh, "<version> " + invtokens(strofreal(reading.fversion), "."))
+	mpfput(fh, "<label> " + reading.label)
 	mpfput(fh, "</header>")
 }
 
@@ -20,7 +20,6 @@ void mptools::header_ok(string scalar what, string scalar type)
     mpfclose(reading.fh)
     
 }
-
 
 void mptools::read_header(string scalar what, | string scalar relax)
 {
@@ -51,6 +50,12 @@ void mptools::read_header(string scalar what, | string scalar relax)
                 errprintf("{p}A header was closed when none was open; not a valide mkproject " + what + " file {p_end}")
                 mpfclose(reading.fh)
                 exit(198)
+            }
+            if (reading.fversion == J(1,0, .)) {
+                reading.fversion = current_version
+            }
+            if (reading.type == "") {
+                reading.type = what
             }
             return
         }

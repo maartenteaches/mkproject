@@ -52,9 +52,10 @@ void mpdefaults::write_default(string scalar what, string scalar value)
     fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.txt")
     unlink(fn)
     fh = mpfopen(fn, "w")
-    write_header(fh, "defaults", 
-                     invtokens(strofreal(current_version),"."),
-                     "user specified defaults") 
+    reading.type = "defaults" 
+    reading.fversion = current_version
+    reading.label = "user specified defaults"
+    write_header(fh) 
     mpfput(fh, "<stencil> " + defaults.stencil)
     mpfput(fh, "<boilerplate> " + defaults.boilerplate)
     mpfclose(fh)

@@ -15,4 +15,4 @@ do bench/mpdefaults.do
 do bench/mpboilerplate.do
 do bench/mkproject.do "`home'"
 do bench/mpquery.do
-
+do bench/mpcreate.do
