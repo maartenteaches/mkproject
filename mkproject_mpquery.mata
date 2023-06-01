@@ -70,7 +70,7 @@ void mpquery::isdefault(string scalar what)
     string scalar def
     real scalar tochange
 
-    files[.,`default'] = J(rows(files), 1,"  ")
+    files[.,`default'] = J(rows(files), 1," ")
     read_defaults()
     if (what == "boilerplate") {
         def  = defaults.boilerplate
@@ -84,7 +84,7 @@ void mpquery::isdefault(string scalar what)
     }
     def = "mp_" + def + ".txt"
     tochange = selectindex(files[.,`path']:==def)
-    files[tochange,`default'] = "* "
+    files[tochange,`default'] = "*"
 }
 
 void mpquery::file2name()
@@ -118,26 +118,53 @@ void mpquery::collect_info(string scalar what)
     file2path()
 }
 
+void mpquery::new()
+{
+    cname  = "{col 2}"
+    cwhere = "{col 16}"
+    clabel = "{col 25}"
+}
+
 void mpquery::print_header()
 {
-    
+    string scalar toprint
+   
+    toprint = "{txt}" + cname + 
+              "Name" + cwhere + 
+              "Where" + clabel + 
+              "Label\n"
+   
+    printf("{hline}\n")
+    printf(toprint)
+    printf("{hline}\n")
 }
 
 void mpquery::print_footer()
 {
-    
+    printf("{hline}\n")
+    printf("{txt}* indicates default")
 }
 
-void mpquery::print_line()
+void mpquery::print_line(real scalar i)
 {
-    
+    string scalar toprint
+    toprint = files[i,1] + `"{view ""' + files[i,2] + `"":"' +
+              files[i,3] + "}" + cwhere + files [i,4] + 
+              clabel + files[i, 5] + "\n"
+    printf(toprint)              
 }
 
 
 
 void mpquery::print_table()
 {
+    real scalar i
     
+    print_header()
+    for(i=1; i<= rows(files); i++) {
+        print_line(i)
+    }
+    print_footer()
 }
 
 void mpquery::run(string scalar what)

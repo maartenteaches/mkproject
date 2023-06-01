@@ -109,6 +109,9 @@ class mpcreate extends mptools{
 
 class mpquery extends mpdefaults {
     string                matrix    files
+    string                scalar    cname
+    string                scalar    cwhere
+    string                scalar    clabel
     
     void                            findfiles()
     string                colvector dupldrop()
@@ -122,6 +125,7 @@ class mpquery extends mpdefaults {
     void                            collect_info()
     void                            print_table()
     void                            run()
+    void                            new()
 }
 end
 
