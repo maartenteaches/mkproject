@@ -13,5 +13,6 @@ do bench/mpfile.do
 do bench/mptools.do "`home'"
 do bench/mpdefaults.do
 do bench/mpboilerplate.do
-do bench/mkproject.do
+do bench/mkproject.do "`home'"
+do bench/mpquery.do
 

@@ -1,3 +1,5 @@
+args home
+
 //parse_dir()
 local dir "bench/"
 local abbrev "foo"
@@ -160,7 +162,7 @@ assert `"`line'"'==`"frames reset"'
 file read `fh' line
 assert `"`line'"'==`"macro drop _all"'
 file read `fh' line
-assert `"`line'"'==`"cd "C:\mijn documenten\projecten\stata\mkproject\bench\test""'
+assert `"`line'"'==`"cd "`home':\mijn documenten\projecten\stata\mkproject\bench\test""'
 file read `fh' line
 assert `"`line'"'==`""'
 file read `fh' line
