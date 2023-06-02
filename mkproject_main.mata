@@ -12,6 +12,7 @@ struct repl
 struct reading_file
 {
     real   rowvector fversion
+    string scalar    sversion
     string scalar    type
     string scalar    label
     string scalar    fn
@@ -59,6 +60,8 @@ class mptools extends mpfile{
     string                 scalar    find_file()
     void                             read_header()
     void                             parse_header()
+    void                             collect_header_info()
+    void                             chk_header()
     void                             write_header()
     void                             parse_dir()
     void                             header_ok()
@@ -76,7 +79,6 @@ class mpdefaults extends mptools{
 class boilerplate extends mpdefaults{
     struct repl           scalar     torepl
     
-    void                             run()
     void                             copy_boiler()
     string                scalar     remove_usuffix()
     void                             parse_dest()
@@ -91,7 +93,6 @@ class mkproject extends boilerplate{
     string                scalar     abbrev
     string                scalar     stencil
     
-    void                             run()
     void                             read_stencil()
     void                             parse_sline()
 	string                scalar     getrest()
@@ -100,6 +101,7 @@ class mkproject extends boilerplate{
     void                             mk_files()
     void                             do_cmds()
     void                             new()
+    void                             run()
 }
 
 class mpquery extends mpdefaults {
@@ -127,6 +129,7 @@ class mpcreate extends mptools {
     string                scalar    newname()
     void                            chk_file()
     void                            create()
+    void                            header_defaults()
 }
 end
 

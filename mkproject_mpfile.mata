@@ -30,6 +30,7 @@ void mpfile::mpfread(string scalar fn)
     reading.lnr = 0
     reading.label = ""
     reading.fversion = J(1,3,.)
+    reading.sversion = ""
     reading.type = ""
 	reading.open = 1
     

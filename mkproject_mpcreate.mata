@@ -1,4 +1,20 @@
 mata:
+
+void mpcreate::header_defaults(string scalar what)
+{
+    if (reading.type == "") { 
+        reading.type = what
+    }
+    if (reading.sversion == "") {
+        reading.sversion = invtokens(strofreal(current_version),".")
+    }
+    header_version(reading.sversion)
+    // wrong type of mkproject file
+    if (reading.type != what) { 
+        errprintf("{p}expected a file of type " + what + " but found a file of type " + reading.type + "{p_end}")
+        exit(198)
+    }
+}
 void mpcreate::create(string scalar what)
 {
     string scalar fn_in, fn_out, EOF, line
@@ -13,20 +29,15 @@ void mpcreate::create(string scalar what)
         exit(601)
     }
     mpfread(fn_in)
-    read_header(what, "relax")
-
-    // wrong type of mkproject file
-    if (reading.type != what) { 
-        errprintf("{p}expected a file of type " + what + " but found a file of type " + reading.type + "{p_end}")
-        exit(198)
-    }
-    // no header in source
-    if (reading.open == 0) { 
-        mpfread(fn_in)
-    }
+    read_header()
+    header_defaults(what)
     fh_out = mpfopen(fn_out, "w")
     write_header(fh_out)
     
+    // no header in source
+    if (reading.open == 0) { 
+        mpfread(fn_in)
+    }    
         
     while((line=mpfget())!=EOF) {
         chk_file(line)

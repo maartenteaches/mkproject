@@ -33,7 +33,7 @@ string matrix mpquery::selecttype(string colvector files, string scalar where, s
     lab = J(rows(files),1, "")
     for(i=1; i<=rows(files); i++) {
         mpfread(pathjoin(path,files[i]))
-        read_header(what, "relax")
+        read_header()
         if (reading.open) mpfclose(reading.fh)
         selection[i] = (reading.type == what)
         lab[i] = reading.label
@@ -147,10 +147,15 @@ void mpquery::print_footer()
 
 void mpquery::print_line(real scalar i)
 {
-    string scalar toprint
+    string scalar toprint, lab
+    real scalar l
+
+    l=st_numscalar("c(linesize)")
+    l = l -24
+    lab = ustrleft(files[i,5],l)
     toprint = files[i,1] + `"{view ""' + files[i,2] + `"":"' +
               files[i,3] + "}" + cwhere + files [i,4] + 
-              clabel + files[i, 5] + "\n"
+              clabel + lab + "\n"
     printf(toprint)              
 }
 

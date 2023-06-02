@@ -21,12 +21,12 @@ void mptools::header_ok(string scalar what, string scalar type)
     
 }
 
-void mptools::read_header(string scalar what, | string scalar relax)
+void mptools::collect_header_info()
 {
     real scalar header
     string scalar line, EOF, first, second
     transmorphic scalar t
-        
+    
     EOF = J(0,0,"")
     t = tokeninit(" ", "", "<>")
     header = 0
@@ -38,7 +38,7 @@ void mptools::read_header(string scalar what, | string scalar relax)
         if (first == "<header>") {
             if (header == 1) {
                 where_err()
-                errprintf("{p}A header is started when one was already open; not a valide mkproject " + what + " file {p_end}")
+                errprintf("{p}A header is started when one was already open; not a valide mkproject file {p_end}")
                 mpfclose(reading.fh)
                 exit(198)
             }
@@ -47,21 +47,15 @@ void mptools::read_header(string scalar what, | string scalar relax)
         else if (first == "</header>") {
             if (header == 0) {
                 where_err()
-                errprintf("{p}A header was closed when none was open; not a valide mkproject " + what + " file {p_end}")
+                errprintf("{p}A header was closed when none was open; not a valide mkproject file {p_end}")
                 mpfclose(reading.fh)
                 exit(198)
-            }
-            if (reading.fversion == J(1,0, .)) {
-                reading.fversion = current_version
-            }
-            if (reading.type == "") {
-                reading.type = what
             }
             return
         }
         else if (header) {
             second = ustrtrim(tokenrest(t))
-            parse_header(first, second, what, relax)
+            parse_header(first, second)
         }
     }
     mpfclose(reading.fh)
@@ -70,32 +64,35 @@ void mptools::read_header(string scalar what, | string scalar relax)
         errprintf("{p}Started a header but never closed it{p_end}")
         exit(198)
     }
-    if (header == 0 & args() == 1) {
-        where_err()
-        errprintf("{p}No header found; Not a valid mkproject "+ what + " file{p_end}")
-        exit(198)
-    }
-    if (args()==2) {
-        reading.fversion = current_version
-        reading.type = what
-    }
 }
 
-void mptools::parse_header(string scalar first, string scalar second, string scalar what, string scalar relax)
+void mptools::read_header(| string scalar what)
+{
+   collect_header_info()
+   if (args()==1) {
+       chk_header(what)
+   }
+}
+
+void mptools::chk_header(string scalar what)
 {
     string scalar errmsg
+    if (reading.type != what) {
+        errmsg = "{p}Expected to find a mkproject file of type " + what + 
+                 " but found a mkproject file of type " + reading.type + "{p_end}"
+        errprintf(errmsg)
+        exit(198)
+    }
+    header_version(reading.sversion)
+}
+
+void mptools::parse_header(string scalar first, string scalar second)
+{
     if (first == "<mkproject>") {
-        if (second != what & relax == "") {
-            where_err()
-            errmsg = "{p}Expected to find a mkproject file of type " + what + 
-                     " but found a mkproject file of type " + second + "{p_end}"
-            errprintf(errmsg)
-            exit(198)
-        }
         reading.type = second
     }
     if (first == "<version>") {
-        header_version(second)
+        reading.sversion = second
     }
     if (first == "<label>") {
         reading.label = second
