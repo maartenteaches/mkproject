@@ -1,87 +1,93 @@
 *! version 2.0.0 27Mar2023 MLB
 program define mkproject
     version 10
-    syntax [name], [debug CREATE(string) query] *
+    syntax [name], [debug CREATE(string) query default(string) RESETDEFault] *
 	
 	local proj mkproject__class_instance
 	mata: `proj' = mkproject()
 
-    if "`create'" != "" {
-        Create `create', proj(`proj')
-        if "`query'" == "" exit
+    if "`default'" != "" & "`resetdefault'" != "" {
+        di as err "{p}Cannot specify default() and resetdefault together{p_end}"
+        exit 198
     }
-    if "`query'" != "" {
-        Query
-        exit
-    }
-    if "`create'`query'`namelist'" == "" {
+    if "`create'`query'`default'`resetdefault'`namelist'" == "" {
         di as err "{p}A name for your project is required{p_end}"
         exit 198
     }
+    if "`create'`query'`default'`resetdefault'" != "" & "`namelist'" != "" {
+        di as err "{p}A name for a project cannot be specified together with the create(), query, default(), resetdefault options{p_end}"
+        exit 198
+    }    
+    
+    if `"`create'"' != "" {
+        capture noisily Create `create', proj(`proj') `options'
+        Cleanup , proj(`proj') rc(`=_rc') `debug'
+        if "`query'`default'`resetdefault'" == "" exit
+    }
+    if `"`default'"' != "" {
+        capture noisily Default `default', proj(`proj') 
+        Cleanup , proj(`proj') rc(`=_rc') `debug'
+        if "`query'`resetdefault'" == "" exit
+    }
+    if "`resetdefault'" != "" {
+        capture noisily Resetdefault, proj(`proj')
+        Cleanup , proj(`proj') rc(`=_rc') `debug'
+        if "`query'" == "" exit        
+    }
+    if "`query'" != "" {
+        Query, proj(`proj')
+        Cleanup, proj(`proj') rc(`=_rc') `debug'
+        exit
+    }
     
 	capture noisily mkproject_main `namelist', `options' proj(`proj')
+	Cleanup, proj(`proj') rc(`=_rc') `debug'	
+end
 
-	if _rc {
-		`proj'.graceful_exit()
-		cleanup, proj(`proj') `debug'
-		exit _rc
-	}
-	cleanup, proj(`proj') `debug'	
+program define Create
+    syntax anything(name=create), proj(string) [replace] *
+    mata: `proj' = mpcreate()
+    mata: `proj'.create("stencil")
+end
+
+program define Query
+    syntax, proj(string)
+    mata: `proj' = mpquery()
+    mata: `proj'.run("stencil")
+end
+
+program define Default
+    syntax anything(name=default), proj(string) 
+    mata: `proj' = mpdefaults()
+    mata: `proj'.write_default("stencil", "`default'")
+end
+
+program define Resetdefault
+    syntax, proj(string) 
+    mata: `proj' = mpdefaults()
+    mata: `proj'.reset()
 end
 
 program define mkproject_main 
 	version 10
 	syntax name(name=abbrev), proj(string) ///
            [ DIRectory(string) template(string)]
-		   
+           
+    mata: `proj' = mkproject()
 	mata:`proj'.run()
 end
 
-program define cleanup 
+program define Cleanup 
 	version 10
-	syntax, proj(string) [debug]
-	if "`debug'" == "" {
+	syntax, proj(string) rc(integer) [debug]
+	
+    if `rc' {
+        `proj'.graceful_exit()
+    }
+    if "`debug'" == "" {
 		mata: mata drop `proj'
 	}
-end
-
-program define Create
-    syntax anything(name=create), proj(string) [replace]
-    mata: `proj'.create("template")
-end
-
-program define Query
-    version 10
-    
-    local personal : dir `"`c(sysdir_personal)'/m/"' files "mp_*.txt"
-    local plus     : dir `"`c(sysdir_plus)'/m/"'     files "mp_*.txt"
-    local all = `"`personal' `plus'"'
-    local all : list uniq all
-    local all : list sort all
-    
-    foreach file of local alll {
-        local name = usubinstr("`file'", "mp_" , "" ,1)
-        local name = ustrreverse("`name'")
-        local name = usubinstr("`name'", "txt.","",1)
-        local name = ustrreverse("`name'")
-        if `: list file in personal' {
-            local path = `"`c(sysdir_personal)'/m/`file'"' 
-            local where "personal"
-        }
-        else {
-            local path = `"`c(sysdir_plus)'/m/`file'"'
-            local where "plus"
-        }
-        display `"    {view "`path'":`name'}"' as txt "{col 19} `where'"
+    if `rc' {
+        exit `rc'
     }
-end
-	
-mata:
-void templname()
-{
-    path = st_local("create")
-    path = pathrmsuffix(pathbasename(path)) + ".txt"
-    path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + path)
-    st_local("newpath", path)
-}    
 end
