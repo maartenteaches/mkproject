@@ -92,7 +92,7 @@ end
 rcof `"noisily mata: totest.find_file("certivy2")"' == 601
 
 //parse_dir
-local dir bench
+local directory bench
 local abbrev test
 mata:
 totest = mptools()

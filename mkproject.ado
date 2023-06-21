@@ -3,9 +3,6 @@ program define mkproject
     version 10
     syntax [name], [debug CREATE(string) query default(string) RESETDEFault] *
 	
-	local proj mkproject__class_instance
-	mata: `proj' = mkproject()
-
     if "`default'" != "" & "`resetdefault'" != "" {
         di as err "{p}Cannot specify default() and resetdefault together{p_end}"
         exit 198
@@ -18,6 +15,8 @@ program define mkproject
         di as err "{p}A name for a project cannot be specified together with the create(), query, default(), resetdefault options{p_end}"
         exit 198
     }    
+
+   	local proj mkproject__class_instance
     
     if `"`create'"' != "" {
         capture noisily Create `create', proj(`proj') `options'
@@ -35,12 +34,11 @@ program define mkproject
         if "`query'" == "" exit        
     }
     if "`query'" != "" {
-        Query, proj(`proj')
+        caputre noisily Query, proj(`proj')
         Cleanup, proj(`proj') rc(`=_rc') `debug'
         exit
     }
-    
-	capture noisily mkproject_main `namelist', `options' proj(`proj')
+    capture noisily mkproject_main `namelist', `options' proj(`proj')
 	Cleanup, proj(`proj') rc(`=_rc') `debug'	
 end
 
@@ -82,7 +80,7 @@ program define Cleanup
 	syntax, proj(string) rc(integer) [debug]
 	
     if `rc' {
-        `proj'.graceful_exit()
+        mata:`proj'.graceful_exit()
     }
     if "`debug'" == "" {
 		mata: mata drop `proj'

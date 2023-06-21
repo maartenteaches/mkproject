@@ -119,7 +119,7 @@ void mptools::parse_dir()
 	string scalar dir, abbrev
 	real scalar errcode
 	
-	dir = st_local("dir")
+	dir = st_local("directory")
 	if (dir == "") {
 		dir = pwd()
 	}

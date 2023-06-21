@@ -1,19 +1,5 @@
 args home
 
-//parse_dir()
-local dir "bench/"
-local abbrev "foo"
-mata:
-odir = pwd()
-totest = mkproject()
-totest.parse_dir()
-assert(totest.odir==odir)
-assert(pwd() == pathjoin(odir, "bench\foo\"))
-chdir("..")
-rmdir("foo")
-chdir("..")
-end
-
 //read_dir()
 mata:
 totest=mkproject()
@@ -198,7 +184,7 @@ assert(st_local("blup")=="bla")
 end
 
 // run
-local dir "bench"
+local directory "bench"
 local abbrev "test"
 local stencil "long"
 mata:
