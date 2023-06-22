@@ -70,7 +70,7 @@ void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 	string scalar orig, EOF, line
 	real scalar dh
 	
-    if (args() == 1) {
+    if (boiler == "") {
         read_defaults()
         boiler = defaults.boilerplate
     }

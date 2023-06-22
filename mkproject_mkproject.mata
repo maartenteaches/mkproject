@@ -4,7 +4,7 @@ void mkproject::run(){
     
     dir = st_local("directory")
     abbrev = st_local("abbrev")
-    stencil  = st_local("stencil")
+    stencil  = st_local("type")
 
 	parse_dir()
 	read_stencil()
