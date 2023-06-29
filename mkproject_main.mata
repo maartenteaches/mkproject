@@ -63,7 +63,6 @@ class mptools extends mpfile{
     void                             collect_header_info()
     void                             chk_header()
     void                             write_header()
-    void                             parse_dir()
     void                             header_ok()
     void                             new() // sets default for odir
 }
@@ -97,11 +96,12 @@ class mkproject extends boilerplate{
     void                             parse_sline()
 	string                scalar     getrest()
     void                             read_dir()
+    void                             parse_dir()
     void                             mk_dirs()
     void                             mk_files()
     void                             do_cmds()
     void                             new()
-    void                             run()
+	void                             run()
 }
 
 class mpquery extends mpdefaults {

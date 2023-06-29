@@ -2,15 +2,37 @@ mata:
 
 void mkproject::run(){
     
-    dir = st_local("directory")
-    abbrev = st_local("abbrev")
-    stencil  = st_local("type")
+    dir     = st_local("directory")
+    abbrev  = st_local("anything")
+    stencil = st_local("type")
 
 	parse_dir()
 	read_stencil()
 	mk_dirs()
 	mk_files()
 	do_cmds()
+}
+
+void mkproject::parse_dir()
+{
+	real scalar errcode
+	
+	if (dir == "") {
+		dir = pwd()
+	}
+	odir = pwd()
+	
+	errcode = _chdir(dir)
+	if (errcode != 0) {
+		errprintf("{p}{err}unable to change to directory " + dir + "{p_end}")
+		exit(errcode)
+	}
+	errcode = _mkdir(abbrev)
+	if (errcode != 0) {
+		errprintf("{p}{err}unable to create directory " + pathjoin(pwd(),abbrev) + "{p_end}")
+		exit(errcode)
+	}
+	chdir(abbrev)
 }
 
 string scalar mkproject::getrest(transmorphic scalar t) 

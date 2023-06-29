@@ -14,7 +14,10 @@ program define main
     
     local dir : list clean dir
     mata: fillindir()
-    qui cd "`dir'"
+    capture cd "`dir'"
+	if _rc {
+		exit
+	}
     local dirs: dir "." dirs "*"
     local files: dir "." files "*"
     foreach file of local files {

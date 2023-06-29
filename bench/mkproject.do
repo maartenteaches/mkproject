@@ -8,7 +8,18 @@ assert(totest.dirs == ("foo\" \ "foo\bar\"))
 totest.read_dir("foo/blup")
 assert(totest.dirs == ("foo\" \ "foo\bar\" \ "foo\blup\"))
 end
-
+//parse_dir
+mata:
+totest = mkproject()
+totest.dir = "bench"
+totest.abbrev = "test"
+totest.parse_dir()
+assert(strlower(pwd()) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\"))
+assert(strlower(totest.odir) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\"))
+end
+cd ..
+rmdir test
+cd ..
 //getrest()
 mata:
 t=tokeninit(" ")
@@ -68,7 +79,7 @@ assert(totest.dirs == ("docu\" \
                        "work\txt\"))
 
 assert(totest.cmds == ("qui cd work/analysis" \
- "projmanager test.stpr"))
+ `"projmanager "test.stpr""'))
 
 
 assert(totest.files== ("rlog",        "docu/research_log.md" \
@@ -108,7 +119,7 @@ assert `"`line'"'==`"// Who wrote it"'
 file read `fh' line
 assert `"`line'"'==`""'
 file read `fh' line
-assert `"`line'"'==`"version 17"'
+assert `"`line'"'==`"version `c(stata_version)'"'
 file read `fh' line
 assert `"`line'"'==`"clear all"'
 file read `fh' line
@@ -140,7 +151,7 @@ file close `fh'
 tempname fh
 file open `fh' using `"test_main.do"', read text
 file read `fh' line
-assert `"`line'"'==`"version 17"'
+assert `"`line'"'==`"version `c(stata_version)'"'
 file read `fh' line
 assert `"`line'"'==`"clear all"'
 file read `fh' line
@@ -185,7 +196,7 @@ end
 
 // run
 local directory "bench"
-local abbrev "test"
+local anything "test"
 local stencil "long"
 mata:
 odir = pwd()

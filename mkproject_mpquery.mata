@@ -27,6 +27,7 @@ string matrix mpquery::selecttype(string colvector files, string scalar where, s
     real scalar i
     string colvector lab
     string scalar path
+	string matrix toreturn
 
     path = pathjoin(pathsubsysdir(where), "m")
     selection = J(rows(files),1,.)
@@ -40,7 +41,13 @@ string matrix mpquery::selecttype(string colvector files, string scalar where, s
     }
     files = select(files, selection)
     lab = select(lab, selection)
-    return((files,lab, J(rows(files),1,where)))
+	if (rows(files) == 0) {
+		toreturn = J(0,3, "")
+	}
+	else {
+		toreturn = (files,lab, J(rows(files),1,where))
+	}
+    return(toreturn)
 }
 
 void mpquery::findfiles(string scalar what) {
@@ -50,12 +57,12 @@ void mpquery::findfiles(string scalar what) {
     path = pathjoin(pathsubsysdir("PERSONAL"), "m")
     personal = dir(path, "files", "mp_*.txt")
     personal = selecttype(personal,"PERSONAL", what)
-    
+
     path = pathjoin(pathsubsysdir("PLUS"), "m")
     plus = dir(path, "files", "mp_*.txt")
     plus = dupldrop(plus, personal[.,1])
     plus = selecttype(plus,"PLUS", what)
-    
+ 
     personal = personal \ plus
     _sort(personal,1)
     files = J(rows(personal),5,"")

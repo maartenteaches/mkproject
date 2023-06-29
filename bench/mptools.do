@@ -91,20 +91,6 @@ end
 
 rcof `"noisily mata: totest.find_file("certivy2")"' == 601
 
-//parse_dir
-local directory bench
-local abbrev test
-mata:
-totest = mptools()
-totest.parse_dir()
-assert(strlower(pwd()) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\"))
-assert(strlower(totest.odir) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\"))
-end
-cd ..
-rmdir test
-cd ..
-
-
 // graceful_exit
 mata:
 orig = pwd()

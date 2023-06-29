@@ -78,16 +78,16 @@ end
 program define mkproject_main 
 	version 10
 	syntax anything, proj(string) calling(string) ///
-           [ DIRectory(string) template(string) type(string)]
+           [ DIRectory(string) type(string)]
     
     if "`calling'" == "stencil" {
-        local abbrev `anything'
         mata: `proj' = mkproject()
-        mata:`proj'.run()
+        mata: `proj'.run()
     }
     else if "`calling'" == "boilerplate" {
         mata: `proj' = boilerplate()
         mata: `proj'.copy_boiler(`"`anything'"', "`type'")
+		doedit `"`anything'"'
     }
 end
 
