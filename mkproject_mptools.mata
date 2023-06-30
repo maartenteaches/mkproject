@@ -96,6 +96,39 @@ void mptools::parse_header(string scalar first, string scalar second)
     if (first == "<label>") {
         reading.label = second
     }
+	if (first == "<reqs>") {
+		reading.reqs = reading.reqs \ second
+	}
+}
+
+real scalar mptools::_chkreq(string scalar req)
+{
+	string rowvector parts
+	real scalar ok
+
+	ok = 1
+	parts = tokens(req)
+	if (parts[1] == "Stata") {
+		
+	}
+	else {
+		
+	}
+	return(ok)
+}
+void mptools::chkreqs()
+{
+	real scalar i, problem
+	problem = 0
+	for(i=1 ; i <= rows(reading.reqs) ; i++) {
+		if(_chkreq(reading.reqs[i])==0) {
+			errprintf("{p}failed requirement: " + reading.reqs[i] +  "{p_end}")
+			problem = 1
+		}
+	}
+	if (problem) {
+		exit(198)
+	}
 }
 
 string scalar mptools::type2ext(string scalar type)

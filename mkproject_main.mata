@@ -15,6 +15,7 @@ struct reading_file
     string scalar    sversion
     string scalar    type
     string scalar    label
+	string colvector reqs
     string scalar    fn
     real   scalar    fh
     real   scalar    lnr
@@ -60,6 +61,8 @@ class mptools extends mpfile{
     string                 scalar    find_file()
     void                             read_header()
     void                             parse_header()
+	real                   scalar    _chkreq()
+	void                             chkreqs()
     void                             collect_header_info()
     void                             chk_header()
     void                             write_header()

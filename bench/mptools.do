@@ -5,11 +5,12 @@ totest = mptools()
 fn = "bench/test_header.txt"
 totest.mpfread(fn)
 totest.read_header()
-assert(totest.reading.lnr == 5)
+assert(totest.reading.lnr == 7)
 assert(totest.fhs.get(totest.reading.fh) == "open")
 assert(totest.mpfget() == "some other text after the header")
 assert(totest.reading.label == "something to test")
 assert(totest.reading.type == "boilerplate")
+assert(totest.reading.reqs == ("Stata 15" \ "dirtree"))
 assert(totest.reading.sversion == "2.0.0")
 totest.mpfclose(totest.reading.fh)
 
