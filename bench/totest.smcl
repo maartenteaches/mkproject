@@ -4,17 +4,17 @@
 {res}{hline}
 {txt}{col 2}Name{col 16}Where{col 25}Label
 {hline}
-*{view "c:\ado\plus/m\mp_long.txt":long}{col 16}PLUS{col 25}based on (Long 2009)
+*{view "c:\ado\plus/m\mp_long.mps":long}{col 16}PLUS{col 25}based on (Long 2009)
 {hline}
 {txt}* indicates default
 {com}. boilerplate , query
 {res}{hline}
 {txt}{col 2}Name{col 16}Where{col 25}Label
 {hline}
- {view "c:\ado\plus/m\mp_ana.txt":ana}{col 16}PLUS{col 25}analysis .do file
-*{view "c:\ado\plus/m\mp_dta.txt":dta}{col 16}PLUS{col 25}data preparation
- {view "c:\ado\plus/m\mp_main.txt":main}{col 16}PLUS{col 25}main project .do file
- {view "c:\ado\plus/m\mp_rlog.txt":rlog}{col 16}PLUS{col 25}research log
+ {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 16}PLUS{col 25}analysis .do file
+*{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 16}PLUS{col 25}data preparation
+ {view "c:\ado\plus/m\mp_main.mpb":main}{col 16}PLUS{col 25}main project .do file
+ {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 16}PLUS{col 25}research log
 {hline}
 {txt}* indicates default
 {com}. log close

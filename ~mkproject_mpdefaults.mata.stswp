@@ -64,7 +64,7 @@ void mpdefaults::write_default(string scalar what, string scalar value)
 void mpdefaults::reset()
 {
     string scalar fn
-    fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.mpd")
+    fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.")
     unlink(fn)
 }
 
