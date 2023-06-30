@@ -41,7 +41,20 @@ assert(fget(fh)==`"bla"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
-unlink(path)
 unlink("bench/foo.do")
     
+end
+
+
+// remove()
+mata:
+totest.write_default("boilerplate", "foo")
+totest.read_defaults()
+assert(totest.defaults.boilerplate=="foo")
+assert(totest.defaults.stencil=="long")
+totest.remove("foo", "boilerplate")
+assert(!fileexists(path))
+totest.read_defaults()
+assert(totest.defaults.boilerplate=="dta")
+assert(totest.defaults.stencil=="long")
 end

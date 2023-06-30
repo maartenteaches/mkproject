@@ -113,13 +113,13 @@ string scalar mptools::type2ext(string scalar type)
 	return(extension)
 }
 
-string scalar mptools::find_file(string scalar what, string scalar type)
+string scalar mptools::find_file(string scalar what, string scalar type, | string scalar plus)
 {
     string scalar path , extension
 
     extension = type2ext(type)
     path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + what + extension)
-    if (!fileexists(path)) {
+    if (!fileexists(path) | plus != "") {
         path = pathjoin(pathsubsysdir("PLUS"), "m/mp_" + what + extension) 
         if (!fileexists(path)) {
             errprintf("{p}" + type + " " +  what + " cannot be found{p_end}")

@@ -93,7 +93,9 @@ fput(fh, "</header>")
 fclose(fh)
 
 true = strlower(pathjoin(pathsubsysdir("PERSONAL"), "m\mp_certify2.mpb"))
+true2 = strlower(pathjoin(pathsubsysdir("PLUS"), "m\mp_certify2.mpb"))
 assert(strlower(totest.find_file("certify2", "boilerplate")) == true)
+assert(strlower(totest.find_file("certify2", "boilerplate", "PLUS")) == true2)
 unlink(fn)
 unlink(fn2)
 end

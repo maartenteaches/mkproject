@@ -1,7 +1,8 @@
 // read_defaults
 mata:
 totest = mpdefaults()
-totest.reset()
+totest.reset("boilerplate")
+totest.reset("stencil")
 totest.read_defaults()
 assert(totest.defaults.stencil == "long")
 assert(totest.defaults.boilerplate== "dta")
@@ -28,6 +29,14 @@ assert(totest.defaults.stencil == "test")
 assert(totest.defaults.boilerplate == "dta")
 end
 
+//read_defaults plus
+mata:
+totest.read_defaults("PLUS")
+assert(totest.defaults.stencil == "long")
+assert(totest.defaults.boilerplate== "dta")
+assert(totest.fhs.get(totest.reading.fh) == "closed")
+assert(totest.reading.open == 0)
+end
 
 //reset
 mata:
@@ -35,7 +44,7 @@ totest = mpdefaults()
 totest.read_defaults()
 assert(totest.defaults.stencil == "test")
 assert(totest.defaults.boilerplate == "dta")
-totest.reset()
+totest.reset("stencil")
 totest.read_defaults()
 assert(totest.defaults.stencil == "long")
 assert(totest.defaults.boilerplate== "dta")

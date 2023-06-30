@@ -126,10 +126,11 @@ class mpquery extends mpdefaults {
     void                            new()
 }
 
-class mpcreate extends mptools {
+class mpcreate extends mpdefaults {
     string                scalar    newname()
     void                            chk_file()
     void                            create()
+	void                            remove()
     void                            header_defaults()
 }
 end

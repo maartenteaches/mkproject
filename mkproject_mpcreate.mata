@@ -78,4 +78,31 @@ string scalar mpcreate::newname(string scalar path, string scalar what)
     }
     return(newpath)
 } 
+
+void mpcreate::remove(string scalar what, string scalar type)
+{
+	string scalar fn, ext
+	
+	ext = type2ext(type)
+	fn = "m\mp_" + what + ext
+	
+	fn = pathjoin(pathsubsysdir("PERSONAL"), fn)
+	if (!fileexists(fn)) {
+		errprintf("{p}" + type + " " + what + " not found{p_end}")
+		exit(601)
+	}
+	read_defaults()
+	if (type == "boilerplate") {
+		if (defaults.boilerplate == what) {
+			reset(type)
+		}
+ 	}
+	else if (type == "stencil") {
+		if (defaults.stencil == what) {
+			reset(type)
+		}
+	}
+	unlink(fn)
+}
+
 end

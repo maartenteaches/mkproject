@@ -1,7 +1,7 @@
 mata:
 mata set matastrict on
 
-void mpdefaults::read_defaults()
+void mpdefaults::read_defaults(| string scalar plus)
 {
     string scalar fn, EOF, line, first, second
     transmorphic scalar t
@@ -9,7 +9,7 @@ void mpdefaults::read_defaults()
     EOF = J(0,0,"")
     t = tokeninit(" ", "", "<>")
     
-    fn = find_file("defaults", "default")
+	fn = find_file("defaults", "default", plus)
     mpfread(fn)
  
     read_header("defaults")
@@ -61,11 +61,23 @@ void mpdefaults::write_default(string scalar what, string scalar value)
     mpfclose(fh)
 }
 
-void mpdefaults::reset()
+void mpdefaults::reset(string scalar what)
 {
-    string scalar fn
-    fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.mpd")
-    unlink(fn)
+	string scalar def
+
+    read_defaults("PLUS")
+	if (what == "boilerplate") {
+		def = defaults.boilerplate
+	}
+	else if (what == "stencil") {
+		def = defaults.stencil
+	}
+	else {
+		errprintf("{p}only boilerplate or stencil allowed in reset(){p_end}")
+		exit(198)
+	}
+	
+	write_default(what, def)
 }
 
 end

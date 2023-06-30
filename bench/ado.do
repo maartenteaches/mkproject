@@ -52,7 +52,7 @@ file read `fh' line
 assert r(eof)==1
 file close `fh'
 
-//create
+//create and remove
 mata:
 unlink("bench/testcreate.txt")
 fh = fopen("bench/testcreate.txt", "w")
@@ -76,7 +76,11 @@ assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"clear all"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
-unlink(file)
+end
+
+boilerplate, remove("testcreate")
+mata: 
+assert(!fileexists(file))
 end
 
 mata:
@@ -105,10 +109,13 @@ assert(fget(fh)==`"<dir> main"')
 assert(fget(fh)==`"<cmd> dirtree"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
-unlink(file)
 unlink("bench/testcreate.txt")
 end
 
+mkproject, remove("testcreate")
+mata: 
+assert(!fileexists(file))
+end
 
 //default resetdefault
 boilerplate, default(ana)
@@ -126,9 +133,20 @@ assert(fget(fh)==`"<boilerplate> ana"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 end
-boilerplate, resetdef
+boilerplate, resetdef 
 mata:
-assert(!fileexists(file))
+file = pathjoin(pathsubsysdir("PERSONAL"), "m")
+file = pathjoin(file,"mp_defaults.mpd")
+fh = fopen(file, "r")
+assert(fget(fh)==`"<header>"')
+assert(fget(fh)==`"<mkproject> defaults"')
+assert(fget(fh)==`"<version> 2.0.0"')
+assert(fget(fh)==`"<label> user specified defaults"')
+assert(fget(fh)==`"</header>"')
+assert(fget(fh)==`"<stencil> long"')
+assert(fget(fh)==`"<boilerplate> dta"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
 end
 
 cleanup bench/totest
