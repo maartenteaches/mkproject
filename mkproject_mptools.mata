@@ -104,15 +104,46 @@ void mptools::parse_header(string scalar first, string scalar second)
 real scalar mptools::_chkreq(string scalar req)
 {
 	string rowvector parts
-	real scalar ok
+	real scalar ok, totest
 
 	ok = 1
 	parts = tokens(req)
 	if (parts[1] == "Stata") {
-		
+		if (cols(parts) !=2) {
+			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
+			errprintf(`"{p}The correct form of such a requirement is "<reqs> Stata #", where # is a number{p_end}"')
+			exit(198)			
+		}
+		totest = strtoreal(parts[2])
+		if (totest == . ) {
+			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
+			errprintf(`"{p}The correct form of such a requirement is "<reqs> Stata #", where # is a number{p_end}"')
+			exit(198)
+		}
+		ok = (st_numscalar("c(stata_version)") >= totest)
+	}
+	else if (parts[1] == "git") {
+		if (cols(parts) !=1) {
+			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
+			errprintf(`"{p}The correct form of such a requirement is "<reqs> git"{p_end}"')
+			exit(198)			
+		}
+		ok = -1
 	}
 	else {
-		
+		if (cols(parts) !=1) {
+			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
+			errprintf(`"{p}The correct form of such a requirement is "<reqs> cmd", where cmd is the command that should exist{p_end}"')
+			exit(198)			
+		}
+		stata("capture which " + parts[1]) 
+		totest = st_numscalar("c(rc)")
+		if (!(totest ==0 | totest == 111)) {
+			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
+			errprintf(`"{p}The correct form of such a requirement is "<reqs> git"{p_end}"')
+			exit(198)			
+		}
+		ok = (totest == 0)
 	}
 	return(ok)
 }

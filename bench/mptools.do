@@ -140,3 +140,25 @@ fclose(fh)
 unlink(fn)
 end
 
+//_chkreq()
+mata:
+totest = mptools()
+assert(totest._chkreq("Stata 1") == 1)
+assert(totest._chkreq("Stata 500") == 0)
+assert(totest._chkreq("git") == -1)
+assert(totest._chkreq("dirtree")==1)
+end
+
+//chkreqs()
+
+mata:
+totest = mptools()
+fn = "bench/test_header.txt"
+totest.mpfread(fn)
+totest.read_header()
+totest.mpfclose(totest.reading.fh)
+totest.chkreqs()
+totest.reading.reqs = ("foo" \ "bar")
+end
+capture noisily mata: totest.chkreqs()
+assert(_rc == 198)
