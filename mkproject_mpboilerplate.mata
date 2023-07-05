@@ -83,6 +83,7 @@ void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 	
 	mpfread(orig)
     read_header("boilerplate")
+	chkreqs()
 	dh = mpfopen(dest, "w")
 	
 	while ((line=mpfget())!=EOF) {

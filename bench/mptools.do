@@ -150,7 +150,6 @@ assert(totest._chkreq("dirtree")==1)
 end
 
 //chkreqs()
-
 mata:
 totest = mptools()
 fn = "bench/test_header.txt"

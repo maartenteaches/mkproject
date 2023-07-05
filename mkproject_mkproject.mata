@@ -83,6 +83,7 @@ void mkproject::read_stencil()
 	
 	mpfread(fn)
 	read_header("stencil")
+	chkreqs()
 	while ((line=mpfget())!=EOF) {
 		parse_sline(line)
 	}
