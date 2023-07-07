@@ -21,12 +21,15 @@ void copyfile(string scalar orig, string scalar dest)
 dir = pwd()
 bench = pathjoin(dir, "bench")
 chdir(pathjoin(pathsubsysdir("PLUS"), "m"))
-files = dir(".", "files", "mp*.txt")
+files = dir(".", "files", "mp*.mps") \ 
+        dir(".", "files", "mp*.mpb")
 for(i=1; i<=rows(files); i++) {
 	unlink(files[i])
 }
 chdir(pathjoin(pathsubsysdir("PERSONAL"), "m"))
-files = dir(".", "files", "mp*.txt")
+files = dir(".", "files", "mp*.mps") \ 
+        dir(".", "files", "mp*.mpb")
+
 for(i=1; i<=rows(files); i++) {
 	path = pathjoin(bench,files[i])
 	unlink(path)
@@ -35,7 +38,8 @@ for(i=1; i<=rows(files); i++) {
 }
 chdir(dir)
 
-files = "mp_long.mps", 
+files = "mp_long.mps",
+        "mp_longt.mps",
         "mp_ana.mpb",
         "mp_defaults.mpd",
         "mp_main.mpb",

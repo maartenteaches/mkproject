@@ -110,11 +110,12 @@ class mkproject extends boilerplate{
 
 class mpquery extends mpdefaults {
     string                matrix    files
+	string                matrix    reqlist
     string                scalar    cname
     string                scalar    cwhere
     string                scalar    clabel
     
-    void                            findfiles()
+    string                matrix    findfiles()
     string                colvector dupldrop()
     string                matrix    getlab()
     void                            file2name()
@@ -125,6 +126,9 @@ class mpquery extends mpdefaults {
     void                            print_footer()
     void                            collect_info()
     void                            print_table()
+	void                            collect_reqs()
+	void                            multilinelab()
+	string                colvector mpparts()
     void                            run()
     void                            new()
 }

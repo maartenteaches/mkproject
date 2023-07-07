@@ -20,7 +20,8 @@ totest = mpquery()
 path = pathjoin(pathsubsysdir("PLUS"), "m")        
 
 files = dir(path, "files", "mp_*.mps")
-assert(totest.getlab(files, "PLUS", "stencil") == (   "mp_long.mps",   "based on (Long 2009)",                   "PLUS"))
+assert(totest.getlab(files, "PLUS", "stencil") == ( "mp_long.mps",  "based on (Long 2009)", "PLUS" \
+                                                    "mp_longt.mps", "based on (Long 2009)", "PLUS"    ))
 
 
 files = dir(path, "files", "mp_*.mpb")
@@ -57,6 +58,7 @@ fclose(fh)
 
 totest.findfiles("stencil")
 assert(totest.files == ("", "mp_long.mps"   , "", "PLUS"    , "based on (Long 2009)" \
+                        "", "mp_longt.mps"  , "", "PLUS"    , "based on (Long 2009)" \
                         "", "mp_totest1.mps", "", "PERSONAL", "testing testing" ))
 end
 
@@ -64,6 +66,7 @@ end
 mata:
 totest.isdefault("stencil")
 assert(totest.files == ("*", "mp_long.mps"   , "", "PLUS"    , "based on (Long 2009)" \
+                        " ", "mp_longt.mps"   , "", "PLUS"   , "based on (Long 2009)" \  
                         " ", "mp_totest1.mps", "", "PERSONAL", "testing testing" ))
 end
 
@@ -71,7 +74,8 @@ end
 //file2name
 mata:
 totest.file2name("stencil")
-assert(totest.files == ("*", "mp_long.mps"   , "long", "PLUS"    , "based on (Long 2009)" \
+assert(totest.files == ("*", "mp_long.mps"   , "long",  "PLUS"    , "based on (Long 2009)" \
+                        " ", "mp_longt.mps"  , "longt", "PLUS"    , "based on (Long 2009)" \
                         " ", "mp_totest1.mps", "totest1", "PERSONAL", "testing testing" ))
 end
 
@@ -79,9 +83,11 @@ end
 mata:
 totest.file2path()
 path1 = pathjoin(pathsubsysdir("PLUS"), "m\mp_long.mps")
-path2 = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_totest1.mps")
+path2 = pathjoin(pathsubsysdir("PLUS"), "m\mp_longt.mps")
+path3 = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_totest1.mps")
 assert(totest.files == ("*", path1   , "long", "PLUS"    , "based on (Long 2009)" \
-                        " ", path2, "totest1", "PERSONAL", "testing testing" ))
+                        " ", path2   , "longt", "PLUS"    , "based on (Long 2009)" \
+                        " ", path3, "totest1", "PERSONAL", "testing testing" ))
 end
 
 //collect_info()
@@ -89,7 +95,8 @@ mata:
 totest = mpquery()
 totest.collect_info("stencil")
 assert(totest.files == ("*", path1   , "long", "PLUS"    , "based on (Long 2009)" \
-                        " ", path2, "totest1", "PERSONAL", "testing testing" ))
+                        " ", path2   , "longt", "PLUS"    , "based on (Long 2009)" \
+                        " ", path3, "totest1", "PERSONAL", "testing testing" ))
 end
 
 //cleanup
@@ -107,5 +114,6 @@ end
 mata:
 totest = mpquery()
 totest.collect_info("boilerplate")
-totest.print_table()
+totest.print_table("basic")
+totest.print_table("reqs")
 end

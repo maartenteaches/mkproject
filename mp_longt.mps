@@ -1,0 +1,24 @@
+<header>
+<mkproject> stencil
+<version> 2.0.0
+<label> based on (Long 2009)
+<reqs> dirtree
+<reqs> Stata 14
+</header>
+
+<dir> docu
+<dir> posted
+<dir> posted/data
+<dir> posted/analysis
+<dir> posted/txt
+<dir> work
+<dir> work/analysis
+<dir> work/txt
+
+<file> rlog docu/research_log.md
+<file> main work/analysis/<abbrev>_main.do
+<file> dta  work/analysis/<abbrev>_dta01.do
+<file> ana  work/analysis/<abbrev>_ana01.do
+
+<cmd> dirtree
+

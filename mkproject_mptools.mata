@@ -108,6 +108,7 @@ real scalar mptools::_chkreq(string scalar req)
 
 	ok = 1
 	parts = tokens(req)
+
 	if (parts[1] == "Stata") {
 		if (cols(parts) !=2) {
 			errprintf(`"{p}You specified a requirement as "<reqs> "' + req + `""{p_end}"')
