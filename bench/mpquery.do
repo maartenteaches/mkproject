@@ -73,7 +73,7 @@ totest.mpfclose(totest.reading.fh)
 out = totest.collect_reqs()
 
 true = J( 2, 8 , "")
-true[1, 1] = `"req"'
+true[1, 1] = `"req1"'
 true[1, 2] = `""'
 true[1, 3] = `""'
 true[1, 4] = `""'
@@ -107,7 +107,7 @@ true[1, 5] = `"PLUS"'
 true[1, 6] = `"based on (Long 2009)"'
 true[1, 7] = `""'
 true[1, 8] = `""'
-true[2, 1] = `"req"'
+true[2, 1] = `"req1"'
 true[2, 2] = `""'
 true[2, 3] = `""'
 true[2, 4] = `""'
@@ -157,7 +157,7 @@ true[2, 5] = `"PLUS"'
 true[2, 6] = `"based on (Long 2009)"'
 true[2, 7] = `""'
 true[2, 8] = `""'
-true[3, 1] = `"req"'
+true[3, 1] = `"req1"'
 true[3, 2] = `" "'
 true[3, 3] = `""'
 true[3, 4] = `""'
@@ -206,7 +206,7 @@ true[2, 5] = `"PLUS"'
 true[2, 6] = `"based on (Long 2009)"'
 true[2, 7] = `""'
 true[2, 8] = `""'
-true[3, 1] = `"req"'
+true[3, 1] = `"req1"'
 true[3, 2] = `" "'
 true[3, 3] = `""'
 true[3, 4] = `""'
@@ -255,7 +255,7 @@ true[2, 5] = `"PLUS"'
 true[2, 6] = `"based on (Long 2009)"'
 true[2, 7] = `""'
 true[2, 8] = `""'
-true[3, 1] = `"req"'
+true[3, 1] = `"req1"'
 true[3, 2] = `" "'
 true[3, 3] = `""'
 true[3, 4] = `""'
@@ -303,7 +303,6 @@ end
 //print
 mata:
 totest = mpquery()
-totest.collect_info("boilerplate")
-totest.print_table("basic")
-totest.print_table("reqs")
+totest.collect_info("stencil")
+totest.print_table()
 end

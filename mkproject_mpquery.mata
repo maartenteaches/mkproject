@@ -11,6 +11,7 @@ local req      = 8
 linetypes:
   main 
   lab_cnt
+  req1
   req
 */
 
@@ -126,6 +127,7 @@ string matrix mpquery::collect_reqs()
 	toreturn = J(rows(reading.reqs),8, "")
 	toreturn[.,`linetype'] = J(rows(reading.reqs), 1, "req")
 	for(i=1; i<= rows(reading.reqs); i++) {
+		if (i==1) toreturn[1,`linetype'] = "req1"
 		chk = _chkreq(reading.reqs[i])
 		toreturn[i,`met'] = (chk == -1 ? "/" : (chk == 0 ? "-" : "+"))
 		toreturn[i,`req'] = reading.reqs[i]
@@ -187,75 +189,76 @@ void mpquery::new()
     cname  = "{col 2}"
     cwhere = "{col 16}"
     clabel = "{col 25}"
+	creq   = "{col 4}"
 	llabel = st_numscalar("c(linesize)") - 24
 }
 
-void mpquery::print_header(string scalar basicreq)
+void mpquery::print_header()
 {
     string scalar toprint
    
-    if (basicreq == "basic") {
-		toprint = "{txt}" + cname + 
-				  "Name" + cwhere + 
-				  "Where" + clabel + 
-				  "Label\n"
-	}
-	else if (basicreq == "reqs") {
-		toprint = "{txt}" + cname +
-		          "Name" + cwhere + 
-				  "Requirement\n"
-	}
-   
+	toprint = "{txt}" + cname + 
+			  "Name" + cwhere + 
+			  "Where" + clabel + 
+			  "Label\n"
     printf("{hline}\n")
     printf(toprint)
     printf("{hline}\n")
 }
 
-void mpquery::print_footer(string scalar basicreq)
+void mpquery::print_footer()
 {
 	printf("{hline}\n")
-	if (basicreq == "basic") {
-		printf("{txt}* indicates default\n")
-	}
-	else {
+	printf("{txt}* indicates default\n")
+	if (anyof(files[.,`linetype'], "req1")) {
 		printf("{txt}+ indicates requirement met\n")
 		printf("{txt}- indicates requirement not met\n")
 		printf("{txt}/ indicates requirement not checked\n")
 	}
 }
 
-void mpquery::print_line(real scalar i, string scalar basicreq)
+void mpquery::print_line(real scalar i)
 {
-    string scalar toprint, lab
+    string scalar toprint
 	string matrix reqlist
 
-	if (basicreq == "basic") {
-		toprint = files[i,1] + `"{view ""' + files[i,2] + `"":"' +
-				  files[i,3] + "}" + cwhere + files [i,4] + 
-				  clabel + lab + "\n"
+	if (files[i,`linetype']== "main") {
+		toprint = "{txt}" + files[i,`default'] + `"{view ""' + files[i,`path'] +
+		          `"":"' + files[i,`name'] + "}" + cwhere + files [i,`where'] + 
+				  clabel + files[i,`lab'] + "\n"		
 	}
-	else if (basicreq == "reqs") {
-		toprint = "{txt}" + cname + reqlist[i,1] + cwhere + reqlist[i,2]
-		if (strlower(reqlist[i,3])== "git") {
-			toprint = toprint + 
-			          `"{browse "https://git-scm.com/":git}"'
-		}
-		else if (strmatch(strlower(reqlist[i,3]), "stata *")) {
-			toprint = toprint + reqlist[i,3]
-		}
-		else if (reqlist[i,2]== "-") {
-			toprint = toprint + 
-			          "{search " + reqlist[i,3] + "}"
-		}
-		else if (reqlist[i,2] == "+") {
-			toprint = toprint +
-			          "{help " + reqlist[i,3]+ "}"
-		}
-		toprint = toprint + "\n"
+	else if(files[i, `linetype'] == "lab_cnt") {
+		toprint = "{txt}" + clabel + files[i,`lab'] + "\n"
 	}
+	else if(files[i, `linetype'] == "req1") {
+		toprint = "{txt}" + creq + "requires:" + cwhere + files[i,`met'] + 
+		          " "  +parse_req(i) + "\n"
+ 	}
+	else if(files[i,`linetype'] == "req") {
+		toprint = "{txt}" + cwhere + files[i, `met'] + " " + parse_req(i) + "\n"
+	}
+
 	printf(toprint)
 }
 
+string scalar mpquery::parse_req(real scalar i)
+{
+	string scalar toreturn
+	
+	if (strlower(files[i,`req'])== "git") {
+		toreturn = `"{browse "https://git-scm.com/":git}"'
+	}
+	else if (strmatch(strlower(files[i,`req']), "stata *")) {
+		toreturn = files[i,`req']
+	}
+	else if (files[i,`met']== "-") {
+		toreturn = "{search " + files[i,`req'] + "}"
+	}
+	else if (files[i,`met'] == "+") {
+		toreturn = "{help " + files[i,`req']+ "}"
+	}
+	return(toreturn)	
+}
 
 
 void mpquery::print_table()

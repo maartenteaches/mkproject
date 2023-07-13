@@ -113,6 +113,7 @@ class mpquery extends mpdefaults {
     string                scalar    cname
     string                scalar    cwhere
     string                scalar    clabel
+	string                scalar    creq
 	real                  scalar    llabel
     
     string                matrix    findfiles()
@@ -126,6 +127,7 @@ class mpquery extends mpdefaults {
     void                            print_footer()
     void                            collect_info()
     void                            print_table()
+	string                scalar    parse_req()
 	string                matrix    collect_reqs()
 	void                            multilinelab()
 	string                colvector mpparts()
