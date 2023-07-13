@@ -25,7 +25,7 @@ void mpquery::collect_info(string scalar what)
 	files = J(0,8,"")
 	for(i=1; i <= rows(toparse) ; i++) {
 		temp = fromheader(what, toparse[i, .] )
-		files \ temp
+		files = files \ temp
 	}
 	isdefault(what)
 	file2name(what)
