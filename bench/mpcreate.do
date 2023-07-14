@@ -35,9 +35,34 @@ end
 // chk_file
 mata:
 totest = mpcreate()
-totest.chk_file("<file> dta somename.do")
+
+basefn = pathjoin(pathsubsysdir("PERSONAL"), "m")
+fn1 = pathjoin(basefn,"mp_test1.mpb")
+fn2 = pathjoin(basefn,"mp_test2.mpb")
+fh1 = fopen(fn1, "w")
+fput(fh1, "<header>")
+fput(fh1, "<mkproject> boilerplate")
+fput(fh1, "<req> Stata 18")
+fput(fh1, "<req> smclpres")
+fput(fh1, "</header>")
+fclose(fh1)
+
+fh2 = fopen(fn2, "w")
+fput(fh2, "<header>")
+fput(fh2, "<mkproject> boilerplate")
+fput(fh2, "</header>")
+fclose(fh2)
+
+toreturn = "git" \ "dirtree"
+sversion = 14
+
+totest.chk_file("<file> test1 somename.do", toreturn, sversion)
+toreturn
+sversion
+unlink(fn1)
+unlink(fn2)
 end
-rcof `"noisily mata: totest.chk_file("<file> bar somename.do")"' == 601
+
 
 //newname
 local create bar.do
