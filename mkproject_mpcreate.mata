@@ -19,6 +19,7 @@ void mpcreate::create(string scalar what)
 {
     string scalar fn_in, fn_out, EOF, line
     real scalar fh_out
+	string colvector reqs
     
     fn_in = st_local("create")
     fn_out = newname(fn_in, what)
@@ -28,9 +29,11 @@ void mpcreate::create(string scalar what)
         errprintf("{p}file " + fn_in + " not found {p_end}")
         exit(601)
     }
+	reqs = integrate_reqs()
     mpfread(fn_in)
     read_header()
     header_defaults(what)
+	reading.reqs = reqs
     fh_out = mpfopen(fn_out, "w")
     write_header(fh_out)
     
@@ -40,25 +43,85 @@ void mpcreate::create(string scalar what)
     }    
         
     while((line=mpfget())!=EOF) {
-        chk_file(line)
         mpfput(fh_out, line)
     }
     mpfclose(reading.fh)
     mpfclose(fh_out)
 }
 
-void mpcreate::chk_file(string scalar line)
+string colvector mpcreate::integrate_reqs(string scalar fn)
+{
+	string colvector toreturn
+	string scalar EOF, line, s
+	real scalar sversion
+	real colvector isstata
+
+	EOF = J(0,0,"")
+	mpfread(fn)
+    read_header()
+	if (reading.open == 0) {
+		mpfread(fn)
+	}
+	else {
+		toreturn = reading.reqs
+		isstata = strmatch(strlower(toreturn), "stata *")
+		if(any(isstata)) {
+			s = select(toreturn,isstata)
+			sversion = strtoreal(tokens(s)[2])
+			toreturn = select(toreturn, !isstata)
+		}
+	}
+		
+	while((line=mpfget())!=EOF) {
+        chk_file_reqs(line, toreturn, sversion)
+    }
+    mpfclose(reading.fh)
+	
+	if (sversion != .) {
+		toreturn = ("Stata " + strofreal(sversion, "%9.1f")) \ toreturn
+	}
+	
+	return(toreturn)
+}
+
+void mpcreate::chk_file(string scalar line, 
+                        string colvector toreturn, 
+						string scalar sversion)
 {
     transmorphic scalar t
-    string scalar garbage, first, second
-    
+    string scalar fn, first, second
+    real scalar i
+	
     t = tokeninit()
     tokenset(t, line)
     first = tokenget(t)
     if (first == "<file>") {
         second = tokenget(t)
-        garbage = find_file(second, "boilerplate")
+        fn = find_file(second, "boilerplate")
+		mpfread(fn)
+		read_header()
+		if (reading.open == 1) {
+			mpfclose(reading.fh)
+		}
+		for(i=1;i<=rows(reading.reqs); i++) {
+			parse_req_line(toreturn,reading.reqs[i],sversion)
+		}
     }
+}
+
+void mpcreate::parse_req_line(string colvector toreturn, 
+                              string scalar req, 
+							  real scalar sversion)
+{
+	real scalar newsversion
+	
+	if (strmatch(strlower(req), "stata *")) {
+		newsversion = strtoreal(tokens(req)[2])
+		sversion = max((sversion, newsversion))
+	}
+	else if (!anyof(toreturn, req)){
+		toreturn = toreturn \ req
+	}
 }
 
 string scalar mpcreate::newname(string scalar path, string scalar what)

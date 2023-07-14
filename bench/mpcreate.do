@@ -1,3 +1,37 @@
+// parse_req_line()
+mata:
+totest = mpcreate()
+toreturn = "smclpres" \
+		   "git"
+sversion = 13	
+totest.parse_req_line(toreturn, "dirtree", sversion)
+
+true = J(3,1,"")
+true[1,1] = "smclpres"
+true[2,1] = "git"
+true[3,1] = "dirtree"	   
+assert(toreturn==true)
+assert(sversion==13)
+
+totest.parse_req_line(toreturn, "git", sversion)
+
+true = J(3,1,"")
+true[1,1] = "smclpres"
+true[2,1] = "git"
+true[3,1] = "dirtree"	   
+assert(toreturn==true)
+assert(sversion==13)
+
+totest.parse_req_line(toreturn, "Stata 15", sversion)
+
+true = J(3,1,"")
+true[1,1] = "smclpres"
+true[2,1] = "git"
+true[3,1] = "dirtree"	   
+assert(toreturn==true)
+assert(sversion==15)
+end
+
 // chk_file
 mata:
 totest = mpcreate()

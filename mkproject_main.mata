@@ -141,6 +141,8 @@ class mpcreate extends mpdefaults {
     void                            create()
 	void                            remove()
     void                            header_defaults()
+	string                colvector integrate_reqs()
+	void                            parse_req_line()
 }
 end
 
