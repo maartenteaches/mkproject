@@ -3,10 +3,17 @@ mata set matastrict on
 
 void mptools::write_header(real scalar fh )
 {
+	real scalar i
+	
 	mpfput(fh, "<header>")
 	mpfput(fh, "<mkproject> " + reading.type)
 	mpfput(fh, "<version> " + invtokens(strofreal(reading.fversion), "."))
 	mpfput(fh, "<label> " + reading.label)
+	
+	for (i = 1 ; i<=rows(reading.reqs); i++) {
+		mpfput(fh, "<reqs> " + reading.reqs[i])
+	}
+	
 	mpfput(fh, "</header>")
 }
 

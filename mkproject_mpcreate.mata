@@ -29,7 +29,7 @@ void mpcreate::create(string scalar what)
         errprintf("{p}file " + fn_in + " not found {p_end}")
         exit(601)
     }
-	reqs = integrate_reqs()
+	reqs = integrate_reqs(fn_in)
     mpfread(fn_in)
     read_header()
     header_defaults(what)

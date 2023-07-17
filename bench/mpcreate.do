@@ -50,10 +50,12 @@ fn1 = pathjoin(basefn,"mp_test1.mpb")
 fn2 = pathjoin(basefn,"mp_test2.mpb")
 fn3 = pathjoin(basefn,"mp_test1.mps")
 fn4 = pathjoin(basefn,"mp_test2.mps")
+fn5 = "bench/test3.do"
 unlink(fn1)
 unlink(fn2)
 unlink(fn3)
 unlink(fn4)
+unlink(fn5)
 end
 
 mata:
@@ -132,15 +134,6 @@ true[2,1] = "smclpres"
 assert(toreturn == true)
 end
 
-// cleanup
-mata:
-unlink(fn1)
-unlink(fn2)
-unlink(fn3)
-unlink(fn4)
-end
-
-
 //newname
 local create bar.do
 mata:
@@ -150,17 +143,21 @@ assert(totest.newname("bar.do", "stencil") == path)
 end
 
 //create()
-local create bench/foo.do
+local create bench/test3.do
 local replace replace
-mata:
-fn = "bench/foo.do"
-unlink(fn)
-fh = fopen(fn,"w")
-fput(fh, "bla")
-fclose(fh)
 
-path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_foo.mpb")
-unlink(path)
+mata:
+fh1 = fopen(fn5, "w")
+fput(fh1, "<header>")
+fput(fh1, "<mkproject> boilerplate")
+fput(fh1, "<label> minimalist boilerplate")
+fput(fh1, "<reqs> Stata 18")
+fput(fh1, "<reqs> smclpres")
+fput(fh1, "</header>")
+fput(fh1, "clear all")
+fclose(fh1)
+
+path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_test3.mpb")
 totest = mpcreate()
 totest.create("boilerplate")
 
@@ -178,6 +175,17 @@ fclose(fh)
 
 unlink("bench/foo.do")
     
+end
+
+
+// cleanup
+mata:
+unlink(fn1)
+unlink(fn2)
+unlink(fn3)
+unlink(fn4)
+unlink(fn5)
+unlink(pathjoin(pathsubsysdir("PERSONAL"), "m\mp_test3.mpb"))
 end
 
 
