@@ -53,16 +53,14 @@ string colvector mpcreate::integrate_reqs(string scalar fn)
 {
 	string colvector toreturn
 	string scalar EOF, line, s
-	real scalar sversion
+	real scalar sversion, fh
 	real colvector isstata
 
 	EOF = J(0,0,"")
 	mpfread(fn)
     read_header()
-	if (reading.open == 0) {
-		mpfread(fn)
-	}
-	else {
+	if (reading.open == 1) {
+		mpfclose(reading.fh)
 		toreturn = reading.reqs
 		isstata = strmatch(strlower(toreturn), "stata *")
 		if(any(isstata)) {
@@ -71,22 +69,23 @@ string colvector mpcreate::integrate_reqs(string scalar fn)
 			toreturn = select(toreturn, !isstata)
 		}
 	}
-		
-	while((line=mpfget())!=EOF) {
-        chk_file_reqs(line, toreturn, sversion)
+	
+	if (toreturn == J(0,0,"")) toreturn = J(0,1,"")
+	fh = fopen(fn, "r")
+	while((line=fget(fh))!=EOF) {
+        chk_file(line, toreturn, sversion)
     }
-    mpfclose(reading.fh)
+    fclose(fh)
 	
 	if (sversion != .) {
 		toreturn = ("Stata " + strofreal(sversion, "%9.1f")) \ toreturn
 	}
-	
 	return(toreturn)
 }
 
 void mpcreate::chk_file(string scalar line, 
                         string colvector toreturn, 
-						string scalar sversion)
+						real scalar sversion)
 {
     transmorphic scalar t
     string scalar fn, first, second
