@@ -71,11 +71,11 @@ string colvector mpcreate::integrate_reqs(string scalar fn)
 	}
 	
 	if (toreturn == J(0,0,"")) toreturn = J(0,1,"")
-	fh = fopen(fn, "r")
+	fh = mpfopen(fn, "r")
 	while((line=fget(fh))!=EOF) {
         chk_file(line, toreturn, sversion)
     }
-    fclose(fh)
+    mpfclose(fh)
 	
 	if (sversion != .) {
 		toreturn = ("Stata " + strofreal(sversion, "%9.1f")) \ toreturn

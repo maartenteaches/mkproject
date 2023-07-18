@@ -276,6 +276,6 @@ void mpquery::print_table()
 void mpquery::run(string scalar what)
 {
     collect_info(what)
-    print_table("basic")
+    print_table()
 }
 end

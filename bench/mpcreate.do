@@ -51,6 +51,7 @@ fn2 = pathjoin(basefn,"mp_test2.mpb")
 fn3 = pathjoin(basefn,"mp_test1.mps")
 fn4 = pathjoin(basefn,"mp_test2.mps")
 fn5 = "bench/test3.do"
+fn6 = pathjoin(basefn,"mp_test3.mpb")
 unlink(fn1)
 unlink(fn2)
 unlink(fn3)
@@ -167,14 +168,16 @@ fh = fopen(path, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> boilerplate"')
 assert(fget(fh)==`"<version> 2.0.0"')
-assert(fget(fh)==`"<label> "')
+assert(fget(fh)==`"<label> minimalist boilerplate"')
+assert(fget(fh)==`"<reqs> Stata 18.0"')
+assert(fget(fh)==`"<reqs> smclpres"')
 assert(fget(fh)==`"</header>"')
-assert(fget(fh)==`"bla"')
+assert(fget(fh)==`"clear all"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
-unlink("bench/foo.do")
-    
+
+//stencil and inherrit some reqs  
 end
 
 
@@ -185,18 +188,17 @@ unlink(fn2)
 unlink(fn3)
 unlink(fn4)
 unlink(fn5)
-unlink(pathjoin(pathsubsysdir("PERSONAL"), "m\mp_test3.mpb"))
 end
 
 
 // remove()
 mata:
-totest.write_default("boilerplate", "foo")
+totest.write_default("boilerplate", "test3")
 totest.read_defaults()
-assert(totest.defaults.boilerplate=="foo")
+assert(totest.defaults.boilerplate=="test3")
 assert(totest.defaults.stencil=="long")
-totest.remove("foo", "boilerplate")
-assert(!fileexists(path))
+totest.remove("test3", "boilerplate")
+assert(!fileexists(fn6))
 totest.read_defaults()
 assert(totest.defaults.boilerplate=="dta")
 assert(totest.defaults.stencil=="long")

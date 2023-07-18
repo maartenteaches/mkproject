@@ -4,17 +4,12 @@
 {res}{hline}
 {txt}{col 2}Name{col 16}Where{col 25}Label
 {hline}
-*{view "c:\ado\plus/m\mp_long.mps":long}{col 16}PLUS{col 25}based on (Long 2009)
- {view "c:\ado\plus/m\mp_longt.mps":longt}{col 16}PLUS{col 25}based on (Long 2009)
+{txt}*{view "c:\ado\plus/m\mp_long.mps":long}{col 16}PLUS{col 25}based on (Long 2009)
+{txt} {view "c:\ado\plus/m\mp_longt.mps":longt}{col 16}PLUS{col 25}based on (Long 2009)
+{txt}{col 4}requires:{col 16}+ {help dirtree}
+{txt}{col 16}+ Stata 14
 {hline}
 {txt}* indicates default
-
-{hline}
-{txt}{col 2}Name{col 16}Requirement
-{hline}
-{txt}{col 2}longt{col 16}+{help dirtree}
-{txt}{col 2}{col 16}+Stata 14
-{hline}
 {txt}+ indicates requirement met
 {txt}- indicates requirement not met
 {txt}/ indicates requirement not checked
@@ -23,10 +18,10 @@
 {res}{hline}
 {txt}{col 2}Name{col 16}Where{col 25}Label
 {hline}
- {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 16}PLUS{col 25}analysis .do file
-*{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 16}PLUS{col 25}data preparation
- {view "c:\ado\plus/m\mp_main.mpb":main}{col 16}PLUS{col 25}main project .do file
- {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 16}PLUS{col 25}research log
+{txt} {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 16}PLUS{col 25}analysis .do file
+{txt}*{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 16}PLUS{col 25}data preparation
+{txt} {view "c:\ado\plus/m\mp_main.mpb":main}{col 16}PLUS{col 25}main project .do file
+{txt} {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 16}PLUS{col 25}research log
 {hline}
 {txt}* indicates default
 
