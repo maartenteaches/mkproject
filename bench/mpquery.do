@@ -63,6 +63,13 @@ true[3, 1] = `"populieren als hooge pluimen aan den einder staat"'
 assert(out == true)
 end
 
+// truncstring()
+mata:
+totest = mpquery()
+longstring = "DènkendaanHollandzieikbreederivierentraagdooroneindiglaaglandgaan"
+assert(totest.truncstring(longstring, 10) == "Dènkenda~n")
+end
+
 //collect_reqs()
 mata:
 path = pathjoin(pathsubsysdir("PLUS"), "m")

@@ -1,6 +1,16 @@
 mata: 
 mata set matastrict on
 
+struct queryinfo
+{
+	string scalar    default
+	string scalar    path
+	string scalar    name
+	string scalar    lab
+	string colvector met
+	string colvector reqs
+}
+
 struct repl 
 {
 	string scalar abbrev
@@ -109,17 +119,15 @@ class mkproject extends boilerplate{
 }
 
 class mpquery extends mpdefaults {
-    string                matrix    files
-    string                scalar    cname
-    string                scalar    cwhere
-    string                scalar    clabel
+    struct queryinfo      colvector files
+	string                scalar    cname
 	string                scalar    creq
-	real                  scalar    llabel
+	string                scalar    clab
     
     string                matrix    findfiles()
     string                colvector dupldrop()
-    string                matrix    fromheader()
-    void                            file2name()
+    void                            fromheader()
+    string                scalar    file2name()
     void                            file2path()
     void                            isdefault()
     void                            print_header()
@@ -128,11 +136,14 @@ class mpquery extends mpdefaults {
     void                            collect_info()
     void                            print_table()
 	string                scalar    parse_req()
-	string                matrix    collect_reqs()
+	string                colvector collect_reqs()
 	void                            multilinelab()
+	string                scalar    truncstring()
 	string                colvector mpparts()
+	void                            parsefiles()
     void                            run()
     void                            new()
+	void                            setup_table()
 }
 
 class mpcreate extends mpdefaults {
