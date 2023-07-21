@@ -4,44 +4,67 @@ mkproject , query
 boilerplate , query
 log close
 
+
 tempname fh
 file open `fh' using `"bench/totest.smcl"', read text
 file read `fh' line
+assert `"`line'"'==`"{smcl}"'
 file read `fh' line
+assert `"`line'"'==`"{com}{sf}{ul off}{txt}"'
 file read `fh' line
 assert `"`line'"'==`"{com}. mkproject , query"'
 file read `fh' line
 assert `"`line'"'==`"{res}{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt}{col 2}Name{col 16}Where{col 25}Label"'
+assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 9}Requires{col 20}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert `"`line'"'==`"*{view "c:\ado\plus/m\mp_long.mps":long}{col 16}PLUS{col 25}based on (Long 2009)"'
+assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 9}{col 20}based on (Long 2009)"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 9}+ {help dirtree:dirtree}{col 20}based on (Long 2009)"'
+file read `fh' line
+assert `"`line'"'==`"{txt}{col 9}+ Stata 14{col 20}"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
 assert `"`line'"'==`"{txt}* indicates default"'
+file read `fh' line
+assert `"`line'"'==`"{txt}+ indicates requirement met"'
+file read `fh' line
+assert `"`line'"'==`"{txt}- indicates requirement not met"'
+file read `fh' line
+assert `"`line'"'==`"{txt}/ indicates requirement not checked"'
+file read `fh' line
+assert `"`line'"'==`""'
 file read `fh' line
 assert `"`line'"'==`"{com}. boilerplate , query"'
 file read `fh' line
 assert `"`line'"'==`"{res}{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt}{col 2}Name{col 16}Where{col 25}Label"'
+assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 8}Requires{col 19}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert `"`line'"'==`" {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 16}PLUS{col 25}analysis .do file"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 8}{col 19}analysis .do file"'
 file read `fh' line
-assert `"`line'"'==`"*{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 16}PLUS{col 25}data preparation"'
+assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 8}{col 19}data preparation"'
 file read `fh' line
-assert `"`line'"'==`" {view "c:\ado\plus/m\mp_main.mpb":main}{col 16}PLUS{col 25}main project .do file"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 8}{col 19}main project .do file"'
 file read `fh' line
-assert `"`line'"'==`" {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 16}PLUS{col 25}research log"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 8}{col 19}research log"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
 assert `"`line'"'==`"{txt}* indicates default"'
+file read `fh' line
+assert `"`line'"'==`"{txt}+ indicates requirement met"'
+file read `fh' line
+assert `"`line'"'==`"{txt}- indicates requirement not met"'
+file read `fh' line
+assert `"`line'"'==`"{txt}/ indicates requirement not checked"'
+file read `fh' line
+assert `"`line'"'==`""'
 file read `fh' line
 assert `"`line'"'==`"{com}. log close"'
 file read `fh' line
@@ -51,6 +74,7 @@ assert `"`line'"'==`"{com}{sf}{ul off}"'
 file read `fh' line
 assert r(eof)==1
 file close `fh'
+
 
 //create and remove
 mata:

@@ -8,7 +8,6 @@ assert(totest.dupldrop(plus, personal) == ("a" \ "c"))
 plus = "a" \ "b" \ "c"
 personal = "d" \ "e" 
 assert(totest.dupldrop(plus,personal) == ("a" \ "b" \ "c"))
-
 plus = "a" \ "b" \ "c"
 personal = "b" \ "a" \ "c" 
 assert(totest.dupldrop(plus,personal) == J(0,1,""))
@@ -40,34 +39,53 @@ fclose(fh)
 
 out = totest.findfiles("stencil")
 true = J( 3, 2 , "")
-true[1, 1] = `"PLUS"'
+true[1, 1] = `"c:\ado\plus/m"'
 true[1, 2] = `"mp_long.mps"'
-true[2, 1] = `"PLUS"'
+true[2, 1] = `"c:\ado\plus/m"'
 true[2, 2] = `"mp_longt.mps"'
-true[3, 1] = `"PERSONAL"'
+true[3, 1] = `"c:\ado\personal/m"'
 true[3, 2] = `"mp_totest1.mps"'
 assert(out == true)
 
 end
 
-//mpparts
+// parsefiles()
 mata:
 totest = mpquery()
-foo = "Denkend aan Holland zie ik breede rivieren traag door oneindig laagland gaan, rijen ondenkbaar ijle populieren als hooge pluimen aan den einder staat"
-out = totest.mpparts(foo)
-
-true = J( 3, 1 , "")
-true[1, 1] = `"Denkend aan Holland zie ik breede rivieren traag door"'
-true[2, 1] = `"oneindig laagland gaan, rijen ondenkbaar ijle"'
-true[3, 1] = `"populieren als hooge pluimen aan den einder staat"'
-assert(out == true)
+out = totest.findfiles("stencil")
+totest.parsefiles("stencil", out)
+assert(rows(totest.files)==3)
+assert(totest.files[1].name == "long")
+assert(totest.files[2].name == "longt")
+assert(totest.files[3].name == "totest1")
+assert(totest.files[1].path == "c:\ado\plus/m\mp_long.mps")
+assert(totest.files[2].path == "c:\ado\plus/m\mp_longt.mps")
+assert(totest.files[3].path == "c:\ado\personal/m\mp_totest1.mps")
 end
 
-// truncstring()
+//file2name()
 mata:
 totest = mpquery()
-longstring = "DènkendaanHollandzieikbreederivierentraagdooroneindiglaaglandgaan"
-assert(totest.truncstring(longstring, 10) == "Dènkenda~n")
+assert(totest.file2name("mp_bla_blÜp3.mps", "stencil")=="bla_blÜp3")
+assert(totest.file2name("mp_dta.mpb", "boilerplate")=="dta")
+end
+
+//fromheader()
+mata:
+totest = mpquery()
+out = totest.findfiles("stencil")
+totest.parsefiles("stencil", out)
+totest.fromheader()
+
+assert(totest.files[1].lab == "based on (Long 2009)")
+assert(totest.files[2].lab == "based on (Long 2009)")
+assert(totest.files[3].lab == "testing testing")
+assert(totest.files[1].reqs == J(0,1,""))
+assert(totest.files[2].reqs == ("dirtree" \ "Stata 14"))
+assert(totest.files[3].reqs == J(0,1,""))
+assert(totest.files[1].met == J(0,1,""))
+assert(totest.files[2].met == ("+" \ "+"))
+assert(totest.files[3].met == J(0,1,""))
 end
 
 //collect_reqs()
@@ -79,221 +97,118 @@ totest.read_header()
 totest.mpfclose(totest.reading.fh)
 out = totest.collect_reqs()
 
-true = J( 2, 8 , "")
-true[1, 1] = `"req1"'
-true[1, 2] = `""'
-true[1, 3] = `""'
-true[1, 4] = `""'
-true[1, 5] = `""'
-true[1, 6] = `""'
-true[1, 7] = `"+"'
-true[1, 8] = `"dirtree"'
-true[2, 1] = `"req"'
-true[2, 2] = `""'
-true[2, 3] = `""'
-true[2, 4] = `""'
-true[2, 5] = `""'
-true[2, 6] = `""'
-true[2, 7] = `"+"'
-true[2, 8] = `"Stata 14"'
+true = J( 2, 1 , "")
+true[1, 1] = `"+"'
+true[2, 1] = `"+"'
 assert(out == true)
 end
-
-//fromheader()
-mata:
-totest = mpquery()
-out = totest.findfiles("stencil")
-out = totest.fromheader("stencil", out[2,.])
-
-true = J( 3, 8 , "")
-true[1, 1] = `"main"'
-true[1, 2] = `""'
-true[1, 3] = `"mp_longt.mps"'
-true[1, 4] = `""'
-true[1, 5] = `"PLUS"'
-true[1, 6] = `"based on (Long 2009)"'
-true[1, 7] = `""'
-true[1, 8] = `""'
-true[2, 1] = `"req1"'
-true[2, 2] = `""'
-true[2, 3] = `""'
-true[2, 4] = `""'
-true[2, 5] = `""'
-true[2, 6] = `""'
-true[2, 7] = `"+"'
-true[2, 8] = `"dirtree"'
-true[3, 1] = `"req"'
-true[3, 2] = `""'
-true[3, 3] = `""'
-true[3, 4] = `""'
-true[3, 5] = `""'
-true[3, 6] = `""'
-true[3, 7] = `"+"'
-true[3, 8] = `"Stata 14"'
-assert(out == true)
-end
-
 
 //isdefault
 mata:
 totest = mpquery()
 toparse = totest.findfiles("stencil")
-totest.files = J(0,8,"")
-temp = totest.fromheader("stencil", toparse[1,.])
-totest.files = totest.files \ temp
-temp = totest.fromheader("stencil", toparse[2,.])
-totest.files = totest.files \ temp
-temp = totest.fromheader("stencil", toparse[3,.])
-totest.files = totest.files \ temp
+totest.parsefiles("stencil", toparse)
+totest.fromheader()
 totest.isdefault("stencil")
-
-true = J( 5, 8 , "")
-true[1, 1] = `"main"'
-true[1, 2] = `"*"'
-true[1, 3] = `"mp_long.mps"'
-true[1, 4] = `""'
-true[1, 5] = `"PLUS"'
-true[1, 6] = `"based on (Long 2009)"'
-true[1, 7] = `""'
-true[1, 8] = `""'
-true[2, 1] = `"main"'
-true[2, 2] = `" "'
-true[2, 3] = `"mp_longt.mps"'
-true[2, 4] = `""'
-true[2, 5] = `"PLUS"'
-true[2, 6] = `"based on (Long 2009)"'
-true[2, 7] = `""'
-true[2, 8] = `""'
-true[3, 1] = `"req1"'
-true[3, 2] = `" "'
-true[3, 3] = `""'
-true[3, 4] = `""'
-true[3, 5] = `""'
-true[3, 6] = `""'
-true[3, 7] = `"+"'
-true[3, 8] = `"dirtree"'
-true[4, 1] = `"req"'
-true[4, 2] = `" "'
-true[4, 3] = `""'
-true[4, 4] = `""'
-true[4, 5] = `""'
-true[4, 6] = `""'
-true[4, 7] = `"+"'
-true[4, 8] = `"Stata 14"'
-true[5, 1] = `"main"'
-true[5, 2] = `" "'
-true[5, 3] = `"mp_totest1.mps"'
-true[5, 4] = `""'
-true[5, 5] = `"PERSONAL"'
-true[5, 6] = `"testing testing"'
-true[5, 7] = `""'
-true[5, 8] = `""'
-assert(totest.files == true)
+assert(totest.files[1].isdefault == "*")
+assert(totest.files[2].isdefault == " ")
+assert(totest.files[3].isdefault == " ")
 end
 
 
-//file2name
+//mpparts
 mata:
-totest.file2name("stencil")
+totest = mpquery()
+foo = "Denkend aan Holland zie ik breede rivieren traag door oneindig laagland gaan, rijen ondenkbaar ijle populieren als hooge pluimen aan den einder staat"
+out = totest.mpparts(foo, 25)
 
-true = J( 5, 8 , "")
-true[1, 1] = `"main"'
-true[1, 2] = `"*"'
-true[1, 3] = `"mp_long.mps"'
-true[1, 4] = `"long"'
-true[1, 5] = `"PLUS"'
-true[1, 6] = `"based on (Long 2009)"'
-true[1, 7] = `""'
-true[1, 8] = `""'
-true[2, 1] = `"main"'
-true[2, 2] = `" "'
-true[2, 3] = `"mp_longt.mps"'
-true[2, 4] = `"longt"'
-true[2, 5] = `"PLUS"'
-true[2, 6] = `"based on (Long 2009)"'
-true[2, 7] = `""'
-true[2, 8] = `""'
-true[3, 1] = `"req1"'
-true[3, 2] = `" "'
-true[3, 3] = `""'
-true[3, 4] = `""'
-true[3, 5] = `""'
-true[3, 6] = `""'
-true[3, 7] = `"+"'
-true[3, 8] = `"dirtree"'
-true[4, 1] = `"req"'
-true[4, 2] = `" "'
-true[4, 3] = `""'
-true[4, 4] = `""'
-true[4, 5] = `""'
-true[4, 6] = `""'
-true[4, 7] = `"+"'
-true[4, 8] = `"Stata 14"'
-true[5, 1] = `"main"'
-true[5, 2] = `" "'
-true[5, 3] = `"mp_totest1.mps"'
-true[5, 4] = `"totest1"'
-true[5, 5] = `"PERSONAL"'
-true[5, 6] = `"testing testing"'
-true[5, 7] = `""'
-true[5, 8] = `""'
-assert(totest.files == true)
 
+true = J( 7, 1 , "")
+true[1, 1] = `"Denkend aan Holland zie"'
+true[2, 1] = `"ik breede rivieren traag"'
+true[3, 1] = `"door oneindig laagland"'
+true[4, 1] = `"gaan, rijen ondenkbaar"'
+true[5, 1] = `"ijle populieren als hooge"'
+true[6, 1] = `"pluimen aan den einder"'
+true[7, 1] = `"staat"'
+
+assert(out == true)
 end
 
-//file2path
+// truncstring()
 mata:
-totest.file2path()
-mata:
-true = J( 5, 8 , "")
-true[1, 1] = `"main"'
-true[1, 2] = `"*"'
-true[1, 3] = `"c:\ado\plus/m\mp_long.mps"'
-true[1, 4] = `"long"'
-true[1, 5] = `"PLUS"'
-true[1, 6] = `"based on (Long 2009)"'
-true[1, 7] = `""'
-true[1, 8] = `""'
-true[2, 1] = `"main"'
-true[2, 2] = `" "'
-true[2, 3] = `"c:\ado\plus/m\mp_longt.mps"'
-true[2, 4] = `"longt"'
-true[2, 5] = `"PLUS"'
-true[2, 6] = `"based on (Long 2009)"'
-true[2, 7] = `""'
-true[2, 8] = `""'
-true[3, 1] = `"req1"'
-true[3, 2] = `" "'
-true[3, 3] = `""'
-true[3, 4] = `""'
-true[3, 5] = `""'
-true[3, 6] = `""'
-true[3, 7] = `"+"'
-true[3, 8] = `"dirtree"'
-true[4, 1] = `"req"'
-true[4, 2] = `" "'
-true[4, 3] = `""'
-true[4, 4] = `""'
-true[4, 5] = `""'
-true[4, 6] = `""'
-true[4, 7] = `"+"'
-true[4, 8] = `"Stata 14"'
-true[5, 1] = `"main"'
-true[5, 2] = `" "'
-true[5, 3] = `"c:\ado\personal/m\mp_totest1.mps"'
-true[5, 4] = `"totest1"'
-true[5, 5] = `"PERSONAL"'
-true[5, 6] = `"testing testing"'
-true[5, 7] = `""'
-true[5, 8] = `""'
-assert(totest.files == true)
+totest = mpquery()
+longstring = "DènkendaanHollandzieikbreederivierentraagdooroneindiglaaglandgaan"
+assert(totest.truncstring(longstring, 10) == "Dènkenda~n")
 end
 
 //collect_info()
 mata:
 totest = mpquery()
 totest.collect_info("stencil")
-assert(totest.files == true)
+assert(totest.files[1].isdefault=="*")
+assert(totest.files[1].path     ==pathjoin(pathsubsysdir("PLUS"),"m\mp_long.mps"))
+assert(totest.files[1].name     == "long")
+assert(totest.files[1].lab      == "based on (Long 2009)")
+assert(totest.files[1].met      == J(0,1,""))
+assert(totest.files[1].reqs     == J(0,1,""))
+
+assert(totest.files[2].isdefault==" ")
+assert(totest.files[2].path     ==pathjoin(pathsubsysdir("PLUS"),"m\mp_longt.mps"))
+assert(totest.files[2].name     == "longt")
+assert(totest.files[2].lab      == "based on (Long 2009)")
+assert(totest.files[2].met      == J(2,1,"+"))
+assert(totest.files[2].reqs     == ("dirtree"\ "Stata 14"))
+
+assert(totest.files[3].isdefault==" ")
+assert(totest.files[3].path     ==pathjoin(pathsubsysdir("PERSONAL"),"m\mp_totest1.mps"))
+assert(totest.files[3].name     == "totest1")
+assert(totest.files[3].lab      == "testing testing")
+assert(totest.files[3].met      == J(0,1,""))
+assert(totest.files[3].reqs     == J(0,1,""))
+end
+
+// parse_names
+mata:
+totest = mpquery()
+totest.collect_info("stencil")
+bigestl=2 
+totest.parse_names(4, bigestl)
+assert(totest.files[2].name == `"  {view "c:\ado\plus/m\mp_longt.mps":lo~t}"')
+assert(bigestl == 4)
+end
+
+//parse_req()
+mata:
+totest = mpquery()
+totest.collect_info("stencil")
+bigestl = 4
+assert(totest.parse_req(2,1,5, bigestl) == `"+ {help dirtree:dir~e}"')
+assert(bigestl==5)
+end
+
+//parse_reqs()
+mata:
+totest = mpquery()
+totest.collect_info("stencil")
+bigestl = 6
+totest.parse_reqs(10,bigestl)
+assert(totest.files[2].reqs[1] == `"+ {help dirtree:dirtree}"')
+assert(totest.files[2].reqs[2] == `"+ Stata 14"')
+assert(bigestl==8)
+end
+
+//setup_table()
+mata:
+totest = mpquery()
+totest.collect_info("stencil")
+totest.setup_table()
+assert(totest.cname == "{txt}{col 3}")
+assert(totest.creq == "{col 11}")
+assert(totest.clab == "{col 22}")
+assert(totest.files[2].name == `"  {view "c:\ado\plus/m\mp_longt.mps":longt}"')
+assert(totest.files[2].reqs[1] == `"+ {help dirtree:dirtree}"')
+assert(totest.files[2].reqs[2] == `"+ Stata 14"')
 end
 
 //cleanup
