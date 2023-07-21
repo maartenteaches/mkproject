@@ -1,5 +1,17 @@
 mata:
 mata set matastrict on
+void mpdefaults::new()
+{
+	string scalar path
+	path = pathsubsysdir("Personal")
+	if(!direxists(path)) {
+		mkdir(path)
+	}
+	path = pathjoin(path, "m") 
+	if (!direxists(path)) {
+		mkdir(path)
+	}
+}
 
 void mpdefaults::read_defaults(| string scalar plus)
 {
