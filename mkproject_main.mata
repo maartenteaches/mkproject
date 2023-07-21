@@ -3,7 +3,7 @@ mata set matastrict on
 
 struct queryinfo
 {
-	string scalar    default
+	string scalar    isdefault
 	string scalar    path
 	string scalar    name
 	string scalar    lab
@@ -128,10 +128,9 @@ class mpquery extends mpdefaults {
     string                colvector dupldrop()
     void                            fromheader()
     string                scalar    file2name()
-    void                            file2path()
     void                            isdefault()
     void                            print_header()
-    void                            print_line()
+    void                            print_entry()
     void                            print_footer()
     void                            collect_info()
     void                            print_table()
@@ -144,7 +143,6 @@ class mpquery extends mpdefaults {
 	string                colvector mpparts()
 	void                            parsefiles()
     void                            run()
-    void                            new()
 	void                            setup_table()
 }
 

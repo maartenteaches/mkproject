@@ -14,7 +14,6 @@ string scalar mpquery::truncstring(string scalar totrunc, real scalar maxl)
 void mpquery::collect_info(string scalar what)
 {
 	string matrix toparse
-	real scalar i
 	
 	toparse = findfiles(what)
 	parsefiles(what, toparse)
@@ -26,7 +25,7 @@ void mpquery::collect_info(string scalar what)
 string matrix mpquery::findfiles(string scalar what) {
     string scalar path_per, path_plus, ext
     string matrix personal, plus	
-
+	
 	ext = type2ext(what)
     path_per = pathjoin(pathsubsysdir("PERSONAL"), "m")
     personal = dir(path_per, "files", "mp_*" + ext)
@@ -56,7 +55,7 @@ void mpquery::parsefiles(string scalar what, string matrix toparse)
 		if (reading.type != what) {
 			select[i] = 0
 		}
-		toparse[i,2] = file2name(what, toparse[i,2])
+		toparse[i,2] = file2name(toparse[i,2], what)
 	}
 	toparse = select(toparse,select)
 	files = queryinfo(rows(toparse),1)
@@ -154,10 +153,10 @@ void mpquery::isdefault(string scalar what)
     }
 	for(i=1; i<=rows(files); i++) {
 		if (files[i].name == def) {
-			files[i].default = "*"
+			files[i].isdefault = "*"
 		}
 		else {
-			files[i].default = " "
+			files[i].isdefault = " "
 		}
 	}
 }
@@ -174,32 +173,15 @@ string scalar mpquery::file2name(string scalar toparse, string scalar what)
     return(name)
 }
 
-void mpquery::file2path()
-{
-    real scalar i
-    string scalar path
-    
-    for(i=1; i<=rows(files);i++) {
-		if (files[i,`where'] == "") continue
-        path = pathjoin(pathsubsysdir(files[i,`where']), "m")
-        path = pathjoin(path, files[i,`path'])
-        files[i,`path'] = path
-    }
-}
-
-void mpquery::new()
-{
-   
-}
-
 void mpquery::parse_names(real scalar maxl, real scalar bigestl) {
 	real scalar i
 
 	for(i=1;i<=rows(files); i++) {
 		files[i].name = truncstring(files[i].name, maxl)
 		bigestl = max((ustrlen(files[i].name),bigestl))
-		files[i].name = `"{view ""' + files[i].path +
-		                 `"":"' + files[i].name + "}"
+		files[i].name = " " + files[i].isdefault + `"{view ""' + 
+		                files[i].path + `"":"' + 
+						files[i].name + "}"
 	}
 }
 void mpquery::setup_table()
@@ -208,7 +190,7 @@ void mpquery::setup_table()
 	
 	maxl = floor(st_numscalar("c(linesize)")/3) - 2
 	
-	cname = "{txt}{col 2}"
+	cname = "{txt}{col 3}"
 	bigestl = 4
 	parse_names(maxl, bigestl)
 	
@@ -218,10 +200,10 @@ void mpquery::setup_table()
 	parse_reqs(maxl, bigestl)
 	
 	pos = pos + bigestl + 3
-	clabel = "{col " + strofreal(pos) + "}"
+	clab = "{col " + strofreal(pos) + "}"
 	maxl = st_numscalar("c(linesize)") - pos + 1
 	for(i=1; i<=rows(files); i++) {
-		files[i].label = mpparts(files[i].label, maxl)
+		files[i].lab = mpparts(files[i].lab, maxl)
 	}
 }
 
@@ -230,8 +212,8 @@ void mpquery::print_header()
     string scalar toprint
    
 	toprint = "{txt}" + cname + 
-			  "Name" + cwhere + 
-			  "Requires" + clabel + 
+			  "Name" + creq + 
+			  "Requires" + clab + 
 			  "Label\n"
     printf("{hline}\n")
     printf(toprint)
@@ -242,35 +224,34 @@ void mpquery::print_footer()
 {
 	printf("{hline}\n")
 	printf("{txt}* indicates default\n")
-	if (anyof(files[.,`linetype'], "req1")) {
-		printf("{txt}+ indicates requirement met\n")
-		printf("{txt}- indicates requirement not met\n")
-		printf("{txt}/ indicates requirement not checked\n")
-	}
+	printf("{txt}+ indicates requirement met\n")
+	printf("{txt}- indicates requirement not met\n")
+	printf("{txt}/ indicates requirement not checked\n")
 }
 
-void mpquery::print_line(real scalar i)
+void mpquery::print_entry(real scalar i)
 {
     string scalar toprint
-	string matrix reqlist
-
-	if (files[i,`linetype']== "main") {
-		toprint = "{txt}" + files[i,`default'] + `"{view ""' + files[i,`path'] +
-		          `"":"' + files[i,`name'] + "}" + cwhere + files [i,`where'] + 
-				  clabel + files[i,`lab'] + "\n"		
+	real scalar rows, j
+	
+	rows = max((rows(files[i].reqs), rows(files[i].lab)))
+	
+	for(j=1; j<= rows; j++) {
+		toprint = "{txt}"
+		if (j==1) {
+			toprint = toprint + files[i].name
+		}
+		toprint = toprint + creq
+		if(j <= rows(files[i].reqs)) {
+			toprint = toprint + files[i].reqs[j]
+		}
+		toprint = toprint + clab
+		if (j <= rows(files[i].lab)) {
+			toprint = toprint + files[i].lab[j]
+		}
+		toprint = toprint + "\n"
+		printf(toprint)
 	}
-	else if(files[i, `linetype'] == "lab_cnt") {
-		toprint = "{txt}" + clabel + files[i,`lab'] + "\n"
-	}
-	else if(files[i, `linetype'] == "req1") {
-		toprint = "{txt}" + creq + "requires:" + cwhere + files[i,`met'] + 
-		          " "  +parse_req(i) + "\n"
- 	}
-	else if(files[i,`linetype'] == "req") {
-		toprint = "{txt}" + cwhere + files[i, `met'] + " " + parse_req(i) + "\n"
-	}
-
-	printf(toprint)
 }
 
 void mpquery::parse_reqs(real scalar maxl, real scalar bigestl)
@@ -292,17 +273,18 @@ string scalar mpquery::parse_req(real scalar i, real scalar j, real scalar maxl,
 	bigestl = max((ustrlen(req), bigestl))
 	bigestl = min((bigestl, maxl))
 	
+	toreturn = files[i].met[j] + " "
 	if (strlower(req)== "git") {
-		toreturn = `"{browse "https://git-scm.com/":git}"'
+		toreturn = toreturn + `"{browse "https://git-scm.com/":git}"'
 	}
 	else if (strmatch(strlower(req), "stata *")) {
-		toreturn = files[i,`req']
+		toreturn = toreturn + req
 	}
 	else if (files[i].met[j]== "-") {
-		toreturn = "{search " + req + ":" + truncstring(req, maxl) + "}"
+		toreturn = toreturn + "{search " + req + ":" + truncstring(req, maxl) + "}"
 	}
-	else if (files[i].met.[j] == "+") {
-		toreturn = "{help " + req + ":" + truncstring(req, maxl) + "}"
+	else if (files[i].met[j] == "+") {
+		toreturn = toreturn + "{help " + req + ":" + truncstring(req, maxl) + "}"
 	}
 	return(toreturn)	
 }
@@ -311,11 +293,11 @@ string scalar mpquery::parse_req(real scalar i, real scalar j, real scalar maxl,
 void mpquery::print_table()
 {
     real scalar i, j
-    
+    setup_table()
     print_header()
 	j = rows(files)
     for(i=1; i<= j; i++) {
-        print_line(i)
+        print_entry(i)
     }
     print_footer()
 }

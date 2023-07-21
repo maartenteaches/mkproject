@@ -177,7 +177,7 @@ string scalar mptools::type2ext(string scalar type)
 	allowed = "boilerplate", "stencil", "default"
 
 	if (!anyof(allowed,type)) {
-		errprintf("{p}Only types boilerplate, path, or default allowed in type2ext(){p_end}")
+		errprintf("{p}Only types boilerplate, stencil, or default allowed in type2ext(){p_end}")
 		exit(198)
 	}
 	extension = (type == "boilerplate" ? ".mpb" : (type == "stencil" ? ".mps" : ".mpd"))
