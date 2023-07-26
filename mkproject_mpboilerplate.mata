@@ -7,7 +7,7 @@ void boilerplate::parse_dest(string scalar dest)
 	if (!pathisabs(dest)) {
 		dest = pathresolve(pwd(),dest)
 	}
-	torepl.basedir = pathgetparent(dest)
+	torepl.basedir = mppathgetparent(dest)
 }
 
 string scalar boilerplate::remove_usuffix(string scalar stub)

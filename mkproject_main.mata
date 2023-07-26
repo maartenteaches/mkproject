@@ -78,6 +78,7 @@ class mptools extends mpfile{
     void                             write_header()
     void                             header_ok()
 	string                 scalar    type2ext()
+	string                 scalar    mppathgetparent()
     void                             new() // sets default for odir
 }
 

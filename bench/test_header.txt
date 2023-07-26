@@ -2,7 +2,7 @@
 <mkproject> boilerplate
 <version> 2.0.0
 <label> something to test
-<reqs> Stata 15
+<reqs> Stata 14
 <reqs> dirtree
 </header>
 some other text after the header

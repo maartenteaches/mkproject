@@ -10,7 +10,7 @@ assert(totest.fhs.get(totest.reading.fh) == "open")
 assert(totest.mpfget() == "some other text after the header")
 assert(totest.reading.label == "something to test")
 assert(totest.reading.type == "boilerplate")
-assert(totest.reading.reqs == ("Stata 15" \ "dirtree"))
+assert(totest.reading.reqs == ("Stata 14" \ "dirtree"))
 assert(totest.reading.sversion == "2.0.0")
 totest.mpfclose(totest.reading.fh)
 
@@ -161,3 +161,11 @@ totest.reading.reqs = ("foo" \ "bar")
 end
 capture noisily mata: totest.chkreqs()
 assert(_rc == 198)
+
+//mppathgetparent()
+mata:
+totest = mptools()
+assert(totest.mppathgetparent("c:\test\blup") == "c:\test\")
+assert(totest.mppathgetparent("c:\test\blup\") == "c:\test\blup\")
+assert(totest.mppathgetparent("c:\test/blup") == "c:\test/")
+end
