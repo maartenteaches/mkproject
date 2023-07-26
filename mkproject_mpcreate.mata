@@ -62,11 +62,13 @@ string colvector mpcreate::integrate_reqs(string scalar fn)
 	if (reading.open == 1) {
 		mpfclose(reading.fh)
 		toreturn = reading.reqs
-		isstata = strmatch(strlower(toreturn), "stata *")
-		if(any(isstata)) {
-			s = select(toreturn,isstata)
-			sversion = strtoreal(tokens(s)[2])
-			toreturn = select(toreturn, !isstata)
+		if(rows(toreturn)>0) {
+			isstata = strmatch(strlower(toreturn), "stata *")
+			if(any(isstata)) {
+				s = select(toreturn,isstata)
+				sversion = strtoreal(tokens(s)[2])
+				toreturn = select(toreturn, !isstata)
+			}
 		}
 	}
 	

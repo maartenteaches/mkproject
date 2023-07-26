@@ -2,12 +2,11 @@
 {com}{sf}{ul off}{txt}
 {com}. mkproject , query
 {res}{hline}
-{txt}{col 2}Name{col 16}Where{col 25}Label
+{txt}{txt}{col 3}Name{col 9}Requires{col 20}Label
 {hline}
-{txt}*{view "c:\ado\plus/m\mp_long.mps":long}{col 16}PLUS{col 25}based on (Long 2009)
-{txt} {view "c:\ado\plus/m\mp_longt.mps":longt}{col 16}PLUS{col 25}based on (Long 2009)
-{txt}{col 4}requires:{col 16}+ {help dirtree}
-{txt}{col 16}+ Stata 14
+{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 9}{col 20}based on (Long 2009)
+{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 9}+ {help dirtree:dirtree}{col 20}based on (Long 2009)
+{txt}{col 9}+ Stata 14{col 20}
 {hline}
 {txt}* indicates default
 {txt}+ indicates requirement met
@@ -16,14 +15,17 @@
 
 {com}. boilerplate , query
 {res}{hline}
-{txt}{col 2}Name{col 16}Where{col 25}Label
+{txt}{txt}{col 3}Name{col 8}Requires{col 19}Label
 {hline}
-{txt} {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 16}PLUS{col 25}analysis .do file
-{txt}*{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 16}PLUS{col 25}data preparation
-{txt} {view "c:\ado\plus/m\mp_main.mpb":main}{col 16}PLUS{col 25}main project .do file
-{txt} {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 16}PLUS{col 25}research log
+{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 8}{col 19}analysis .do file
+{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 8}{col 19}data preparation
+{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 8}{col 19}main project .do file
+{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 8}{col 19}research log
 {hline}
 {txt}* indicates default
+{txt}+ indicates requirement met
+{txt}- indicates requirement not met
+{txt}/ indicates requirement not checked
 
 {com}. log close
 {smcl}
