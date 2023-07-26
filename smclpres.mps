@@ -1,7 +1,8 @@
 <header>
 <mkproject> stencil
 <version> 2.0.0
-<label> a smclpres presentation
+<label> a smclpres presentation project
+<reqs> smclpres
 </header>
 
 <dir> source
