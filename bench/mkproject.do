@@ -78,9 +78,14 @@ assert(totest.dirs == ("docu\" \
                        "work\analysis\" \
                        "work\txt\"))
 
-assert(totest.cmds == ("qui cd work/analysis" \
- `"projmanager "test.stpr""'))
 
+true = J( 5, 1 , "")
+true[1, 1] = `"qui cd work/analysis"'
+true[2, 1] = `"projmanager "test.stpr""'
+true[3, 1] = `"doedit "test_main.do""'
+true[4, 1] = `"doedit "test_dta01.do""'
+true[5, 1] = `"doedit "test_ana01.do""'
+assert(totest.cmds == true)
 
 assert(totest.files== ("rlog",        "docu/research_log.md" \
                        "main",  "work/analysis/test_main.do" \

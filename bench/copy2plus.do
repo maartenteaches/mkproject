@@ -38,13 +38,20 @@ for(i=1; i<=rows(files); i++) {
 }
 chdir(dir)
 
-files = "mp_long.mps",
-        "mp_longt.mps",
-        "mp_ana.mpb",
-        "mp_defaults.mpd",
-        "mp_main.mpb",
-        "mp_dta.mpb",
-        "mp_rlog.mpb"		
+files = "mp_course.mps", 
+"mp_long.mps",
+"mp_longt.mps",
+"mp_researcht_git.mps",
+"mp_research_git.mps",
+"mp_smclpres.mps",
+"mp_ana.mpb",
+"mp_dta.mpb",
+"mp_ignore.mpb",
+"mp_main.mpb",
+"mp_readme.mpb",
+"mp_rlog.mpb",
+"mp_rlogc.mpb",
+"mp_smclpres.mpb"
 		
 dir = pathjoin(pathsubsysdir("PLUS"),"m")
 

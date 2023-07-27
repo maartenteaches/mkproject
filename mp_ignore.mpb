@@ -1,0 +1,8 @@
+<header>
+<mkproject> boilerplate
+<version> 2.0.0
+<label> .ignore file for git, ignores everything in directory data, and all .dta and .csv files
+</header>
+data/
+*.dta
+*.csv

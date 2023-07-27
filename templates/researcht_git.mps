@@ -1,7 +1,9 @@
 <header>
 <mkproject> stencil
 <version> 2.0.0
-<label> Research with git
+<label> Research project with git, display project with dirtree
+<reqs> git
+<reqs> dirtree
 </header>
 
 <dir> docu
@@ -19,5 +21,4 @@
 <cmd> !git init -b main
 <cmd> !git add .
 <cmd> !git commit -m "initial commit"
-<cmd> cd analysis
-<cmd> projmanager <abbrev>.stpr
+<cmd> dirtree
