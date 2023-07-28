@@ -3,7 +3,7 @@ mata set matastrict on
 void mpdefaults::new()
 {
 	string scalar path
-	path = pathsubsysdir("Personal")
+	path = pathsubsysdir("PERSONAL")
 	if(!direxists(path)) {
 		mkdir(path)
 	}
