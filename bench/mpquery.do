@@ -38,13 +38,22 @@ fput(fh, "</header>")
 fclose(fh)
 
 out = totest.findfiles("stencil")
-true = J( 3, 2 , "")
+true = J( 7, 2 , "")
 true[1, 1] = `"c:\ado\plus/m"'
-true[1, 2] = `"mp_long.mps"'
+true[1, 2] = `"mp_course.mps"'
 true[2, 1] = `"c:\ado\plus/m"'
-true[2, 2] = `"mp_longt.mps"'
-true[3, 1] = `"c:\ado\personal/m"'
-true[3, 2] = `"mp_totest1.mps"'
+true[2, 2] = `"mp_long.mps"'
+true[3, 1] = `"c:\ado\plus/m"'
+true[3, 2] = `"mp_longt.mps"'
+true[4, 1] = `"c:\ado\plus/m"'
+true[4, 2] = `"mp_research_git.mps"'
+true[5, 1] = `"c:\ado\plus/m"'
+true[5, 2] = `"mp_researcht_git.mps"'
+true[6, 1] = `"c:\ado\plus/m"'
+true[6, 2] = `"mp_smclpres.mps"'
+true[7, 1] = `"c:\ado\personal/m"'
+true[7, 2] = `"mp_totest1.mps"'
+
 assert(out == true)
 
 end
@@ -54,13 +63,21 @@ mata:
 totest = mpquery()
 out = totest.findfiles("stencil")
 totest.parsefiles("stencil", out)
-assert(rows(totest.files)==3)
-assert(totest.files[1].name == "long")
-assert(totest.files[2].name == "longt")
-assert(totest.files[3].name == "totest1")
-assert(totest.files[1].path == "c:\ado\plus/m\mp_long.mps")
-assert(totest.files[2].path == "c:\ado\plus/m\mp_longt.mps")
-assert(totest.files[3].path == "c:\ado\personal/m\mp_totest1.mps")
+assert(rows(totest.files)==7)
+assert(totest.files[1].name == "course")
+assert(totest.files[2].name == "long")
+assert(totest.files[3].name == "longt")
+assert(totest.files[4].name == "research_git")
+assert(totest.files[5].name == "researcht_git")
+assert(totest.files[6].name == "smclpres")
+assert(totest.files[7].name == "totest1")
+assert(totest.files[1].path == "c:\ado\plus/m\mp_course.mps")
+assert(totest.files[2].path == "c:\ado\plus/m\mp_long.mps")
+assert(totest.files[3].path == "c:\ado\plus/m\mp_longt.mps")
+assert(totest.files[4].path == "c:\ado\plus/m\mp_research_git.mps")
+assert(totest.files[5].path == "c:\ado\plus/m\mp_researcht_git.mps")
+assert(totest.files[6].path == "c:\ado\plus/m\mp_smclpres.mps")
+assert(totest.files[7].path == "c:\ado\personal/m\mp_totest1.mps")
 end
 
 //file2name()
@@ -77,15 +94,30 @@ out = totest.findfiles("stencil")
 totest.parsefiles("stencil", out)
 totest.fromheader()
 
-assert(totest.files[1].lab == "based on (Long 2009)")
+assert(totest.files[1].lab == "Small research project as part of a course")
 assert(totest.files[2].lab == "based on (Long 2009)")
-assert(totest.files[3].lab == "testing testing")
-assert(totest.files[1].reqs == J(0,1,""))
-assert(totest.files[2].reqs == ("dirtree" \ "Stata 14"))
-assert(totest.files[3].reqs == J(0,1,""))
-assert(totest.files[1].met == J(0,1,""))
-assert(totest.files[2].met == ("+" \ "+"))
-assert(totest.files[3].met == J(0,1,""))
+assert(totest.files[3].lab == "based on (Long 2009), display project with dirtree")
+assert(totest.files[4].lab == "Research with git")
+assert(totest.files[5].lab == "Research project with git, display project with dirtree")
+assert(totest.files[6].lab == "a smclpres presentation project")
+assert(totest.files[7].lab == "testing testing")
+
+assert(totest.files[1].reqs == "dirtree")
+assert(totest.files[2].reqs == J(0,1,""))
+assert(totest.files[3].reqs == "dirtree")
+assert(totest.files[4].reqs == "git")
+assert(totest.files[5].reqs == ("git" \ "dirtree" ))
+assert(totest.files[6].reqs == "smclpres")
+assert(totest.files[7].reqs == J(0,1,""))
+
+assert(totest.files[1].met == "+")
+assert(totest.files[2].met == J(0,1,""))
+assert(totest.files[3].met == "+")
+assert(totest.files[4].met == "/")
+assert(totest.files[5].met == ("/" \ "+"))
+assert(totest.files[6].met == "+")
+assert(totest.files[7].met == J(0,1,""))
+
 end
 
 //collect_reqs()
@@ -95,12 +127,8 @@ path = pathjoin(path,"mp_longt.mps")
 totest.mpfread(path)
 totest.read_header()
 totest.mpfclose(totest.reading.fh)
-out = totest.collect_reqs()
+totest.collect_reqs() == "+"
 
-true = J( 2, 1 , "")
-true[1, 1] = `"+"'
-true[2, 1] = `"+"'
-assert(out == true)
 end
 
 //isdefault
@@ -110,9 +138,13 @@ toparse = totest.findfiles("stencil")
 totest.parsefiles("stencil", toparse)
 totest.fromheader()
 totest.isdefault("stencil")
-assert(totest.files[1].isdefault == "*")
-assert(totest.files[2].isdefault == " ")
+assert(totest.files[1].isdefault == " ")
+assert(totest.files[2].isdefault == "*")
 assert(totest.files[3].isdefault == " ")
+assert(totest.files[4].isdefault == " ")
+assert(totest.files[5].isdefault == " ")
+assert(totest.files[6].isdefault == " ")
+assert(totest.files[7].isdefault == " ")
 end
 
 
