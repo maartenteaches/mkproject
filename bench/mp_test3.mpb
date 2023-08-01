@@ -1,0 +1,8 @@
+<header>
+<mkproject> boilerplate
+<version> 2.0.0
+<label> minimalist boilerplate
+<reqs> Stata 18.0
+<reqs> smclpres
+</header>
+clear all

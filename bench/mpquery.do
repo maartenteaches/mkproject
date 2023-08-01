@@ -178,26 +178,37 @@ end
 mata:
 totest = mpquery()
 totest.collect_info("stencil")
-assert(totest.files[1].isdefault=="*")
-assert(totest.files[1].path     ==pathjoin(pathsubsysdir("PLUS"),"m\mp_long.mps"))
-assert(totest.files[1].name     == "long")
-assert(totest.files[1].lab      == "based on (Long 2009)")
-assert(totest.files[1].met      == J(0,1,""))
-assert(totest.files[1].reqs     == J(0,1,""))
+assert(totest.files[1].isdefault == " ")
+assert(totest.files[2].isdefault == "*")
+assert(totest.files[3].isdefault == " ")
+assert(totest.files[4].isdefault == " ")
+assert(totest.files[5].isdefault == " ")
+assert(totest.files[6].isdefault == " ")
+assert(totest.files[7].isdefault == " ")
 
-assert(totest.files[2].isdefault==" ")
-assert(totest.files[2].path     ==pathjoin(pathsubsysdir("PLUS"),"m\mp_longt.mps"))
-assert(totest.files[2].name     == "longt")
-assert(totest.files[2].lab      == "based on (Long 2009)")
-assert(totest.files[2].met      == J(2,1,"+"))
-assert(totest.files[2].reqs     == ("dirtree"\ "Stata 14"))
+assert(totest.files[1].lab == "Small research project as part of a course")
+assert(totest.files[2].lab == "based on (Long 2009)")
+assert(totest.files[3].lab == "based on (Long 2009), display project with dirtree")
+assert(totest.files[4].lab == "Research with git")
+assert(totest.files[5].lab == "Research project with git, display project with dirtree")
+assert(totest.files[6].lab == "a smclpres presentation project")
+assert(totest.files[7].lab == "testing testing")
 
-assert(totest.files[3].isdefault==" ")
-assert(totest.files[3].path     ==pathjoin(pathsubsysdir("PERSONAL"),"m\mp_totest1.mps"))
-assert(totest.files[3].name     == "totest1")
-assert(totest.files[3].lab      == "testing testing")
-assert(totest.files[3].met      == J(0,1,""))
-assert(totest.files[3].reqs     == J(0,1,""))
+assert(totest.files[1].reqs == "dirtree")
+assert(totest.files[2].reqs == J(0,1,""))
+assert(totest.files[3].reqs == "dirtree")
+assert(totest.files[4].reqs == "git")
+assert(totest.files[5].reqs == ("git" \ "dirtree" ))
+assert(totest.files[6].reqs == "smclpres")
+assert(totest.files[7].reqs == J(0,1,""))
+
+assert(totest.files[1].met == "+")
+assert(totest.files[2].met == J(0,1,""))
+assert(totest.files[3].met == "+")
+assert(totest.files[4].met == "/")
+assert(totest.files[5].met == ("/" \ "+"))
+assert(totest.files[6].met == "+")
+assert(totest.files[7].met == J(0,1,""))
 end
 
 // parse_names
@@ -206,7 +217,7 @@ totest = mpquery()
 totest.collect_info("stencil")
 bigestl=2 
 totest.parse_names(4, bigestl)
-assert(totest.files[2].name == `"  {view "c:\ado\plus/m\mp_longt.mps":lo~t}"')
+assert(totest.files[3].name == `"  {view "c:\ado\plus/m\mp_longt.mps":lo~t}"')
 assert(bigestl == 4)
 end
 
@@ -215,7 +226,7 @@ mata:
 totest = mpquery()
 totest.collect_info("stencil")
 bigestl = 4
-assert(totest.parse_req(2,1,5, bigestl) == `"+ {help dirtree:dir~e}"')
+assert(totest.parse_req(3,1,5, bigestl) == `"+ {help dirtree:dir~e}"')
 assert(bigestl==5)
 end
 
@@ -225,8 +236,14 @@ totest = mpquery()
 totest.collect_info("stencil")
 bigestl = 6
 totest.parse_reqs(10,bigestl)
-assert(totest.files[2].reqs[1] == `"+ {help dirtree:dirtree}"')
-assert(totest.files[2].reqs[2] == `"+ Stata 14"')
+assert(totest.files[1].reqs[1] == `"+ {help dirtree:dirtree}"')
+assert(rows(totest.files[2].reqs) == 0)
+assert(totest.files[3].reqs[1] == `"+ {help dirtree:dirtree}"')
+assert(totest.files[4].reqs[1] ==`"/ {browse "https://git-scm.com/":git}"')
+assert(totest.files[5].reqs[1] ==`"/ {browse "https://git-scm.com/":git}"')
+assert(totest.files[5].reqs[2] == `"+ {help dirtree:dirtree}"')
+assert(totest.files[6].reqs[1] == `"+ {help smclpres:smclpres}"')
+assert(rows(totest.files[7].reqs) == 0)
 assert(bigestl==8)
 end
 
@@ -236,11 +253,10 @@ totest = mpquery()
 totest.collect_info("stencil")
 totest.setup_table()
 assert(totest.cname == "{txt}{col 3}")
-assert(totest.creq == "{col 11}")
-assert(totest.clab == "{col 22}")
-assert(totest.files[2].name == `"  {view "c:\ado\plus/m\mp_longt.mps":longt}"')
-assert(totest.files[2].reqs[1] == `"+ {help dirtree:dirtree}"')
-assert(totest.files[2].reqs[2] == `"+ Stata 14"')
+assert(totest.creq == "{col 17}")
+assert(totest.clab == "{col 28}")
+assert(totest.files[1].name == `"  {view "c:\ado\plus/m\mp_course.mps":course}"')
+assert(totest.files[1].reqs[1] == `"+ {help dirtree:dirtree}"')
 end
 
 //cleanup

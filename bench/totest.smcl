@@ -2,11 +2,15 @@
 {com}{sf}{ul off}{txt}
 {com}. mkproject , query
 {res}{hline}
-{txt}{txt}{col 3}Name{col 9}Requires{col 20}Label
+{txt}{txt}{col 3}Name{col 17}Requires{col 28}Label
 {hline}
-{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 9}{col 20}based on (Long 2009)
-{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 9}+ {help dirtree:dirtree}{col 20}based on (Long 2009)
-{txt}{col 9}+ Stata 14{col 20}
+{txt}  {view "c:\ado\plus/m\mp_course.mps":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course
+{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 17}{col 28}based on (Long 2009)
+{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree
+{txt}  {view "c:\ado\plus/m\mp_research_git.mps":research_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research with git
+{txt}  {view "c:\ado\plus/m\mp_researcht_git.mps":researcht_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research project with git, display project with
+{txt}{col 17}+ {help dirtree:dirtree}{col 28}dirtree
+{txt}  {view "c:\ado\plus/m\mp_smclpres.mps":smclpres}{col 17}+ {help smclpres:smclpres}{col 28}a smclpres presentation project
 {hline}
 {txt}* indicates default
 {txt}+ indicates requirement met
@@ -15,12 +19,18 @@
 
 {com}. boilerplate , query
 {res}{hline}
-{txt}{txt}{col 3}Name{col 8}Requires{col 19}Label
+{txt}{txt}{col 3}Name{col 12}Requires{col 23}Label
 {hline}
-{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 8}{col 19}analysis .do file
-{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 8}{col 19}data preparation
-{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 8}{col 19}main project .do file
-{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 8}{col 19}research log
+{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23}analysis .do file
+{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation
+{txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory
+{txt}{col 12}{col 23}data, and all .dta and .csv files
+{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 12}{col 23}main project .do file
+{txt}  {view "c:\ado\plus/m\mp_readme.mpb":readme}{col 12}{col 23}readme.md for when you want to put your project on github
+{txt}{col 12}{col 23}or the like
+{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 12}{col 23}research log
+{txt}  {view "c:\ado\plus/m\mp_rlogc.mpb":rlogc}{col 12}{col 23}research log
+{txt}  {view "c:\ado\plus/m\mp_smclpres.mpb":smclpres}{col 12}+ {help smclpres:smclpres}{col 23}a smclpres presentation
 {hline}
 {txt}* indicates default
 {txt}+ indicates requirement met

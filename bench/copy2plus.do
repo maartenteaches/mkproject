@@ -51,7 +51,8 @@ files = "mp_course.mps",
 "mp_readme.mpb",
 "mp_rlog.mpb",
 "mp_rlogc.mpb",
-"mp_smclpres.mpb"
+"mp_smclpres.mpb",
+"mp_defaults.mpd"
 		
 dir = pathjoin(pathsubsysdir("PLUS"),"m")
 

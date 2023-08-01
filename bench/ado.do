@@ -4,7 +4,6 @@ mkproject , query
 boilerplate , query
 log close
 
-
 tempname fh
 file open `fh' using `"bench/totest.smcl"', read text
 file read `fh' line
@@ -16,15 +15,23 @@ assert `"`line'"'==`"{com}. mkproject , query"'
 file read `fh' line
 assert `"`line'"'==`"{res}{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 9}Requires{col 20}Label"'
+assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 17}Requires{col 28}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 9}{col 20}based on (Long 2009)"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_course.mps":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course"'
 file read `fh' line
-assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 9}+ {help dirtree:dirtree}{col 20}based on (Long 2009)"'
+assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 17}{col 28}based on (Long 2009)"'
 file read `fh' line
-assert `"`line'"'==`"{txt}{col 9}+ Stata 14{col 20}"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_research_git.mps":research_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research with git"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_researcht_git.mps":researcht_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research project with git, display project with"'
+file read `fh' line
+assert `"`line'"'==`"{txt}{col 17}+ {help dirtree:dirtree}{col 28}dirtree"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_smclpres.mps":smclpres}{col 17}+ {help smclpres:smclpres}{col 28}a smclpres presentation project"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
@@ -42,17 +49,29 @@ assert `"`line'"'==`"{com}. boilerplate , query"'
 file read `fh' line
 assert `"`line'"'==`"{res}{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 8}Requires{col 19}Label"'
+assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 12}Requires{col 23}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 8}{col 19}analysis .do file"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23}analysis .do file"'
 file read `fh' line
-assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 8}{col 19}data preparation"'
+assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation"'
 file read `fh' line
-assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 8}{col 19}main project .do file"'
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory"'
 file read `fh' line
-assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 8}{col 19}research log"'
+assert `"`line'"'==`"{txt}{col 12}{col 23}data, and all .dta and .csv files"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 12}{col 23}main project .do file"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_readme.mpb":readme}{col 12}{col 23}readme.md for when you want to put your project on github"'
+file read `fh' line
+assert `"`line'"'==`"{txt}{col 12}{col 23}or the like"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 12}{col 23}research log"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_rlogc.mpb":rlogc}{col 12}{col 23}research log"'
+file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_smclpres.mpb":smclpres}{col 12}+ {help smclpres:smclpres}{col 23}a smclpres presentation"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
@@ -74,7 +93,6 @@ assert `"`line'"'==`"{com}{sf}{ul off}"'
 file read `fh' line
 assert r(eof)==1
 file close `fh'
-
 
 //create and remove
 mata:
