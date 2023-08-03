@@ -12,7 +12,7 @@
 
 <file> rlogc  docu/research_log.md
 <file> main   ana/<abbrev>_main.do
-<file> dta    ana/<abbrev>_dta01.do
+<file> dta_c  ana/<abbrev>_dta01.do
 <file> ana    ana/<abbrev>_ana01.do
 
 <cmd> dirtree

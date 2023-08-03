@@ -23,6 +23,7 @@
 {hline}
 {txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23}analysis .do file
 {txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation
+{txt}  {view "c:\ado\plus/m\mp_dta_c.mpb":dta_c}{col 12}{col 23}data preparation for course
 {txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory
 {txt}{col 12}{col 23}data, and all .dta and .csv files
 {txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 12}{col 23}main project .do file

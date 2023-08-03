@@ -57,6 +57,8 @@ assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23
 file read `fh' line
 assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation"'
 file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_dta_c.mpb":dta_c}{col 12}{col 23}data preparation for course"'
+file read `fh' line
 assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory"'
 file read `fh' line
 assert `"`line'"'==`"{txt}{col 12}{col 23}data, and all .dta and .csv files"'
@@ -93,6 +95,7 @@ assert `"`line'"'==`"{com}{sf}{ul off}"'
 file read `fh' line
 assert r(eof)==1
 file close `fh'
+
 
 //create and remove
 mata:
