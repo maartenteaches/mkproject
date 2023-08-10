@@ -5,6 +5,7 @@
 {txt}{txt}{col 3}Name{col 17}Requires{col 28}Label
 {hline}
 {txt}  {view "c:\ado\plus/m\mp_course.mps":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course
+{txt}  {view "c:\ado\plus/m\mp_excer.mps":excer}{col 17}{col 28}excercise for a course
 {txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 17}{col 28}based on (Long 2009)
 {txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree
 {txt}  {view "c:\ado\plus/m\mp_research_git.mps":research_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research with git
@@ -24,6 +25,7 @@
 {txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23}analysis .do file
 {txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation
 {txt}  {view "c:\ado\plus/m\mp_dta_c.mpb":dta_c}{col 12}{col 23}data preparation for course
+{txt}  {view "c:\ado\plus/m\mp_excer.mpb":excer}{col 12}{col 23}course exercise
 {txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory
 {txt}{col 12}{col 23}data, and all .dta and .csv files
 {txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 12}{col 23}main project .do file

@@ -21,6 +21,8 @@ assert `"`line'"'==`"{hline}"'
 file read `fh' line
 assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_course.mps":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course"'
 file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_excer.mps":excer}{col 17}{col 28}excercise for a course"'
+file read `fh' line
 assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_long.mps":long}{col 17}{col 28}based on (Long 2009)"'
 file read `fh' line
 assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_longt.mps":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree"'
@@ -59,6 +61,8 @@ assert `"`line'"'==`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23
 file read `fh' line
 assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_dta_c.mpb":dta_c}{col 12}{col 23}data preparation for course"'
 file read `fh' line
+assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_excer.mpb":excer}{col 12}{col 23}course exercise"'
+file read `fh' line
 assert `"`line'"'==`"{txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory"'
 file read `fh' line
 assert `"`line'"'==`"{txt}{col 12}{col 23}data, and all .dta and .csv files"'
@@ -95,6 +99,7 @@ assert `"`line'"'==`"{com}{sf}{ul off}"'
 file read `fh' line
 assert r(eof)==1
 file close `fh'
+
 
 
 //create and remove
