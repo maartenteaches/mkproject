@@ -62,13 +62,13 @@ assert(totest.cmds == ("cd working" \
 		         	   "doedit blup_main.do"))
 end
 
-// read_stencil
+// read_project
 mata:
 totest = mkproject()
 totest.dir     = "bench"
 totest.abbrev  = "test"
-totest.stencil = "long"
-totest.read_stencil()
+totest.project = "long"
+totest.read_project()
 assert(totest.dirs == ("docu\" \
                        "posted\" \
                        "posted\data\" \
@@ -206,7 +206,7 @@ end
 // run
 local directory "bench"
 local anything "test"
-local stencil "long"
+local project "long"
 mata:
 odir = pwd()
 totest = mkproject()

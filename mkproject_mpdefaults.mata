@@ -31,15 +31,15 @@ void mpdefaults::read_defaults(| string scalar plus)
         tokenset(t,line)
         first = tokenget(t)
         second = tokenget(t)
-        if (first == "<stencil>") {
-            defaults.stencil = second
+        if (first == "<project>") {
+            defaults.project = second
         }
         else if (first == "<boilerplate>") {
             defaults.boilerplate = second
         }
     }
     mpfclose(reading.fh)
-    header_ok(defaults.stencil, "stencil")
+    header_ok(defaults.project, "project")
     header_ok(defaults.boilerplate, "boilerplate")
 }
 
@@ -50,8 +50,8 @@ void mpdefaults::write_default(string scalar what, string scalar value)
     
     read_defaults()
     header_ok(value, what)
-    if (what == "stencil") {
-        defaults.stencil = value
+    if (what == "project") {
+        defaults.project = value
     }
     else if (what == "boilerplate") {
         defaults.boilerplate = value
@@ -68,7 +68,7 @@ void mpdefaults::write_default(string scalar what, string scalar value)
     reading.fversion = current_version
     reading.label = "user specified defaults"
     write_header(fh) 
-    mpfput(fh, "<stencil> " + defaults.stencil)
+    mpfput(fh, "<project> " + defaults.project)
     mpfput(fh, "<boilerplate> " + defaults.boilerplate)
     mpfclose(fh)
 }
@@ -81,11 +81,11 @@ void mpdefaults::reset(string scalar what)
 	if (what == "boilerplate") {
 		def = defaults.boilerplate
 	}
-	else if (what == "stencil") {
-		def = defaults.stencil
+	else if (what == "project") {
+		def = defaults.project
 	}
 	else {
-		errprintf("{p}only boilerplate or stencil allowed in reset(){p_end}")
+		errprintf("{p}only boilerplate or project allowed in reset(){p_end}")
 		exit(198)
 	}
 	

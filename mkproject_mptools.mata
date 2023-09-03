@@ -174,13 +174,13 @@ string scalar mptools::type2ext(string scalar type)
 {
 	string scalar extension
 	string vector allowed
-	allowed = "boilerplate", "stencil", "default"
+	allowed = "boilerplate", "project", "default"
 
 	if (!anyof(allowed,type)) {
-		errprintf("{p}Only types boilerplate, stencil, or default allowed in type2ext(){p_end}")
+		errprintf("{p}Only types boilerplate, project, or default allowed in type2ext(){p_end}")
 		exit(198)
 	}
-	extension = (type == "boilerplate" ? ".mpb" : (type == "stencil" ? ".mps" : ".mpd"))
+	extension = (type == "boilerplate" ? ".mpb" : (type == "project" ? ".mpp" : ".mpd"))
 	
 	return(extension)
 }

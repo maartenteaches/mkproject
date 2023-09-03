@@ -52,25 +52,25 @@ end
 mata:
 totest = mptools()
 assert(totest.type2ext("boilerplate") == ".mpb")
-assert(totest.type2ext("stencil") == ".mps")
+assert(totest.type2ext("project") == ".mpp")
 assert(totest.type2ext("default") == ".mpd")
 end
 rcof `"noisily mata:totest.type2ext("foo")"' == 198
 
 // findfile
 mata:
-fn = pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.mps")
+fn = pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.mpp")
 unlink(fn)
 fh = fopen(fn,"w")
 fput(fh, "<header>")
-fput(fh, "<mkproject> stencil")
+fput(fh, "<mkproject> project")
 fput(fh, "<version> 2.0.0")
 fput(fh, "<label> used for certifying")
 fput(fh, "</header>")
 fclose(fh)
 totest = mptools()
-true = strlower(pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.mps"))
-assert(strlower(totest.find_file("certify1", "stencil")) == true)
+true = strlower(pathjoin(pathsubsysdir("PLUS"), "m\mp_certify1.mpp"))
+assert(strlower(totest.find_file("certify1", "project")) == true)
 unlink(fn)
 
 fn = pathjoin(pathsubsysdir("PLUS"), "m\mp_certify2.mpb")

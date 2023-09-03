@@ -34,7 +34,7 @@ struct reading_file
 struct defaults
 {
     string scalar boilerplate
-    string scalar stencil
+    string scalar project
 }
 
 class mpversion{
@@ -106,9 +106,9 @@ class mkproject extends boilerplate{
     string                colvector  cmds
     string                scalar     dir
     string                scalar     abbrev
-    string                scalar     stencil
+    string                scalar     project
     
-    void                             read_stencil()
+    void                             read_project()
     void                             parse_sline()
 	string                scalar     getrest()
     void                             read_dir()

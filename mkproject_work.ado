@@ -3,7 +3,7 @@ program define mkproject_work
     version 15.1
     syntax [anything], calling(string) [type(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
     
-    if `"`calling'"' != "stencil" & `"`calling'"' != "boilerplate" {
+    if `"`calling'"' != "project" & `"`calling'"' != "boilerplate" {
         di as err "{p}mkproject_work can only be called from mkproject or boilerplate{p_end}"
         exit 198
     }
@@ -95,7 +95,7 @@ program define mkproject_main
 	syntax anything, proj(string) calling(string) ///
            [ DIRectory(string) type(string)]
     
-    if "`calling'" == "stencil" {
+    if "`calling'" == "project" {
         mata: `proj' = mkproject()
         mata: `proj'.run()
     }

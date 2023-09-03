@@ -161,8 +161,8 @@ void mpcreate::remove(string scalar what, string scalar type)
 			reset(type)
 		}
  	}
-	else if (type == "stencil") {
-		if (defaults.stencil == what) {
+	else if (type == "project") {
+		if (defaults.project == what) {
 			reset(type)
 		}
 	}

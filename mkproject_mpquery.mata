@@ -144,11 +144,11 @@ void mpquery::isdefault(string scalar what)
     if (what == "boilerplate") {
         def  = defaults.boilerplate
     }
-    else if (what == "stencil") {
-        def = defaults.stencil
+    else if (what == "project") {
+        def = defaults.project
     }
     else {
-        errprintf("what can only be boilerplate or stencil")
+        errprintf("what can only be boilerplate or project")
         exit(198)
     }
 	for(i=1; i<=rows(files); i++) {

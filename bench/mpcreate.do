@@ -48,8 +48,8 @@ mata:
 basefn = pathjoin(pathsubsysdir("PERSONAL"), "m")
 fn1 = pathjoin(basefn,"mp_test1.mpb")
 fn2 = pathjoin(basefn,"mp_test2.mpb")
-fn3 = pathjoin(basefn,"mp_test1.mps")
-fn4 = pathjoin(basefn,"mp_test2.mps")
+fn3 = pathjoin(basefn,"mp_test1.mpp")
+fn4 = pathjoin(basefn,"mp_test2.mpp")
 fn5 = "bench/test3.do"
 fn6 = pathjoin(basefn,"mp_test3.mpb")
 unlink(fn1)
@@ -100,7 +100,7 @@ end
 mata:
 fh3 = fopen(fn3, "w")
 fput(fh3, "<header>")
-fput(fh3, "<mkproject> stencil")
+fput(fh3, "<mkproject> project")
 fput(fh3, "<reqs> Stata 14")
 fput(fh3, "<reqs> git")
 fput(fh3, "<reqs> dirtree")
@@ -111,7 +111,7 @@ fclose(fh3)
 
 fh4 = fopen(fn4, "w")
 fput(fh4, "<header>")
-fput(fh4, "<mkproject> stencil")
+fput(fh4, "<mkproject> project")
 fput(fh4, "<reqs> Stata 19")
 fput(fh4, "</header>")
 fput(fh4, "<file> test1 somefilename1")
@@ -139,8 +139,8 @@ end
 local create bar.do
 mata:
 totest = mpcreate()
-path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_bar.mps")
-assert(totest.newname("bar.do", "stencil") == path)
+path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_bar.mpp")
+assert(totest.newname("bar.do", "project") == path)
 end
 
 //create()
@@ -177,7 +177,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 
-//stencil and inherrit some reqs  
+//project and inherrit some reqs  
 end
 
 
@@ -196,10 +196,10 @@ mata:
 totest.write_default("boilerplate", "test3")
 totest.read_defaults()
 assert(totest.defaults.boilerplate=="test3")
-assert(totest.defaults.stencil=="long")
+assert(totest.defaults.project=="long")
 totest.remove("test3", "boilerplate")
 assert(!fileexists(fn6))
 totest.read_defaults()
 assert(totest.defaults.boilerplate=="dta")
-assert(totest.defaults.stencil=="long")
+assert(totest.defaults.project=="long")
 end

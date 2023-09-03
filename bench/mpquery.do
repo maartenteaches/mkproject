@@ -16,45 +16,45 @@ end
 //findfiles
 mata:
 path = pathjoin(pathsubsysdir("PLUS"), "m")
-fn = pathjoin(path,"mp_totest1.mps")
+fn = pathjoin(path,"mp_totest1.mpp")
 unlink(fn)
 fh = fopen(fn, "w")
 fput(fh,"<header>")
-fput(fh, "<mkproject> stencil")
+fput(fh, "<mkproject> project")
 fput(fh, "<version> 2.0.0")
 fput(fh, "<label> testing testing")
 fput(fh, "</header>")
 fclose(fh)
 
 path = pathjoin(pathsubsysdir("PERSONAL"), "m")
-fn = pathjoin(path,"mp_totest1.mps")
+fn = pathjoin(path,"mp_totest1.mpp")
 unlink(fn)
 fh = fopen(fn, "w")
 fput(fh,"<header>")
-fput(fh, "<mkproject> stencil")
+fput(fh, "<mkproject> project")
 fput(fh, "<version> 2.0.0")
 fput(fh, "<label> testing testing")
 fput(fh, "</header>")
 fclose(fh)
 
-out = totest.findfiles("stencil")
+out = totest.findfiles("project")
 true = J( 8, 2 , "")
 true[1, 1] = `"c:\ado\plus/m"'
-true[1, 2] = `"mp_course.mps"'
+true[1, 2] = `"mp_course.mpp"'
 true[2, 1] = `"c:\ado\plus/m"'           
-true[2, 2] = `"mp_excer.mps"' 
+true[2, 2] = `"mp_excer.mpp"' 
 true[3, 1] = `"c:\ado\plus/m"'
-true[3, 2] = `"mp_long.mps"'
+true[3, 2] = `"mp_long.mpp"'
 true[4, 1] = `"c:\ado\plus/m"'
-true[4, 2] = `"mp_longt.mps"'
+true[4, 2] = `"mp_longt.mpp"'
 true[5, 1] = `"c:\ado\plus/m"'
-true[5, 2] = `"mp_research_git.mps"'
+true[5, 2] = `"mp_research_git.mpp"'
 true[6, 1] = `"c:\ado\plus/m"'
-true[6, 2] = `"mp_researcht_git.mps"'
+true[6, 2] = `"mp_researcht_git.mpp"'
 true[7, 1] = `"c:\ado\plus/m"'
-true[7, 2] = `"mp_smclpres.mps"'
+true[7, 2] = `"mp_smclpres.mpp"'
 true[8, 1] = `"c:\ado\personal/m"'
-true[8, 2] = `"mp_totest1.mps"'
+true[8, 2] = `"mp_totest1.mpp"'
 
 assert(out == true)
 
@@ -63,8 +63,8 @@ end
 // parsefiles()
 mata:
 totest = mpquery()
-out = totest.findfiles("stencil")
-totest.parsefiles("stencil", out)
+out = totest.findfiles("project")
+totest.parsefiles("project", out)
 assert(rows(totest.files)==8)
 assert(totest.files[1].name == "course")
 assert(totest.files[2].name == "excer")
@@ -74,28 +74,28 @@ assert(totest.files[5].name == "research_git")
 assert(totest.files[6].name == "researcht_git")
 assert(totest.files[7].name == "smclpres")
 assert(totest.files[8].name == "totest1")
-assert(totest.files[1].path == "c:\ado\plus/m\mp_course.mps")
-assert(totest.files[2].path == "c:\ado\plus/m\mp_excer.mps")
-assert(totest.files[3].path == "c:\ado\plus/m\mp_long.mps")
-assert(totest.files[4].path == "c:\ado\plus/m\mp_longt.mps")
-assert(totest.files[5].path == "c:\ado\plus/m\mp_research_git.mps")
-assert(totest.files[6].path == "c:\ado\plus/m\mp_researcht_git.mps")
-assert(totest.files[7].path == "c:\ado\plus/m\mp_smclpres.mps")
-assert(totest.files[8].path == "c:\ado\personal/m\mp_totest1.mps")
+assert(totest.files[1].path == "c:\ado\plus/m\mp_course.mpp")
+assert(totest.files[2].path == "c:\ado\plus/m\mp_excer.mpp")
+assert(totest.files[3].path == "c:\ado\plus/m\mp_long.mpp")
+assert(totest.files[4].path == "c:\ado\plus/m\mp_longt.mpp")
+assert(totest.files[5].path == "c:\ado\plus/m\mp_research_git.mpp")
+assert(totest.files[6].path == "c:\ado\plus/m\mp_researcht_git.mpp")
+assert(totest.files[7].path == "c:\ado\plus/m\mp_smclpres.mpp")
+assert(totest.files[8].path == "c:\ado\personal/m\mp_totest1.mpp")
 end
 
 //file2name()
 mata:
 totest = mpquery()
-assert(totest.file2name("mp_bla_blÜp3.mps", "stencil")=="bla_blÜp3")
+assert(totest.file2name("mp_bla_blÜp3.mpp", "project")=="bla_blÜp3")
 assert(totest.file2name("mp_dta.mpb", "boilerplate")=="dta")
 end
 
 //fromheader()
 mata:
 totest = mpquery()
-out = totest.findfiles("stencil")
-totest.parsefiles("stencil", out)
+out = totest.findfiles("project")
+totest.parsefiles("project", out)
 totest.fromheader()
 
 assert(totest.files[1].lab == "Small research project as part of a course")
@@ -130,7 +130,7 @@ end
 //collect_reqs()
 mata:
 path = pathjoin(pathsubsysdir("PLUS"), "m")
-path = pathjoin(path,"mp_longt.mps")
+path = pathjoin(path,"mp_longt.mpp")
 totest.mpfread(path)
 totest.read_header()
 totest.mpfclose(totest.reading.fh)
@@ -141,10 +141,10 @@ end
 //isdefault
 mata:
 totest = mpquery()
-toparse = totest.findfiles("stencil")
-totest.parsefiles("stencil", toparse)
+toparse = totest.findfiles("project")
+totest.parsefiles("project", toparse)
 totest.fromheader()
-totest.isdefault("stencil")
+totest.isdefault("project")
 assert(totest.files[1].isdefault == " ")
 assert(totest.files[2].isdefault == " ")
 assert(totest.files[3].isdefault == "*")
@@ -185,7 +185,7 @@ end
 //collect_info()
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 assert(totest.files[1].name == "course")
 assert(totest.files[2].name == "excer")
 assert(totest.files[3].name == "long")
@@ -195,14 +195,14 @@ assert(totest.files[6].name == "researcht_git")
 assert(totest.files[7].name == "smclpres")
 assert(totest.files[8].name == "totest1")
 
-assert(totest.files[1].path == "c:\ado\plus/m\mp_course.mps")
-assert(totest.files[2].path == "c:\ado\plus/m\mp_excer.mps")
-assert(totest.files[3].path == "c:\ado\plus/m\mp_long.mps")
-assert(totest.files[4].path == "c:\ado\plus/m\mp_longt.mps")
-assert(totest.files[5].path == "c:\ado\plus/m\mp_research_git.mps")
-assert(totest.files[6].path == "c:\ado\plus/m\mp_researcht_git.mps")
-assert(totest.files[7].path == "c:\ado\plus/m\mp_smclpres.mps")
-assert(totest.files[8].path == "c:\ado\personal/m\mp_totest1.mps")
+assert(totest.files[1].path == "c:\ado\plus/m\mp_course.mpp")
+assert(totest.files[2].path == "c:\ado\plus/m\mp_excer.mpp")
+assert(totest.files[3].path == "c:\ado\plus/m\mp_long.mpp")
+assert(totest.files[4].path == "c:\ado\plus/m\mp_longt.mpp")
+assert(totest.files[5].path == "c:\ado\plus/m\mp_research_git.mpp")
+assert(totest.files[6].path == "c:\ado\plus/m\mp_researcht_git.mpp")
+assert(totest.files[7].path == "c:\ado\plus/m\mp_smclpres.mpp")
+assert(totest.files[8].path == "c:\ado\personal/m\mp_totest1.mpp")
 
 assert(totest.files[1].isdefault == " ")
 assert(totest.files[2].isdefault == " ")
@@ -244,17 +244,17 @@ end
 // parse_names
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 bigestl=2 
 totest.parse_names(4, bigestl)
-assert(totest.files[4].name == `"  {view "c:\ado\plus/m\mp_longt.mps":lo~t}"')
+assert(totest.files[4].name == `"  {view "c:\ado\plus/m\mp_longt.mpp":lo~t}"')
 assert(bigestl == 4)
 end
 
 //parse_req()
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 bigestl = 4
 assert(totest.parse_req(4,1,5, bigestl) == `"+ {help dirtree:dir~e}"')
 assert(bigestl==5)
@@ -263,7 +263,7 @@ end
 //parse_reqs()
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 bigestl = 6
 totest.parse_reqs(10,bigestl)
 assert(totest.files[1].reqs[1] == `"+ {help dirtree:dirtree}"')
@@ -281,29 +281,29 @@ end
 //setup_table()
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 totest.setup_table()
 assert(totest.cname == "{txt}{col 3}")
 assert(totest.creq == "{col 17}")
 assert(totest.clab == "{col 28}")
-assert(totest.files[1].name == `"  {view "c:\ado\plus/m\mp_course.mps":course}"')
+assert(totest.files[1].name == `"  {view "c:\ado\plus/m\mp_course.mpp":course}"')
 assert(totest.files[1].reqs[1] == `"+ {help dirtree:dirtree}"')
 end
 
 //cleanup
 mata:
 path = pathjoin(pathsubsysdir("PERSONAL"), "m")
-fn = pathjoin(path,"mp_totest1.mps")
+fn = pathjoin(path,"mp_totest1.mpp")
 unlink(fn)
 
 path = pathjoin(pathsubsysdir("PLUS"), "m")
-fn = pathjoin(path,"mp_totest1.mps")
+fn = pathjoin(path,"mp_totest1.mpp")
 unlink(fn)
 end
 
 //print
 mata:
 totest = mpquery()
-totest.collect_info("stencil")
+totest.collect_info("project")
 totest.print_table()
 end

@@ -4,10 +4,10 @@ void mkproject::run(){
     
     dir     = st_local("directory")
     abbrev  = st_local("anything")
-    stencil = st_local("type")
+    project = st_local("type")
 
 	parse_dir()
-	read_stencil()
+	read_project()
 	mk_dirs()
 	mk_files()
 	do_cmds()
@@ -68,21 +68,21 @@ void mkproject::parse_sline(string scalar line)
 }
 
 
-void mkproject::read_stencil()
+void mkproject::read_project()
 {
 	string       scalar EOF, fn, line
     
-    if (stencil == "") {
+    if (project == "") {
         read_defaults()
-        stencil = defaults.stencil
+        project = defaults.project
     }
 	
 	EOF = J(0,0,"")
 	
-	fn = find_file(stencil, "stencil")
+	fn = find_file(project, "project")
 	
 	mpfread(fn)
-	read_header("stencil")
+	read_header("project")
 	chkreqs()
 	while ((line=mpfget())!=EOF) {
 		parse_sline(line)
