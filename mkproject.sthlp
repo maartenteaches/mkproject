@@ -2,6 +2,7 @@
 {* *! version 1.2.0}{...}
 {vieweralsosee "boilerplate" "help boilerplate"}{...}
 {vieweralsosee "smclpres (if installed)" "help smclpres"}{...}
+{vieweralsosee "dirtree (if installed)" "help dirtree"}{...}
 {viewerjumpto "Syntax" "mkproject##syntax"}{...}
 {viewerjumpto "Description" "mkproject##description"}{...}
 {viewerjumpto "Options" "mkproject##option"}{...}
@@ -17,13 +18,21 @@
 
 {p 8 17 2}
 {cmd:mkproject}
-{it:proj_abbrev} ,
-{cmd:[}
-{opt dir:ectory(dir)}
-{opt smclpres}
-{opt git}
-{opt opendata}
-{cmd:]}
+[{it:proj_abbrev}] 
+[{cmd:,} {it:options}]
+
+{synoptset 20 tabbed}{...}
+{synopthdr}
+{synoptline}
+{synopt:{opt template(template)}}choose the template for the projects. The {it:query} option displays a list of templates available and the default{p_end}
+{synopt:{opt type()}}suppress the display; calculate only the mean;
+        programmer's option{p_end}
+{synopt:{opt f:ormat}}use variable's display format{p_end}
+{synopt:{opt sep:arator(#)}}draw separator line after every {it:#} variables;
+        default is {cmd:separator(5)}{p_end}
+{synopt:{opth g:enerate(newvar)}}create variable name {it:newvar}{p_end}
+{synoptline}
+{p2colreset}{...}
 
 
 {marker description}{...}

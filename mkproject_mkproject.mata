@@ -4,7 +4,7 @@ void mkproject::run(){
     
     dir     = st_local("directory")
     abbrev  = st_local("anything")
-    project = st_local("type")
+    project = st_local("template")
 
 	parse_dir()
 	read_project()

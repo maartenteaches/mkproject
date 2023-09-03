@@ -1,7 +1,7 @@
 *! version 2.0.0 21Jun2023 MLB
 program define mkproject_work
     version 15.1
-    syntax [anything], calling(string) [type(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
+    syntax [anything], calling(string) [template(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
     
     if `"`calling'"' != "project" & `"`calling'"' != "boilerplate" {
         di as err "{p}mkproject_work can only be called from mkproject or boilerplate{p_end}"
@@ -101,7 +101,7 @@ program define mkproject_main
     }
     else if "`calling'" == "boilerplate" {
         mata: `proj' = boilerplate()
-        mata: `proj'.copy_boiler(`"`anything'"', "`type'")
+        mata: `proj'.copy_boiler(`"`anything'"', "`template'")
 		doedit `"`anything'"'
     }
 end
