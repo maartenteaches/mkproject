@@ -21,16 +21,21 @@
 [{it:proj_abbrev}] 
 [{cmd:,} {it:options}]
 
-{synoptset 20 tabbed}{...}
+{synoptset 24 tabbed}{...}
 {synopthdr}
 {synoptline}
-{synopt:{opt template(template)}}choose the template for the projects. The {it:query} option displays a list of templates available and the default{p_end}
-{synopt:{opt type()}}suppress the display; calculate only the mean;
-        programmer's option{p_end}
-{synopt:{opt f:ormat}}use variable's display format{p_end}
-{synopt:{opt sep:arator(#)}}draw separator line after every {it:#} variables;
-        default is {cmd:separator(5)}{p_end}
-{synopt:{opth g:enerate(newvar)}}create variable name {it:newvar}{p_end}
+{syntab:Main}
+{synopt:{opt template(template)}}choose the template for the projects. The 
+{it:query} option displays a list of templates available and the default{p_end}
+{synopt:{opt dir(directory)}}specifies the directory in which the project 
+directory is to be created{p_end}
+{synopt:{opt query}}displays a list of templates available{p_end}
+
+{syntab:Modify templates}
+{synopt:{opt create(filename)}}create a template from {it:filename}{p_end}
+{synopt:{opt remove(template_name)}}removes the template {it:template_name}{p_end}
+{synopt:{opt default(template_name)}}set the default template to {it:template_name}{p_end}
+{synopt:{opt resetdef:ault}}sets the default template to {it:long}{p_end}
 {synoptline}
 {p2colreset}{...}
 
