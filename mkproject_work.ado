@@ -56,7 +56,7 @@ program define mkproject_work
         Cleanup, proj(`proj') rc(`=_rc') `debug'
         exit
     }
-    capture noisily mkproject_main `anything', `options' proj(`proj') type(`type') calling("`calling'")
+    capture noisily mkproject_main `anything', `options' proj(`proj') template(`template') calling("`calling'")
 	Cleanup, proj(`proj') rc(`=_rc') `debug'	
 end
 
@@ -93,7 +93,7 @@ end
 program define mkproject_main 
 	version 10
 	syntax anything, proj(string) calling(string) ///
-           [ DIRectory(string) type(string)]
+           [ DIRectory(string) template(string)]
     
     if "`calling'" == "project" {
         mata: `proj' = mkproject()
