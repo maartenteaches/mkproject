@@ -18,8 +18,18 @@
 
 {p 8 17 2}
 {cmd:mkproject}
-[{it:proj_abbrev}] 
-[{cmd:,} {it:options}]
+{it:proj_abbrev}
+[{cmd:,} {opt template(templet)} 
+{opt dir(directory)} ]
+
+{p 8 17 2}
+{cmd:mkproject}
+[{cmd:,} {opt query} 
+{opt create(filename)} 
+{opt remove(template_name)} 
+{opt default(template_name)} 
+{opt resetdefault}
+{opt replace}]
 
 {synoptset 24 tabbed}{...}
 {synopthdr}
@@ -45,10 +55,50 @@ directory is to be created{p_end}
 
 {pstd}
 the purpose of {cmd:mkproject} is to create a standard directory structure and 
-some files with boilerplate code in order to help get a project started. {cmd:mkproject}
-knows two types of projects: A data-analysis project and a {cmd:smclpres} project.
-The purpose of the latter is to create a presentation in Stata using the {stata ssc desc smclpres:smclpres} package. {cmd:mkproject} also allows for setting up a 
-git repository
+some files with boilerplate code in order to help get a project started. There 
+is usually a set of commands that are included in every .do file a person makes, 
+like {cmd:clear _all} or {cmd:log using}. What those commands are can differ 
+from person to person, but most persons have such a standard set. Similarly, a 
+project usually has a standard set of directories and files. Starting a new a 
+new project thus involves a number of steps that could easily be automated. 
+Automating has the advantage of reducing the amount of work you need to do. 
+However, the more important advantage of automating the start of a project is 
+that it makes it easier to maintain your own workflow: it is so easy to start 
+"quick and dirty" and promise to yourself that you will fix that "later". If the 
+start is automated, then you don't need to fix it. 
+
+{pstd}
+The {cmd:mkproject} command automates the beginning of a project. It comes with 
+a set of "templates" I find useful. A template contains all the actions (like 
+create sub-directories, create files, run other Stata commands) that 
+{cmd:mkproject} will take when it creates a new project. Since everybody's 
+workflow is different, {cmd:mkproject} allows users to create their own template. 
+
+{pstd}
+You can get a list of available templates at your computer by typing 
+{cmd:mkproject, query}. It will show for each template a short label, which can
+give a quick idea of what templates could potentially be useful for you. You can 
+also click on the name of the template to open it in the viewer, to see what it
+exactly does. 
+
+{pmore}
+Lines between {cmd:<header>} and {cmd:</header>} contain 
+meta-information, like the label for that template. 
+
+{pmore}
+Lines starting with {cmd:<dir>} tell you what sub-directories that template will
+create
+
+{pmore}
+Lines starting with {cmd:<file>} have two elements, the first "word" is the name
+of the template that {help boilerplate} will use to create a file, and the second
+"word" is the filename. This filename can contain the tag {cmd:<abbrev>} which 
+{cmd:mkproject} will replace with the {it:proj_abbrev} you will specify when using
+{cmd:mkproject} to create a project folder.  
+
+{pmore}
+Lines starting with {cmd:<cmd>} tell you what commands {cmd:mkproject} will run
+after creating those directories and files
 
 
 {it:A data-analysis project}

@@ -1,8 +1,13 @@
 <header>
-<mkproject> stencil
+<mkproject> project
 <version> 2.0.0
 <label> Research with git
 <reqs> git
+<description>
+{pstd}
+This template sets up a directory for a medium sized research project that uses
+{browse "https://git-scm.com/":git} to keep track of its history.
+</description>
 </header>
 
 <dir> docu

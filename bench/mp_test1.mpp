@@ -1,0 +1,8 @@
+<header>
+<mkproject> project
+<reqs> Stata 14
+<reqs> git
+<reqs> dirtree
+</header>
+<file> test1 somefilename1
+<file> test2 somefilename2

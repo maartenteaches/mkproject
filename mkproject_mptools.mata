@@ -29,13 +29,14 @@ void mptools::header_ok(string scalar what, string scalar type)
 
 void mptools::collect_header_info()
 {
-    real scalar header
+    real scalar header, descopen
     string scalar line, EOF, first, second
     transmorphic scalar t
     
-    EOF = J(0,0,"")
-    t = tokeninit(" ", "", "<>")
-    header = 0
+    EOF      = J(0,0,"")
+    t        = tokeninit(" ", "", "<>")
+    header   = 0
+	descopen = 0
     
     while ((line=mpfget())!= EOF) {
         reading.lnr = reading.lnr + 1
@@ -61,7 +62,7 @@ void mptools::collect_header_info()
         }
         else if (header) {
             second = ustrtrim(tokenrest(t))
-            parse_header(first, second)
+            parse_header(first, second, descopen)
         }
     }
     mpfclose(reading.fh)
@@ -70,6 +71,11 @@ void mptools::collect_header_info()
         errprintf("{p}Started a header but never closed it{p_end}")
         exit(198)
     }
+	if (descopen == 1) {
+		where_err()
+		errprintf("{p}Started a description but never closed it{p_end}")
+		exit(198)
+	}
 }
 
 void mptools::read_header(| string scalar what)
@@ -92,20 +98,54 @@ void mptools::chk_header(string scalar what)
     header_version(reading.sversion)
 }
 
-void mptools::parse_header(string scalar first, string scalar second)
+void mptools::descopenerr(real scalar descopen) {
+	if (descopen == 1) {
+		where_err()
+		errprintf("cannot enter other tags when a description is open")
+		exit(198)
+	}
+}
+
+void mptools::parse_header(string scalar first, string scalar second,  real scalar descopen )
 {
     if (first == "<mkproject>") {
+		descopenerr(descopen)
         reading.type = second
     }
     if (first == "<version>") {
-        reading.sversion = second
+        descopenerr(descopen)
+		reading.sversion = second
     }
     if (first == "<label>") {
+		descopenerr(descopen)
         reading.label = second
     }
 	if (first == "<reqs>") {
+		descopenerr(descopen)
 		reading.reqs = reading.reqs \ second
 	}
+	if (first == "</description>") {
+		if (descopen == 0) {
+			where_err()
+			errprintf("{p}Tried to close a description when none was open{p_end}")
+			exit(198)
+		}
+		descopen = 0
+	}
+	if (descopen == 1) {
+		reading.description = 
+		    reading.description \ (first + " " + second)
+	}
+	if (first == "<description>") {
+		if (descopen == 1) {
+			where_err()
+			errprintf("{p}Tried to open a description when one was already open{p_end}")
+			exit(198)
+		}
+		descopen = 1
+		reading.description = J(0,1,"")
+	}
+
 }
 
 real scalar mptools::_chkreq(string scalar req)

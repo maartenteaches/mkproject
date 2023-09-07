@@ -47,6 +47,8 @@ void mpcreate::create(string scalar what)
     }
     mpfclose(reading.fh)
     mpfclose(fh_out)
+	
+	write_help(what, fn_out)
 }
 
 string colvector mpcreate::integrate_reqs(string scalar fn)
@@ -167,6 +169,299 @@ void mpcreate::remove(string scalar what, string scalar type)
 		}
 	}
 	unlink(fn)
+	fn = "m\mp_" + (type=="project"? "p" : "b" ) + "_" + what + ".sthlp"
+	fn = pathjoin(pathsubsysdir("PERSONAL"), fn)
+	unlink(fn)
 }
+
+void mpcreate::write_help(string scalar what, string fn_in ){
+	string scalar templ
+	
+	templ = pathrmsuffix(pathbasename(fn_in)) 
+	templ = substr(templ, 4)
+	
+	if (what == "project") {
+		write_help_p(fn_in, templ)
+	}
+	else {
+		write_help_b(fn_in, templ)
+	}
+}
+
+void mpcreate::write_help_p(string scalar fn_in , string scalar templ)
+{
+	string scalar fn_out 
+	real scalar fh
+	
+	fn_out = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_p_" + templ + ".sthlp")
+	
+	project = templ
+	abbrev = "proj_abbrev"
+	read_project()
+	
+	if (st_local("replace") == "" & fileexists(fn_out)) {
+        errprintf("{p}" +fn_out + " already exists{p_end}" )
+        exit(198)
+    }
+    else {
+        unlink(fn_out)
+    }
+	
+	fh = mpfopen(fn_out, "w")
+	
+	write_help_header(fh, templ, "project")
+	write_help_p_body(fh)
+	write_help_footer(fh)
+	
+	mpfclose(fh)
+}
+
+void mpcreate::write_help_b(string scalar fn_in, string scalar templ)
+{
+	string scalar fn_out
+	real scalar fh
+	
+	fn_out = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_b_" + templ + ".sthlp")
+	
+	mpfread(fn_in)
+	collect_header_info()
+	
+	if (st_local("replace") == "" & fileexists(fn_out)) {
+        errprintf("{p}" + fn_out + " already exists{p_end}" )
+        exit(198)
+    }
+    else {
+        unlink(fn_out)
+    }
+	
+	fh = mpfopen(fn_out, "w")
+	
+	write_help_header(fh, templ, "boilerplate")
+	write_help_b_body(fh)
+	write_help_footer(fh)
+	
+	mpfclose(fh)
+	mpfclose(reading.fh)
+}
+
+void mpcreate::write_help_b_body(real scalar fh)
+{
+	string scalar line, EOF
+
+	EOF = J(0,0,"")
+	
+	mpfput(fh, "{title:Boilerplate}")
+	mpfput(fh, "")
+	mpfput(fh, "{pstd}")
+	mpfput(fh, "This template creates a .do file with the following content: ")
+	mpfput(fh, "")
+	mpfput(fh, "{cmd}")
+	
+	while ((line=mpfget())!= EOF) {
+		mpfput(fh, "    " + line)
+	}
+	mpfput(fh, "{txt}")
+	mpfput(fh,"")
+	mpfput(fh, "{title:Tags}")
+	mpfput(fh, "")
+	mpfput(fh, "{pstd}")
+	mpfput(fh,"This file may contain one or more of the following tags:{p_end}")
+	mpfput(fh, "{pmore}{cmd:<stata_version>} will be replaced by the Stata version{p_end}")
+	mpfput(fh, "{pmore}{cmd:<date>} will be replaced by the date{p_end}")
+	mpfput(fh, "{pmore}{cmd:<fn>} will be replaced by the file name{p_end}")
+	mpfput(fh, "{pmore}{cmd:<stub>} will be replaced by the file name without the suffix{p_end}")
+	mpfput(fh, "{pmore}{cmd:<abbrev>} will be replaced by the file name without the suffix up to the last underscore{p_end}")
+	mpfput(fh, "{pmore}{cmd:<basedir>} will be replaced by the directory in which the file is saved{p_end}")
+	mpfput(fh, "{pmore}{cmd:<as of #>} will include whatever comes after that tag only if the Stata version is # or higher{p_end}")
+	mpfput(fh, "")
+	mpfput(fh, "")
+}
+
+
+void mpcreate::write_help_header(real scalar fh, string scalar templ, string scalar what)
+{
+	real scalar r
+	
+	mpfput(fh, "{smcl}")
+	mpfput(fh, `"{vieweralsosee "mkproject" "help mkproject"}{...}"')
+	mpfput(fh, `"{vieweralsosee "boilerplate" "help boilerplate"}{...}"')
+	mpfput(fh, "{title:Title}")
+	mpfput(fh, "")
+	mpfput(fh, "{phang}")
+	mpfput(fh, what + " template " + templ + " {hline 2} " + reading.label )
+	mpfput(fh, "")
+	mpfput(fh, "")
+	if (rows(reading.description) > 0) {
+		mpfput(fh, "{title:Description}")
+		mpfput(fh, "")
+		for(r=1; r<=rows(reading.description); r++) {
+			mpfput(fh, reading.description[r])
+		}
+		mpfput(fh, "")
+		mpfput(fh, "")
+	}
+}
+
+void mpcreate::write_help_p_body(real scalar fh)
+{
+	real scalar i
+	
+	mpfput(fh, "{title:File structure}")
+	mpfput(fh, "")
+	mpfput(fh, "{pstd}")
+	mpfput(fh, "This template will create the following sub-directories and files:")
+	mpfput(fh, "")
+	create_tree(fh)
+	if (rows(cmds)> 0) { 
+		mpfput(fh, "")
+		mpfput(fh, "")
+		mpfput(fh, "{title:Commands}")
+		mpfput(fh, "")
+		mpfput(fh, "{pstd}")
+		mpfput(fh, "After creating these sub-directories and files it will change the working directory to {it:proj_abbrev} directory.")
+		mpfput(fh, "Subsequently it will execute the following commands:{p_end}")
+		for(i=1; i <= rows(cmds) ; i++) {
+			mpfput(fh, "{pmore}{cmd:" + cmds[i] + "}{p_end}")
+		}
+	}
+	mpfput(fh, "")
+	mpfput(fh, "")
+}
+
+void mpcreate::write_help_footer(real scalar fh)
+{
+	mpfput(fh, "{title:Source code}")
+	mpfput(fh, "")
+	mpfput(fh, `"    {view ""' + reading.fn + `"":"' + pathbasename(reading.fn) + "}")
+}
+
+void mpcreate::create_tree(real scalar fh)
+{
+	string matrix dirtree, filetree, newcols, toparse
+	real scalar ncolsd, ncolsf
+	
+	dirtree = parse_tree(dirs)
+	
+	toparse = files
+	if (rows(toparse) != 0) {
+		toparse[.,2] = subinstr(files[.,2], "/", "\")
+		filetree = parse_tree(toparse)
+		ncolsd = cols(dirtree)
+		ncolsf = cols(filetree)
+		if (ncolsf > ncolsd) {
+			newcols = J(rows(dirtree), ncolsf - ncolsd, "")
+			dirtree = dirtree , newcols
+		}
+		else if(ncolsf < ncolsd) {
+			newcols = J(rows(filetree), ncolsd - ncolsf, "")
+			filetree = filetree , newcols
+		}
+		dirtree = dirtree \ filetree
+	}
+	dirtree = sort(dirtree, (1..cols(dirtree)))
+	dirtree = J(rows(dirtree), 1, (abbrev, "/")), dirtree
+	dirtree = ("proj_abbrev", "/", J(1,cols(dirtree)-2,"")) \ dirtree
+	decorate_tree(dirtree)
+	write_tree(fh, dirtree)
+}
+
+string matrix mpcreate::parse_tree(string matrix toparse)
+{   
+	real scalar ncols, nrows, i, n, files
+	string matrix parsed, newcols
+	string rowvector tdir
+	string colvector paths
+	transmorphic scalar t
+
+	if (cols(toparse) == 1) {
+		paths = toparse
+		files = 0
+	}
+	else if (cols(toparse)== 2) {
+		paths = toparse[.,2]
+		files = 1
+	}
+	else {
+		errprintf("{p}parse_tree() expected a matrix with 1 or 2 colums{p_end}")
+		exit(198)
+	}
+	ncols = 1	   
+	nrows = rows(paths)
+	parsed = J(nrows,ncols, "")
+	t = tokeninit("\")
+
+	for (i=1; i<= nrows; i++) {
+		tokenset(t,paths[i])
+		tdir = tokengetall(t)
+		n = cols(tdir)
+		if (files==1) {
+			tdir[n] = "{help mp_b_" + toparse[i,1] + ":" + tdir[n] + "}"
+		}
+		else {
+			tdir = tdir, "/"
+			n = n + 1
+		}
+		if (n > ncols) {
+			newcols = J(nrows, n - ncols, "")
+			parsed = parsed, newcols
+			ncols = n
+		}
+		else if (n < ncols) {
+			newcols = J(1, ncols - n, "")
+			tdir = tdir, newcols
+		}
+		parsed[i,.] = tdir 
+	}
+	_sort(parsed, (1..ncols))
+	return(parsed)
+}
+
+void mpcreate::decorate_tree(string matrix toparse)
+{
+	real scalar r, c, nextc, first
+	string scalar lastchild, child, dir
+	
+    lastchild = "└──"
+    child     = "├──"
+	dir       = "/"
+	
+	for (c=1; c < cols(toparse); c++) {
+		first = 1
+		for (r= rows(toparse); r>1  ; r--) {
+			if (toparse[r,c] == dir | toparse[r,c] == "") continue
+			nextc = c + 1
+			nextc = nextc + (toparse[r, nextc] == dir)
+			
+			if (toparse[r,c] == toparse[r-1,c]) {
+				toparse[r,c] = (first ? "   ": "|  " )
+				if (toparse[r, c+1] == dir) {
+					toparse[r, c+1] = ""
+				}
+			}
+			else {
+				first = 1
+			}
+			
+			if (nextc > cols(toparse)) continue
+			if (toparse[r,nextc]!= toparse[r-1,nextc] & anyof(("|  ", "   "),toparse[r,c])) {
+				toparse[r,c] = (first ? lastchild : child)
+				first = 0
+				if (toparse[r,c+1] == dir) {
+					toparse[r, c+1] = ""
+				}
+			}
+		}
+	}
+}
+
+void mpcreate::write_tree(real scalar fh, string matrix toparse)
+{
+	real scalar r
+	
+	for(r=1; r <= rows(toparse); r++) {
+		mpfput(fh, "    " + invtokens(toparse[r,.], " "))
+	}
+}
+
 
 end

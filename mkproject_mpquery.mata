@@ -179,8 +179,9 @@ void mpquery::parse_names(real scalar maxl, real scalar bigestl) {
 	for(i=1;i<=rows(files); i++) {
 		files[i].name = truncstring(files[i].name, maxl)
 		bigestl = max((ustrlen(files[i].name),bigestl))
-		files[i].name = " " + files[i].isdefault + `"{view ""' + 
-		                files[i].path + `"":"' + 
+		files[i].name = " " + files[i].isdefault + `"{help ""' + 
+		                "mp_" + substr(files[i].path,-1,1) + "_" + 
+						files[i].name + `"":"' + 
 						files[i].name + "}"
 	}
 }

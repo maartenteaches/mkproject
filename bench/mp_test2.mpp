@@ -1,0 +1,6 @@
+<header>
+<mkproject> project
+<reqs> Stata 19
+</header>
+<file> test1 somefilename1
+<file> test2 somefilename2

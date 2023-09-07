@@ -3,9 +3,6 @@
 <version> 2.0.0
 <label> a smclpres presentation project
 <reqs> smclpres
-<description>
-{pstd}
-This template sets up a directory for a {help smclpres} presentation.
 </header>
 
 <dir> source

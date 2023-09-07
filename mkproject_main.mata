@@ -25,6 +25,7 @@ struct reading_file
     string scalar    sversion
     string scalar    type
     string scalar    label
+	string colvector description
 	string colvector reqs
     string scalar    fn
     real   scalar    fh
@@ -71,6 +72,7 @@ class mptools extends mpfile{
     string                 scalar    find_file()
     void                             read_header()
     void                             parse_header()
+	void                             descopenerr()
 	real                   scalar    _chkreq()
 	void                             chkreqs()
     void                             collect_header_info()
@@ -148,7 +150,7 @@ class mpquery extends mpdefaults {
 	void                            setup_table()
 }
 
-class mpcreate extends mpdefaults {
+class mpcreate extends mkproject {
     string                scalar    newname()
     void                            chk_file()
     void                            create()
@@ -156,6 +158,17 @@ class mpcreate extends mpdefaults {
     void                            header_defaults()
 	string                colvector integrate_reqs()
 	void                            parse_req_line()
+	string                matrix    parse_tree()
+	void                            create_tree()
+	void                            decorate_tree()
+	void                            write_tree()
+	void                            write_help()
+	void                            write_help_p()
+	void                            write_help_b()
+	void                            write_help_header()
+	void                            write_help_footer()
+	void                            write_help_p_body()
+	void                            write_help_b_body()
 }
 end
 

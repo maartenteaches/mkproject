@@ -2,6 +2,11 @@
 <mkproject> boilerplate
 <version> 2.0.0
 <label> readme.md for when you want to put your project on github or the like
+<description>
+{pstd}
+This template creates a readme.md file that will be used if you put your project
+on github to introduce your project to people visiting your project page.
+</description>
 </header>
 # Title
 

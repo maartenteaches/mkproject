@@ -3,6 +3,10 @@
 <version> 2.0.0
 <label> a smclpres presentation
 <reqs> smclpres
+<description>
+{pstd}
+This template starts a {help smclpres} presentation.
+</description>
 </header>
 //version 4.0.2
 
