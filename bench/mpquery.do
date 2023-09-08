@@ -247,7 +247,7 @@ totest = mpquery()
 totest.collect_info("project")
 bigestl=2 
 totest.parse_names(4, bigestl)
-assert(totest.files[4].name == `"  {view "c:\ado\plus/m\mp_longt.mpp":lo~t}"')
+assert(totest.files[4].name == `"  {help "mp_p_longt":lo~t}"')
 assert(bigestl == 4)
 end
 
@@ -286,7 +286,7 @@ totest.setup_table()
 assert(totest.cname == "{txt}{col 3}")
 assert(totest.creq == "{col 17}")
 assert(totest.clab == "{col 28}")
-assert(totest.files[1].name == `"  {view "c:\ado\plus/m\mp_course.mpp":course}"')
+assert(totest.files[1].name == `"  {help "mp_p_course":course}"')
 assert(totest.files[1].reqs[1] == `"+ {help dirtree:dirtree}"')
 end
 

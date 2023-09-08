@@ -2,6 +2,11 @@
 <mkproject> boilerplate
 <version> 2.0.0
 <label> research log for a course
+<description>
+{pstd} 
+This template starts a research log. Here you keep track of what you are doing
+and why.
+</description>
 </header>
 # Research log: [project name]
 

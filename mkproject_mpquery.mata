@@ -175,14 +175,15 @@ string scalar mpquery::file2name(string scalar toparse, string scalar what)
 
 void mpquery::parse_names(real scalar maxl, real scalar bigestl) {
 	real scalar i
+	string scalar name
 
 	for(i=1;i<=rows(files); i++) {
+		name = files[i].name
 		files[i].name = truncstring(files[i].name, maxl)
 		bigestl = max((ustrlen(files[i].name),bigestl))
 		files[i].name = " " + files[i].isdefault + `"{help ""' + 
 		                "mp_" + substr(files[i].path,-1,1) + "_" + 
-						files[i].name + `"":"' + 
-						files[i].name + "}"
+						name + `"":"' + files[i].name + "}"
 	}
 }
 void mpquery::setup_table()

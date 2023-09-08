@@ -67,6 +67,8 @@ void mpdefaults::write_default(string scalar what, string scalar value)
     reading.type = "defaults" 
     reading.fversion = current_version
     reading.label = "user specified defaults"
+	reading.description = J(0,1, "")
+	reading.reqs = J(0,1,"")
     write_header(fh) 
     mpfput(fh, "<project> " + defaults.project)
     mpfput(fh, "<boilerplate> " + defaults.boilerplate)

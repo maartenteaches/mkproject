@@ -34,6 +34,7 @@ void mpfile::mpfread(string scalar fn)
     reading.type = ""
 	reading.open = 1
     reading.reqs = J(0,1,"")
+	reading.description = J(0,1,"")
 }
 
 void mpfile::mpfclose(real scalar fh)

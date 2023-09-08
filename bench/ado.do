@@ -19,21 +19,21 @@ assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 17}Requires{col 28}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_course.mpp":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course"')
+assert `"`line'"'==`"{txt}  {help "mp_p_course":course}{col 17}+ {help dirtree:dirtree}{col 28}Small research project as part of a course"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_excer.mpp":excer}{col 17}{col 28}excercise for a course"')
+assert `"`line'"'==`"{txt}  {help "mp_p_excer":excer}{col 17}{col 28}excercise for a course"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt} *{view "c:\ado\plus/m\mp_long.mpp":long}{col 17}{col 28}based on (Long 2009)"')
+assert `"`line'"'==`"{txt} *{help "mp_p_long":long}{col 17}{col 28}based on (Long 2009)"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_longt.mpp":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree"')
+assert `"`line'"'==`"{txt}  {help "mp_p_longt":longt}{col 17}+ {help dirtree:dirtree}{col 28}based on (Long 2009), display project with dirtree"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_research_git.mpp":research_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research with git"')
+assert `"`line'"'==`"{txt}  {help "mp_p_research_git":research_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research with git"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_researcht_git.mpp":researcht_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research project with git, display project with"')
+assert `"`line'"'==`"{txt}  {help "mp_p_researcht_git":researcht_git}{col 17}/ {browse "https://git-scm.com/":git}{col 28}Research project with git, display project with"'
 file read `fh' line
 assert `"`line'"'==`"{txt}{col 17}+ {help dirtree:dirtree}{col 28}dirtree"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_smclpres.mpp":smclpres}{col 17}+ {help smclpres:smclpres}{col 28}a smclpres presentation project"')
+assert `"`line'"'==`"{txt}  {help "mp_p_smclpres":smclpres}{col 17}+ {help smclpres:smclpres}{col 28}a smclpres presentation project"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
@@ -55,29 +55,29 @@ assert `"`line'"'==`"{txt}{txt}{col 3}Name{col 12}Requires{col 23}Label"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_ana.mpb":ana}{col 12}{col 23}analysis .do file"')
+assert `"`line'"'==`"{txt}  {help "mp_b_ana":ana}{col 12}{col 23}analysis .do file"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt} *{view "c:\ado\plus/m\mp_dta.mpb":dta}{col 12}{col 23}data preparation"')
+assert `"`line'"'==`"{txt} *{help "mp_b_dta":dta}{col 12}{col 23}data preparation"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_dta_c.mpb":dta_c}{col 12}{col 23}data preparation for course"')
+assert `"`line'"'==`"{txt}  {help "mp_b_dta_c":dta_c}{col 12}{col 23}data preparation for course"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_excer.mpb":excer}{col 12}{col 23}course exercise"')
+assert `"`line'"'==`"{txt}  {help "mp_b_excer":excer}{col 12}{col 23}course exercise"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_ignore.mpb":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory"')
+assert `"`line'"'==`"{txt}  {help "mp_b_ignore":ignore}{col 12}{col 23}.ignore file for git, ignores everything in directory"'
 file read `fh' line
 assert `"`line'"'==`"{txt}{col 12}{col 23}data, and all .dta and .csv files"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_main.mpb":main}{col 12}{col 23}main project .do file"')
+assert `"`line'"'==`"{txt}  {help "mp_b_main":main}{col 12}{col 23}main project.do file"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_readme.mpb":readme}{col 12}{col 23}readme.md for when you want to put your project on github"')
+assert `"`line'"'==`"{txt}  {help "mp_b_readme":readme}{col 12}{col 23}readme.md for when you want to put your project on github"'
 file read `fh' line
 assert `"`line'"'==`"{txt}{col 12}{col 23}or the like"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_rlog.mpb":rlog}{col 12}{col 23}research log"')
+assert `"`line'"'==`"{txt}  {help "mp_b_rlog":rlog}{col 12}{col 23}research log"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_rlogc.mpb":rlogc}{col 12}{col 23}research log"')
+assert `"`line'"'==`"{txt}  {help "mp_b_rlogc":rlogc}{col 12}{col 23}research log for a course"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"{txt}  {view "c:\ado\plus/m\mp_smclpres.mpb":smclpres}{col 12}+ {help smclpres:smclpres}{col 23}a smclpres presentation"')
+assert `"`line'"'==`"{txt}  {help "mp_b_smclpres":smclpres}{col 12}+ {help smclpres:smclpres}{col 23}a smclpres presentation"'
 file read `fh' line
 assert `"`line'"'==`"{hline}"'
 file read `fh' line
@@ -99,6 +99,7 @@ assert `"`line'"'==`"{com}{sf}{ul off}"'
 file read `fh' line
 assert r(eof)==1
 file close `fh'
+
 
 
 

@@ -18,12 +18,13 @@ void mpcreate::header_defaults(string scalar what)
 void mpcreate::create(string scalar what)
 {
     string scalar fn_in, fn_out, EOF, line
-    real scalar fh_out
+    real scalar fh_out, plus
 	string colvector reqs
     
     fn_in = st_local("create")
     fn_out = newname(fn_in, what)
     EOF = J(0,0,"")
+	plus = (st_local("plus") != "")
     
     if (fileexists(fn_in)==0) {
         errprintf("{p}file " + fn_in + " not found {p_end}")
@@ -48,7 +49,7 @@ void mpcreate::create(string scalar what)
     mpfclose(reading.fh)
     mpfclose(fh_out)
 	
-	write_help(what, fn_out)
+	write_help(what, fn_out, plus)
 }
 
 string colvector mpcreate::integrate_reqs(string scalar fn)
@@ -174,21 +175,21 @@ void mpcreate::remove(string scalar what, string scalar type)
 	unlink(fn)
 }
 
-void mpcreate::write_help(string scalar what, string fn_in ){
+void mpcreate::write_help(string scalar what, string fn_in, real scalar plus ){
 	string scalar templ
 	
 	templ = pathrmsuffix(pathbasename(fn_in)) 
 	templ = substr(templ, 4)
 	
 	if (what == "project") {
-		write_help_p(fn_in, templ)
+		write_help_p(fn_in, templ, plus)
 	}
 	else {
-		write_help_b(fn_in, templ)
+		write_help_b(fn_in, templ, plus)
 	}
 }
 
-void mpcreate::write_help_p(string scalar fn_in , string scalar templ)
+void mpcreate::write_help_p(string scalar fn_in , string scalar templ, real scalar plus)
 {
 	string scalar fn_out 
 	real scalar fh
@@ -211,12 +212,12 @@ void mpcreate::write_help_p(string scalar fn_in , string scalar templ)
 	
 	write_help_header(fh, templ, "project")
 	write_help_p_body(fh)
-	write_help_footer(fh)
+	write_help_footer(fh, plus)
 	
 	mpfclose(fh)
 }
 
-void mpcreate::write_help_b(string scalar fn_in, string scalar templ)
+void mpcreate::write_help_b(string scalar fn_in, string scalar templ, real scalar plus)
 {
 	string scalar fn_out
 	real scalar fh
@@ -238,7 +239,7 @@ void mpcreate::write_help_b(string scalar fn_in, string scalar templ)
 	
 	write_help_header(fh, templ, "boilerplate")
 	write_help_b_body(fh)
-	write_help_footer(fh)
+	write_help_footer(fh, plus)
 	
 	mpfclose(fh)
 	mpfclose(reading.fh)
@@ -328,11 +329,16 @@ void mpcreate::write_help_p_body(real scalar fh)
 	mpfput(fh, "")
 }
 
-void mpcreate::write_help_footer(real scalar fh)
+void mpcreate::write_help_footer(real scalar fh, real scalar plus)
 {
+	string scalar fn
+	
+	fn = pathbasename(reading.fn)
+	if (plus) fn = pathjoin(pathsubsysdir("PLUS"), "m/" +fn)
+	
 	mpfput(fh, "{title:Source code}")
 	mpfput(fh, "")
-	mpfput(fh, `"    {view ""' + reading.fn + `"":"' + pathbasename(reading.fn) + "}")
+	mpfput(fh, `"    {view ""' + fn + `"":"' + pathbasename(reading.fn) + "}")
 }
 
 void mpcreate::create_tree(real scalar fh)

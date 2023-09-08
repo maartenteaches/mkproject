@@ -14,6 +14,15 @@ void mptools::write_header(real scalar fh )
 		mpfput(fh, "<reqs> " + reading.reqs[i])
 	}
 	
+	if (rows(reading.description) > 0) {
+		mpfput(fh, "<description>")
+	}
+	for(i = 1 ; i<=rows(reading.description); i++ ) {
+		mpfput(fh, reading.description[i])
+	}
+	if (rows(reading.description) > 0) {
+		mpfput(fh, "</description>")
+	}
 	mpfput(fh, "</header>")
 }
 
@@ -143,7 +152,6 @@ void mptools::parse_header(string scalar first, string scalar second,  real scal
 			exit(198)
 		}
 		descopen = 1
-		reading.description = J(0,1,"")
 	}
 
 }

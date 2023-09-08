@@ -61,7 +61,7 @@ program define mkproject_work
 end
 
 program define Create
-    syntax anything(name=create), proj(string) calling(string) [replace] *
+    syntax anything(name=create), proj(string) calling(string) [replace plus] *
     mata: `proj' = mpcreate()
     mata: `proj'.create("`calling'")
 end
