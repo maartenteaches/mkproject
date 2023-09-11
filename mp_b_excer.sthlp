@@ -10,6 +10,8 @@ boilerplate template excer {hline 2} course exercise
 {title:Description}
 
 {pstd} 
+This a a template for a .do file that a student can use to do an
+exercise in a course.
 
 
 {title:Boilerplate}

@@ -4,6 +4,8 @@
 <label> course exercise
 <description>
 {pstd} 
+This a a template for a .do file that a student can use to do an
+exercise in a course.
 </description>
 </header>
 capture log close

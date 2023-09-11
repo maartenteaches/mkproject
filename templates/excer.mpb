@@ -4,9 +4,10 @@
 <label> course exercise
 <description>
 {pstd}
-</description>
 This a a template for a .do file that a student can use to do an
 exercise in a course.
+</description>
+
 </header>
 capture log close
 log using <stub>.txt, replace text

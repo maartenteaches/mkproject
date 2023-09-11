@@ -19,7 +19,7 @@
 {p 8 17 2}
 {cmd:mkproject}
 {it:proj_abbrev}
-[{cmd:,} {opt template(template)} 
+[{cmd:,} {opt templ:ate(template)} 
 {opt dir(directory)} ]
 
 {p 8 17 2}
@@ -35,7 +35,7 @@
 {synopthdr}
 {synoptline}
 {syntab:Main}
-{synopt:{opt template(template)}}choose the template for the projects. The 
+{synopt:{opt templ:ate(template)}}choose the template for the projects. The 
 {it:query} option displays a list of templates available and the default{p_end}
 {synopt:{opt dir(directory)}}specifies the directory in which the project 
 directory is to be created{p_end}
