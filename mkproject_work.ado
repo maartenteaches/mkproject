@@ -93,7 +93,7 @@ end
 program define mkproject_main 
 	version 10
 	syntax anything, proj(string) calling(string) ///
-           [ DIRectory(string) template(string)]
+           [ DIRectory(string) TEMPLate(string)]
     
     if "`calling'" == "project" {
         mata: `proj' = mkproject()
