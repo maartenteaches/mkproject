@@ -10,7 +10,7 @@
 {title:Title}
 
 {phang}
-{bf:mkproject} {hline 2} Creates project folder with some boilerplate code and research log
+{bf:mkproject} {hline 2} Creates project folder with some boilerplate code 
 
 
 {marker syntax}{...}
@@ -54,7 +54,7 @@ directory is to be created{p_end}
 {title:Description}
 
 {pstd}
-the purpose of {cmd:mkproject} is to create a standard directory structure and 
+The purpose of {cmd:mkproject} is to create a standard directory structure and 
 some files with boilerplate code in order to help get a project started. There 
 is usually a set of commands that are included in every .do file a person makes, 
 like {cmd:clear _all} or {cmd:log using}. What those commands are can differ 

@@ -1,0 +1,51 @@
+v v2.0.0
+d 'MKPROJECT': Creates project folder with some boilerplate code
+d 
+d Distribution-Date:   20230912
+d License: Creative Commons Attribution 4.0
+d 
+F boilerplate.ado
+F boilerplate.sthlp
+F boilerplate_create.sthlp
+F lmkproject.mlib
+F mkproject.ado
+F mkproject.sthlp
+F mkproject_create.sthlp
+F mkproject_work.ado
+F mp_ana.mpb
+F mp_b_ana.sthlp
+F mp_b_dta.sthlp
+F mp_b_dta_c.sthlp
+F mp_b_excer.sthlp
+F mp_b_ignore.sthlp
+F mp_b_main.sthlp
+F mp_b_readme.sthlp
+F mp_b_readme_sp.sthlp
+F mp_b_rlog.sthlp
+F mp_b_rlogc.sthlp
+F mp_b_smclpres.sthlp
+F mp_course.mpp
+F mp_defaults.mpd
+F mp_dta.mpb
+F mp_dta_c.mpb
+F mp_excer.mpb
+F mp_excer.mpp
+F mp_ignore.mpb
+F mp_long.mpp
+F mp_longt.mpp
+F mp_main.mpb
+F mp_p_course.sthlp
+F mp_p_excer.sthlp
+F mp_p_long.sthlp
+F mp_p_longt.sthlp
+F mp_p_research_git.sthlp
+F mp_p_researcht_git.sthlp
+F mp_p_smclpres.sthlp
+F mp_readme.mpb
+F mp_readme_sp.mpb
+F mp_research_git.mpp
+F mp_researcht_git.mpp
+F mp_rlog.mpb
+F mp_rlogc.mpb
+F mp_smclpres.mpb
+F mp_smclpres.mpp
