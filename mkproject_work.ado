@@ -1,7 +1,7 @@
 *! version 2.0.1 15Sep2023 MLB
 program define mkproject_work
     version 15.1
-    syntax [anything], calling(string) [template(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
+    syntax [anything], calling(string) [TEMPLate1(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
     
     if `"`calling'"' != "project" & `"`calling'"' != "boilerplate" {
         di as err "{p}mkproject_work can only be called from mkproject or boilerplate{p_end}"
@@ -56,7 +56,7 @@ program define mkproject_work
         Cleanup, proj(`proj') rc(`=_rc') `debug'
         exit
     }
-    capture noisily mkproject_main `anything', `options' proj(`proj') template(`template') calling("`calling'")
+    capture noisily mkproject_main `anything', `options' proj(`proj') template(`template1') calling("`calling'")
 	Cleanup, proj(`proj') rc(`=_rc') `debug'	
 end
 

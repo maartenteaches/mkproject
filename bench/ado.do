@@ -208,6 +208,6 @@ cd ../..
 cleanup bench/totest
 
 capture erase bench/totest_ana02.do
-boilerplate bench/totest_ana02.do, template(ana)
+boilerplate bench/totest_ana02.do, templ(ana)
 erase bench/totest_ana02.do // returns error if file does not exist
 
