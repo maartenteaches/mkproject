@@ -1,4 +1,4 @@
-*! version 2.0.0 12Sep2023 MLB
+*! version 2.0.1 15Sep2023 MLB
 program define mkproject_work
     version 15.1
     syntax [anything], calling(string) [template(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *
@@ -93,7 +93,7 @@ end
 program define mkproject_main 
 	version 10
 	syntax anything, proj(string) calling(string) ///
-           [ DIRectory(string) TEMPLate(string)]
+           [ DIRectory(string) TEMPLate1(string)]
     
     if "`calling'" == "project" {
         mata: `proj' = mkproject()
@@ -101,7 +101,7 @@ program define mkproject_main
     }
     else if "`calling'" == "boilerplate" {
         mata: `proj' = boilerplate()
-        mata: `proj'.copy_boiler(`"`anything'"', "`template'")
+        mata: `proj'.copy_boiler(`"`anything'"', "`template1'")
 		doedit `"`anything'"'
     }
 end

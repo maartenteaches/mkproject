@@ -284,6 +284,7 @@ void mpcreate::write_help_header(real scalar fh, string scalar templ, string sca
 	real scalar r
 	
 	mpfput(fh, "{smcl}")
+	mpfput(fh, "{* *! version " + invtokens(strofreal(current_version), ".") + "}{...}")
 	mpfput(fh, `"{vieweralsosee "mkproject" "help mkproject"}{...}"')
 	mpfput(fh, `"{vieweralsosee "boilerplate" "help boilerplate"}{...}"')
 	mpfput(fh, "{title:Title}")

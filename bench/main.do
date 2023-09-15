@@ -5,7 +5,7 @@ local home "D"
 *local home "C"
 
 cd "`home':\mijn documenten\projecten\stata\mkproject"
-do mkproject_main.mata
+do mkproject_build.do
 
 do bench/copy2plus.do
 do bench/version.do

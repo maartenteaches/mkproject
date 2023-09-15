@@ -3,6 +3,10 @@ mata: mata clear
 
 cd "D:/mijn documenten/projecten/stata/mkproject"
 do mkproject_main.mata
+
+lmbuild lmkproject, replace
+mata : mata describe using lmkproject
+
 lmbuild lmkproject, dir(.) replace
 mata : mata describe using lmkproject
 
