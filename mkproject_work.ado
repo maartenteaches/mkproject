@@ -100,6 +100,10 @@ program define mkproject_main
         mata: `proj'.run()
     }
     else if "`calling'" == "boilerplate" {
+		if `"`directory'"' != "" {
+			di as err "{p}option {bf:directory()} not allowed{p_end}"
+			exit 198
+		}
         mata: `proj' = boilerplate()
         mata: `proj'.copy_boiler(`"`anything'"', "`template1'")
 		doedit `"`anything'"'
