@@ -32,6 +32,13 @@ assert(totest.torepl.fn == "bläföödta01.do")
 assert(totest.torepl.stub == "bläföödta01")
 assert(totest.torepl.abbrev == "bläföödta01")
 assert(strlower(totest.torepl.basedir) == strlower( pathresolve(pwd(),"bench") + "/"))
+
+totest = boilerplate()
+totest.parse_dest("bench/blä_föö_dta01")
+assert(totest.torepl.fn == "blä_föö_dta01")
+assert(totest.torepl.stub == "blä_föö_dta01")
+assert(totest.torepl.abbrev == "blä_föö")
+assert(strlower(totest.torepl.basedir) == strlower( pathresolve(pwd(),"bench") + "/"))
 end
 
 // parse_bline()
