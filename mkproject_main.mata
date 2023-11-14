@@ -96,6 +96,7 @@ class mpdefaults extends mptools{
 class boilerplate extends mpdefaults{
     struct repl           scalar     torepl
     
+	void                             parse_anything()
     void                             copy_boiler()
     string                scalar     remove_usuffix()
     void                             parse_dest()
@@ -109,7 +110,7 @@ class mkproject extends boilerplate{
     string                scalar     dir
     string                scalar     abbrev
     string                scalar     project
-    
+
     void                             read_project()
     void                             parse_sline()
 	string                scalar     getrest()

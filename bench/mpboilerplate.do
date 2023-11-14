@@ -1,3 +1,27 @@
+//parse_anything()
+local anything = "c:\temp\foo.ado"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+assert "`anything'" == "c:\temp\foo.ado"
+
+local anything = "c:\temp\foo"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+assert "`anything'" == "c:\temp\foo.do"
+
+local anything = "foo"
+local directory = "c:\temp"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+di "`anything'"
+assert "`anything'" == "c:/temp/foo.do"
+
 // remove_usuffix()
 mata:
 totest = boilerplate()

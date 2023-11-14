@@ -1,4 +1,29 @@
 mata:
+void boilerplate::parse_anything()
+{
+	string scalar dest, dir, errmsg
+	
+	dest = st_local("anything")
+	dir = st_local("directory")
+	
+	if (dir != "") {
+		if (pathisabs(dest)) {
+			errmsg = "{p}the filename " + dest + " is absolute{p_end}"
+			errprintf(errmsg)
+			errmsg = "{p}you cannot combine the directory() option with an absolute path{p_end}"
+			errprintf(errmsg)
+			exit(198)
+		}
+		dest = pathresolve(dir, dest)
+	}
+	
+	if(pathsuffix(dest)=="") {
+		dest = dest + ".do"
+	}
+	
+	st_local("anything",dest)
+}
+
 void boilerplate::parse_dest(string scalar dest)
 {
 	torepl.fn = pathbasename(dest)
