@@ -15,7 +15,6 @@ log using <stub>.txt, replace text
 
 version <stata_version>
 clear all
-<as of 16>frames reset
 macro drop _all
 
 *use ../posted/data/[original_data_file.dta]

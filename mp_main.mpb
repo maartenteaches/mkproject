@@ -16,7 +16,6 @@ computer, you only have to change the {cmd:cd} command in this file and it will 
 </header>
 version <stata_version>
 clear all
-<as of 16>frames reset
 macro drop _all
 cd "<basedir>"
 

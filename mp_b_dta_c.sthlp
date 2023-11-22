@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.1}{...}
+{* *! version 2.0.2}{...}
 {vieweralsosee "mkproject" "help mkproject"}{...}
 {vieweralsosee "boilerplate" "help boilerplate"}{...}
 {title:Title}
@@ -28,7 +28,6 @@ This template creates a .do file with the following content:
     
     version <stata_version>
     clear all
-    <as of 16>frames reset
     macro drop _all
     
     *use ../data/[original_data_file.dta]
