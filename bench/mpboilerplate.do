@@ -1,3 +1,27 @@
+//parse_anything()
+local anything = "c:\temp\foo.ado"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+assert "`anything'" == "c:\temp\foo.ado"
+
+local anything = "c:\temp\foo"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+assert "`anything'" == "c:\temp\foo.do"
+
+local anything = "foo"
+local directory = "c:\temp"
+mata:
+totest = boilerplate()
+totest.parse_anything()
+end
+di "`anything'"
+assert "`anything'" == "c:/temp/foo.do"
+
 // remove_usuffix()
 mata:
 totest = boilerplate()
@@ -31,6 +55,13 @@ totest.parse_dest("bench/bläföödta01.do")
 assert(totest.torepl.fn == "bläföödta01.do")
 assert(totest.torepl.stub == "bläföödta01")
 assert(totest.torepl.abbrev == "bläföödta01")
+assert(strlower(totest.torepl.basedir) == strlower( pathresolve(pwd(),"bench") + "/"))
+
+totest = boilerplate()
+totest.parse_dest("bench/blä_föö_dta01")
+assert(totest.torepl.fn == "blä_föö_dta01")
+assert(totest.torepl.stub == "blä_föö_dta01")
+assert(totest.torepl.abbrev == "blä_föö")
 assert(strlower(totest.torepl.basedir) == strlower( pathresolve(pwd(),"bench") + "/"))
 end
 
