@@ -60,6 +60,7 @@ class mpfile extends mpversion{
     void                             mpfclose()
     void                             mpferror()
     void                             mpfclose_all()
+	real                   scalar    nlines()
     void                             new()
 }
 
@@ -110,7 +111,12 @@ class mkproject extends boilerplate{
     string                scalar     dir
     string                scalar     abbrev
     string                scalar     project
-
+	string                scalar     profile_path
+	string                colvector  prcontent
+	real                  scalar     ppos
+	
+	void                             read_profile()	
+	string                scalar     parse_pline()
     void                             read_project()
     void                             parse_sline()
 	string                scalar     getrest()

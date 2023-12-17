@@ -19,6 +19,19 @@ real scalar mpfile::mpfopen(string scalar fn, string scalar mode)
 	return(fh)
 }
 
+real scalar mpfile::nlines(string scalar fn)
+{
+	real scalar fh, i
+	string scalar EOF, line
+	
+	EOF = J(0,0,"")
+	
+	fh = mpfopen(fn,"r")
+	i = 0
+	while ((line=fget(fh))!=EOF) i++
+	mpfclose(fh)
+	return(i)
+}
 void mpfile::mpfread(string scalar fn)
 {
     if (reading.open == 1) {

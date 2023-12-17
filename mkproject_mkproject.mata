@@ -140,6 +140,65 @@ void mkproject::mk_dirs()
 void mkproject::new()
 {
     files = J(0,2,"")
+	ppos = 0
+}
+
+void mkproject::read_profile()
+{	
+	real scalar l, i, fh
+	
+	profile_path = findfile("profile.do")
+	if (profile_path != "") {
+		l = nlines(profile_path)
+		prcontent = J(l,1,"")
+		fh = mpfopen(profile_path,"r")
+		for(i=1; i<=l; i++) {
+			prcontent[i] = fget(fh)
+		}
+		mpfclose(fh)
+	}
+}
+
+void mkproject::modify_profile(string scalar fkey)
+{
+	real scalar l, i
+	
+	l = rows(prcontent)
+	for(i=1;i<=l;i++){
+		prcontent[i] = parse_pline(prcontent[i],fkey,i)
+	}
+}
+
+string colvector mkproject::pr2insert(string scalar fkey)
+{
+	"noi di as txt " + fkey + " as result " ABM talk" 
+	global F4 cd "C:\Mijn documenten\projecten\stata\abm\sug\london\abm_buis\presentation"; 
+
+}
+
+string scalar mkproject::parse_pline(string scalar line, string scalar fkey, real scalar i)
+{
+	string rowvector parts
+	
+	parts = tokens(line)
+	if (cols(parts) >  5) {
+		if ( usubstr(parts[1],1,3) == "noi" &
+			 usubstr(parts[2],1,2) == "di" &
+			 parts[3] == "as" &
+			 parts[4] == "txt" & 
+			 parts[5] == fkey) {
+ 				ppos = max(ppos,i)
+			 	return("//[modified by mkproject] " + line )
+			 }
+	}
+	if (cols(parts) >= 3){
+		if ( parts[1] == "global" & 
+		     parts[2] == fkey) {
+			 	ppos = max(ppos,i)
+				return("//[modified by mkproject] " + line)
+			 }
+	}
+	return(line)
 }
 
 end
