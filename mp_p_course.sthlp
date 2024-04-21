@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.2}{...}
+{* *! version 2.0.3}{...}
 {vieweralsosee "mkproject" "help mkproject"}{...}
 {vieweralsosee "boilerplate" "help boilerplate"}{...}
 {title:Title}
