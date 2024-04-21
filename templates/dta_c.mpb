@@ -4,7 +4,8 @@
 <label> data preparation for course
 <description>
 {pstd}
-This is a template of a .do file that cleans the data.
+This is a template of a .do file that cleans the data in a smaller project, like 
+a project a student might do for a course.
 </description>
 </header>
 capture log close
