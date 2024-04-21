@@ -13,6 +13,11 @@ project template researcht_git {hline 2} Research project with git, display proj
 {pstd} 
 This template sets up a directory for a medium sized research project that uses
 {browse "https://git-scm.com/":git} to keep track of its history.
+ 
+{pstd} 
+The only difference with the {help mp_p_research_git:research_git} template is
+that this template shows the content of the created project folder using
+{help dirtree}, and the {it:research_git} template does not.
 
 
 {title:File structure}

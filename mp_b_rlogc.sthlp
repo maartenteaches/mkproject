@@ -11,8 +11,8 @@ boilerplate template rlogc {hline 2} research log for a course
 {title:Description}
 
 {pstd} 
-This template starts a research log. Here you keep track of what you are doing
-and why.
+This template starts a research log for a project a student might do for a
+course. Here you keep track of what you are doing and why.
 
 
 {title:Boilerplate}

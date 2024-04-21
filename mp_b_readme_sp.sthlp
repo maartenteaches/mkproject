@@ -5,7 +5,7 @@
 {title:Title}
 
 {phang}
-boilerplate template readme_sp {hline 2} readme.md for when you want to put your project on github or the like
+boilerplate template readme_sp {hline 2} readme.txt for a smclpres presentation
 
 
 {title:Description}

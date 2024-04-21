@@ -4,8 +4,8 @@
 <label> research log for a course
 <description>
 {pstd} 
-This template starts a research log. Here you keep track of what you are doing
-and why.
+This template starts a research log for a project a student might do for a
+course. Here you keep track of what you are doing and why.
 </description>
 </header>
 # Research log: [project name]

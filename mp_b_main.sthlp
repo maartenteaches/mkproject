@@ -15,7 +15,7 @@ This is a template for the main .do file in a project. This is the .do file that
 calls all other .do files.
  
 {pstd} 
-This is the only file that can use a absolute path. All
+This is the only file that can use an absolute path. All
 other .do files in the project must only use relative paths. That way, if you
 want to share your project with someone else, or if you need to run it on another
 computer, you only have to change the {cmd:cd} command in this file and it will run.
