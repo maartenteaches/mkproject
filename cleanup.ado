@@ -13,11 +13,9 @@ program define main
     syntax anything(name=dir)
     
     local dir : list clean dir
-    mata: fillindir()
-    capture cd "`dir'"
-	if _rc {
-		exit
-	}
+    mata: fillindir("`dir'")
+    qui cd "`dir'"
+	
     local dirs: dir "." dirs "*"
     local files: dir "." files "*"
     foreach file of local files {
@@ -32,15 +30,12 @@ program define main
 end
 
 mata:
-void fillindir()
+void fillindir(string scalar dir)
 {
-    string scalar dir
-    
-    dir = st_local("dir")
     if(!pathisabs(dir)) {
         dir = pathresolve(pwd(),dir)
+		st_local("dir",dir)
     }
-    st_local("dir",dir)
 }
 end
 
