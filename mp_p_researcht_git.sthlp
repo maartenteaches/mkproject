@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.3}{...}
+{* *! version 2.0.4}{...}
 {vieweralsosee "mkproject" "help mkproject"}{...}
 {vieweralsosee "boilerplate" "help boilerplate"}{...}
 {title:Title}
@@ -28,7 +28,7 @@ This template will create the following sub-directories and files:
     proj_abbrev /  
     ├──  ana /
     |    ├── {help mp_b_ana:proj_abbrev_ana01.do}
-    |    ├── {help mp_b_dta:proj_abbrev_dta01.do}
+    |    ├── {help mp_b_dta_g:proj_abbrev_dta01.do}
     |    └── {help mp_b_main:proj_abbrev_main.do}
     ├──  data /
     ├──  docu /

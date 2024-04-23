@@ -5,14 +5,13 @@
 {title:Title}
 
 {phang}
-boilerplate template rlog {hline 2} research log
+boilerplate template dta_g {hline 2} data preparation for a project using git
 
 
 {title:Description}
 
 {pstd} 
-This template starts a research log. Here you keep track of what you are doing
-and why.
+This is a template for a .do file that cleans the data.
 
 
 {title:Boilerplate}
@@ -21,41 +20,34 @@ and why.
 This template creates a .do file with the following content: 
 
 {cmd}
-    # Research log: [project name]
+    capture log close
+    log using <stub>.txt, replace text
     
-    ## <date>: Preliminaries
+    // What this .do file does
+    // Who wrote it
     
+    version <stata_version>
+    clear all
+    macro drop _all
     
+    *use ../data/[original_data_file.dta]
     
-    ### Authors:
+    *rename *, lower
+    *keep
     
-    authors with affiliation and email
+    // prepare data
     
+    *gen some_var = ...
+    *note some_var: based on [original vars] \ <fn> \ [author] TS
     
+    *compress
+    *note: <abbrev>##.dta \ [description] \ <fn> \ [author] TS 
+    *label data [description]
+    *datasignature set, reset
+    *save <abbrev>##.dta, replace
     
-    ### Preliminary research question:
-    
-    
-    
-    ### Data:
-    
-    data, where and how to get it, when we got it
-    
-    
-    
-    ### Intended conference:
-    
-    conference, deadline
-    
-    
-    
-    ### Intended Journal
-    
-    journal, requirements, e.g. max word count
-    
-    
-    
-    
+    log close
+    exit
 {txt}
 
 {title:Tags}
@@ -73,4 +65,4 @@ This file may contain one or more of the following tags:{p_end}
 
 {title:Source code}
 
-    {view "c:\ado\plus/m\mp_rlog.mpb":mp_rlog.mpb}
+    {view "c:\ado\plus/m\mp_dta_g.mpb":mp_dta_g.mpb}

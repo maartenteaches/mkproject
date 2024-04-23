@@ -25,7 +25,7 @@ that this template shows the content of the created project folder using
 <file> ignore .ignore
 <file> rlog   docu/research_log.md
 <file> main   ana/<abbrev>_main.do
-<file> dta    ana/<abbrev>_dta01.do
+<file> dta_g  ana/<abbrev>_dta01.do
 <file> ana    ana/<abbrev>_ana01.do
 
 <cmd> !git init -b main
