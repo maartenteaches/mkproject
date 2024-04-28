@@ -102,6 +102,8 @@ class boilerplate extends mpdefaults{
     string                scalar     remove_usuffix()
     void                             parse_dest()
     void                             parse_bline()
+	void                             parse_bbody()
+	void                             parse_bbody2_0_4()
 }
 
 class mkproject extends boilerplate{

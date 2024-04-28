@@ -104,13 +104,23 @@ void mpcreate::chk_file(string scalar line,
         fn = find_file(second, "boilerplate")
 		mpfread(fn)
 		read_header()
-		if (reading.open == 1) {
-			mpfclose(reading.fh)
-		}
 		for(i=1;i<=rows(reading.reqs); i++) {
 			parse_req_line(toreturn,reading.reqs[i],sversion)
 		}
+		if (reading.open == 1) {
+			chk_body()
+			mpfclose(reading.fh)
+		}
+		else if (!lt(current_version,(2,1,0))){ // that should not be current version
+			errprintf("{p}The file does not contain a body{p_end}")
+			exit(198)
+		}
     }
+}
+
+void mpcreate::chk_body()
+{
+	real scalar body
 }
 
 void mpcreate::parse_req_line(string colvector toreturn, 
