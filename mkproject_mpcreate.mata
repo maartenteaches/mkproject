@@ -18,7 +18,7 @@ void mpcreate::header_defaults(string scalar what)
 void mpcreate::create(string scalar what)
 {
     string scalar fn_in, fn_out, EOF, line
-    real scalar fh_out, plus
+    real scalar fh_out, plus, body, everbody
 	string colvector reqs
     
     fn_in = st_local("create")
@@ -42,14 +42,51 @@ void mpcreate::create(string scalar what)
     if (reading.open == 0) { 
         mpfread(fn_in)
     }    
-        
+    
+    body = 0
+	everbody = lt(reading.fversion,(2,1,0))
     while((line=mpfget())!=EOF) {
+		reading.lnr = reading.lnr + 1
+		check_body(line, body, everbody)
         mpfput(fh_out, line)
     }
     mpfclose(reading.fh)
     mpfclose(fh_out)
 	
+	if (body = 1 & !lt(reading.fversion,(2,1,0))) {
+		errprintf("{p}The body was never closed{p_end}")
+		exit(198)
+	}
+	if(everbody == 0) {
+		errprintf("{p}No body found{p_end}")
+		unlink(fn_out)
+		exit(198)
+	}
+	
 	write_help(what, fn_out, plus)
+}
+
+void mpcreate::check_body(string scalar line, real scalar body, real scalar everbody)
+{
+	string scalar first
+	
+	first = tokens(line)[1]
+	if (first == "<body>") {
+		if (body == 1) {
+			where_err()
+			errprintf("{p}Started a body when one was already open; not a valid mkproject file{p_end}")
+			exit(198)
+		}
+		body = 1
+		everbody = 1
+	}
+	else if (first == "</body>") {
+		if (body == 0) {
+			where_err()
+			errprintf("{p}closed a body when none was open; not a valid mkproject file{p_end}")
+		}
+		body = 0
+	}
 }
 
 string colvector mpcreate::integrate_reqs(string scalar fn)
