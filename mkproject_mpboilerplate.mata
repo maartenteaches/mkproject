@@ -125,8 +125,12 @@ void boilerplate::parse_bbody(real scalar dh)
 	EOF == J(0,0,"")
 	body = 0
 	while ((line=mpfget())!=EOF) {
+		reading.lnr = reading.lnr + 1
 		if (line != "") {
 			first = tokens(line)[1]
+		}
+		else {
+			first = ""
 		}
 		if (first == "</body>") {
 			if (body == 0) {

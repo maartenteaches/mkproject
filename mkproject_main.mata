@@ -117,7 +117,9 @@ class mkproject extends boilerplate{
 	string                colvector  prcontent
 	real                  scalar     ppos
 	
-	void                             read_profile()	
+	void                             read_profile()
+	void                             parse_pbody()
+	void                             parse_pbody2_0_4()
 	string                scalar     parse_pline()
     void                             read_project()
     void                             parse_sline()
