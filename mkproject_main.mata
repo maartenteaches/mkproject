@@ -162,6 +162,7 @@ class mpquery extends mpdefaults {
 class mpcreate extends mkproject {
     string                scalar    newname()
     void                            chk_file()
+	void                            check_body()
     void                            create()
 	void                            remove()
     void                            header_defaults()
