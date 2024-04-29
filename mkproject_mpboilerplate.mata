@@ -109,7 +109,7 @@ void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 	chkreqs()
 	dh = mpfopen(dest, "w")
 	
-	if (lt(current_version,(2,1,0))){
+	if (lt(reading.fversion,(2,1,0))){
 		parse_bbody2_0_4(dh)
 	}
 	else{
