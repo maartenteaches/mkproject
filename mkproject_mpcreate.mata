@@ -156,11 +156,6 @@ void mpcreate::chk_file(string scalar line,
     }
 }
 
-void mpcreate::chk_body()
-{
-	real scalar body
-}
-
 void mpcreate::parse_req_line(string colvector toreturn, 
                               string scalar req, 
 							  real scalar sversion)
@@ -230,14 +225,14 @@ void mpcreate::write_help(string scalar what, string fn_in, real scalar plus ){
 	templ = substr(templ, 4)
 	
 	if (what == "project") {
-		write_help_p(fn_in, templ, plus)
+		write_help_p(templ, plus)
 	}
 	else {
 		write_help_b(fn_in, templ, plus)
 	}
 }
 
-void mpcreate::write_help_p(string scalar fn_in , string scalar templ, real scalar plus)
+void mpcreate::write_help_p(string scalar templ, real scalar plus)
 {
 	string scalar fn_out 
 	real scalar fh

@@ -134,6 +134,10 @@ void mkproject::parse_pbody()
 }
 
 void mkproject::parse_pbody2_0_4() {
+	string scalar line, EOF
+	
+	EOF = J(0,0,"")
+	
 	while ((line=mpfget())!=EOF) {
 		parse_sline(line)
 	}

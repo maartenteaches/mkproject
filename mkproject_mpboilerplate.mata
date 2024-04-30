@@ -92,8 +92,8 @@ void boilerplate::parse_bline(string scalar line, real scalar dh)
 
 void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 {
-	string scalar orig, EOF, line, first
-	real scalar dh, body
+	string scalar orig
+	real scalar dh
 	
     if (boiler == "") {
         read_defaults()
@@ -161,7 +161,7 @@ void boilerplate::parse_bbody(real scalar dh)
 
 void boilerplate::parse_bbody2_0_4(real scalar dh)
 {
-	string scalar line, EOF, first
+	string scalar line, EOF
 
 	EOF == J(0,0,"")
 	while ((line=mpfget())!=EOF) {
