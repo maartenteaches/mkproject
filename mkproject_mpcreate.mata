@@ -70,8 +70,12 @@ void mpcreate::create(string scalar what)
 void mpcreate::check_body(string scalar line, real scalar body, real scalar everbody)
 {
 	string scalar first
-	
-	first = tokens(line)[1]
+	if (line != "") {
+		first = tokens(line)[1]
+	}
+	else {
+		first = ""
+	}
 	if (first == "<body>") {
 		if (body == 1) {
 			where_err()
@@ -144,14 +148,6 @@ void mpcreate::chk_file(string scalar line,
 		read_header()
 		for(i=1;i<=rows(reading.reqs); i++) {
 			parse_req_line(toreturn,reading.reqs[i],sversion)
-		}
-		if (reading.open == 1) {
-			chk_body()
-			mpfclose(reading.fh)
-		}
-		else if (!lt(current_version,(2,1,0))){ // that should not be current version
-			errprintf("{p}The file does not contain a body{p_end}")
-			exit(198)
 		}
     }
 }
