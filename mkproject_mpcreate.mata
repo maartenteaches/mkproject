@@ -149,6 +149,7 @@ void mpcreate::chk_file(string scalar line,
 		for(i=1;i<=rows(reading.reqs); i++) {
 			parse_req_line(toreturn,reading.reqs[i],sversion)
 		}
+		mpfclose(reading.fh)
     }
 }
 

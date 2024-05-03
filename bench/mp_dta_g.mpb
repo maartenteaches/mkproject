@@ -1,11 +1,10 @@
 <header>
 <mkproject> boilerplate
 <version> 2.0.0
-<label> data preparation for course
+<label> data preparation for a project using git
 <description>
 {pstd} 
-This is a template of a .do file that cleans the data in a smaller project, like
-a project a student might do for a course.
+This is a template for a .do file that cleans the data.
 </description>
 </header>
 capture log close
