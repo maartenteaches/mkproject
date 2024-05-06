@@ -128,10 +128,6 @@ assert `"`line'"'==`"version `c(stata_version)'"'
 file read `fh' line
 assert `"`line'"'==`"clear all"'
 file read `fh' line
-if c(stata_version) >= 16 {
-	assert `"`line'"'==`"frames reset"'
-	file read `fh' line
-}
 assert `"`line'"'==`"macro drop _all"'
 file read `fh' line
 assert `"`line'"'==`""'
@@ -162,10 +158,6 @@ assert `"`line'"'==`"version `c(stata_version)'"'
 file read `fh' line
 assert `"`line'"'==`"clear all"'
 file read `fh' line
-if c(stata_version) >= 16 {
-	assert `"`line'"'==`"frames reset"'
-	file read `fh' line
-}
 assert `"`line'"'==`"macro drop _all"'
 file read `fh' line
 assert strlower(`"`line'"')==strlower(`"cd "`home':/mijn documenten/projecten/stata/mkproject/bench/test/""')

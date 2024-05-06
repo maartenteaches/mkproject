@@ -162,13 +162,15 @@ void boilerplate::parse_bbody(real scalar dh)
 void boilerplate::parse_bbody2_0_4(real scalar dh)
 {
 	string scalar line, EOF
-
-	EOF == J(0,0,"")
+	
+	EOF = J(0,0,"")
 	while ((line=mpfget())!=EOF) {
 		parse_bline(line, dh)
 	}
+
 	mpfclose(reading.fh)
 	mpfclose(dh)
+
 }
 
 

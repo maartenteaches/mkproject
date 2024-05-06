@@ -121,7 +121,7 @@ file = pathjoin(file, "mp_testcreate.mpb")
 fh = fopen(file, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> boilerplate"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> "'+ invtokens(strofreal(totest.current_version), "."))
 assert(fget(fh)==`"<label> something to test"')
 assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"clear all"')
@@ -153,7 +153,7 @@ file = pathjoin(file, "mp_testcreate.mpp")
 fh = fopen(file, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> project"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> "' + invtokens(strofreal(totest.current_version), "."))
 assert(fget(fh)==`"<label> something to test"')
 assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"<dir> main"')
@@ -176,7 +176,7 @@ file = pathjoin(file,"mp_defaults.mpd")
 fh = fopen(file, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> defaults"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> "' + invtokens(strofreal(totest.current_version), "."))
 assert(fget(fh)==`"<label> user specified defaults"')
 assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"<project> long"')
@@ -191,7 +191,7 @@ file = pathjoin(file,"mp_defaults.mpd")
 fh = fopen(file, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> defaults"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> "' + invtokens(strofreal(totest.current_version), "."))
 assert(fget(fh)==`"<label> user specified defaults"')
 assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"<project> long"')
@@ -200,12 +200,12 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 end
 
-cleanup bench/totest
+capture cleanup bench/totest
 mkproject totest, dir(bench)
 cd ../..
 assert (`"`:dir . dirs "*" '"') == (`""docu" "posted" "work""')
 cd ../..
-cleanup bench/totest
+capture cleanup bench/totest
 
 capture erase bench/totest_ana02.do
 boilerplate bench/totest_ana02.do, templ(ana)

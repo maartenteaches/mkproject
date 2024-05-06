@@ -132,9 +132,6 @@ assert(fget(fh)==`""')
 ver = strofreal(st_numscalar("c(stata_version)"))
 assert(fget(fh)==`"version "' + ver)
 assert(fget(fh)==`"clear all"')
-if (st_numscalar("c(stata_version)") >= 16) {
-    assert(fget(fh)==`"frames reset"')
-}
 assert(fget(fh)==`"macro drop _all"')
 assert(fget(fh)==`""')
 assert(fget(fh)==`"*use ../posted/data/[original_data_file.dta]"')

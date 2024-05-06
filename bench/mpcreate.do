@@ -37,8 +37,8 @@ mata:
 totest = mpcreate()
 totest.header_defaults("boilerplate")
 assert(totest.reading.type=="boilerplate")
-assert(totest.reading.sversion=="2.0.1")
-assert(totest.reading.fversion==(2,0,1))
+assert(totest.reading.sversion==invtokens(strofreal(totest.current_version), "."))
+assert(totest.reading.fversion==totest.current_version)
 
 end
 
@@ -167,7 +167,7 @@ assert(fileexists(path))
 fh = fopen(path, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> boilerplate"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> "' + invtokens(strofreal(totest.current_version), "."))
 assert(fget(fh)==`"<label> minimalist boilerplate"')
 assert(fget(fh)==`"<reqs> Stata 18.0"')
 assert(fget(fh)==`"<reqs> smclpres"')
