@@ -53,7 +53,7 @@ void mpcreate::create(string scalar what)
     mpfclose(reading.fh)
     mpfclose(fh_out)
 	
-	if (body = 1 & !lt(reading.fversion,(2,1,0))) {
+	if (body == 1 & !lt(reading.fversion,(2,1,0))) {
 		errprintf("{p}The body was never closed{p_end}")
 		unlink(fn_out)
 		exit(198)
