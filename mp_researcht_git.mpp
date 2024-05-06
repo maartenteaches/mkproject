@@ -1,6 +1,6 @@
 <header>
 <mkproject> project
-<version> 2.0.0
+<version> 2.1.0
 <label> Research project with git, display project with dirtree
 <reqs> git
 <reqs> dirtree
@@ -16,6 +16,7 @@ that this template shows the content of the created project folder using
 </description>
 </header>
 
+<body> -------------------------------------------------------------------------
 <dir> docu
 <dir> data
 <dir> ana
@@ -32,3 +33,4 @@ that this template shows the content of the created project folder using
 <cmd> !git add .
 <cmd> !git commit -m "initial commit"
 <cmd> dirtree
+</body> ------------------------------------------------------------------------

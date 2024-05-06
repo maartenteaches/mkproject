@@ -27,6 +27,8 @@ computer, you only have to change the {cmd:cd} command in this file and it will 
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     version <stata_version>
     clear all
     macro drop _all
@@ -36,6 +38,7 @@ This template creates a .do file with the following content:
     do <abbrev>_ana01.do // some comment
     
     exit
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

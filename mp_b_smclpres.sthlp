@@ -20,6 +20,8 @@ This template starts a {help smclpres} presentation.
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     //version 4.0.2
     
     //layout toc title(subsection) link(subsection) 
@@ -43,6 +45,7 @@ This template creates a .do file with the following content:
     //ex
     //endex
     //endslide ------------------------------------------------------------------------
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

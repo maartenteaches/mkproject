@@ -21,6 +21,8 @@ on github to introduce your project to people visiting your project page.
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     # Title
     
     *Author*
@@ -46,6 +48,7 @@ This template creates a .do file with the following content:
     3. Obtain the raw data files [name1, name2, ...]  from  https://doi.org/######### and save those in the directory `data`
     4. In ana/main.do change line 5 (`cd ..."`) to where your directory is
     5. run main.do 
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

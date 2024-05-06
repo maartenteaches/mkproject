@@ -1,6 +1,6 @@
 <header>
 <mkproject> boilerplate
-<version> 2.0.0
+<version> 2.1.0
 <label> main project.do file
 <description>
 {pstd} 
@@ -14,6 +14,8 @@ want to share your project with someone else, or if you need to run it on anothe
 computer, you only have to change the {cmd:cd} command in this file and it will run.
 </description>
 </header>
+
+<body> -------------------------------------------------------------------------
 version <stata_version>
 clear all
 macro drop _all
@@ -23,3 +25,4 @@ do <abbrev>_dta01.do // some comment
 do <abbrev>_ana01.do // some comment
 
 exit
+</body> ------------------------------------------------------------------------

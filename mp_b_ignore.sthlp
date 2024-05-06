@@ -23,9 +23,12 @@ individual level data on a place like github.
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     data/
     *.dta
     *.csv
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

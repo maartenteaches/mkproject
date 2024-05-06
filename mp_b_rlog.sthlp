@@ -21,6 +21,8 @@ and why.
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     # Research log: [project name]
     
     ## <date>: Preliminaries
@@ -52,10 +54,7 @@ This template creates a .do file with the following content:
     ### Intended Journal
     
     journal, requirements, e.g. max word count
-    
-    
-    
-    
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

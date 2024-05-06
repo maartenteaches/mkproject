@@ -21,6 +21,8 @@ a project a student might do for a course.
 This template creates a .do file with the following content: 
 
 {cmd}
+    
+    <body> -------------------------------------------------------------------------
     capture log close
     log using <stub>.txt, replace text
     
@@ -49,6 +51,7 @@ This template creates a .do file with the following content:
     
     log close
     exit
+    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

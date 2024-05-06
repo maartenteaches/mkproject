@@ -1,6 +1,6 @@
-<header>
+<header> -----------------------------------------------------------------------
 <mkproject> project
-<version> 2.0.0
+<version> 2.1.0
 <label> Research with git
 <reqs> git
 <description>
@@ -8,8 +8,9 @@
 This template sets up a directory for a medium sized research project that uses
 {browse "https://git-scm.com/":git} to keep track of its history.
 </description>
-</header>
+</header> ----------------------------------------------------------------------
 
+<body> -------------------------------------------------------------------------
 <dir> docu
 <dir> data
 <dir> ana
@@ -30,3 +31,4 @@ This template sets up a directory for a medium sized research project that uses
 <cmd> doedit "<abbrev>_main.do"
 <cmd> doedit "<abbrev>_dta01.do"
 <cmd> doedit "<abbrev>_ana01.do"
+</body> ------------------------------------------------------------------------

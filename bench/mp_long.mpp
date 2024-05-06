@@ -1,6 +1,6 @@
 <header>
 <mkproject> project
-<version> 2.0.0
+<version> 2.1.0
 <label> based on (Long 2009)
 <description>
 {pstd} 
@@ -23,6 +23,7 @@ answer the question. If not ...
 </description>
 </header>
 
+<body> -------------------------------------------------------------------------
 <dir> docu
 <dir> posted
 <dir> posted/data
@@ -42,3 +43,4 @@ answer the question. If not ...
 <cmd> doedit "<abbrev>_main.do"
 <cmd> doedit "<abbrev>_dta01.do"
 <cmd> doedit "<abbrev>_ana01.do"
+</body> ------------------------------------------------------------------------

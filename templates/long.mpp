@@ -1,6 +1,6 @@
-<header>
+<header> -----------------------------------------------------------------------
 <mkproject> project
-<version> 2.0.0
+<version> 2.1.0
 <label> based on (Long 2009)
 <description>
 {pstd}
@@ -21,8 +21,9 @@ asks you how you did something for that presentation. If you have taken a snapsh
 of your project just before the presentation, you can return to that state and 
 answer the question. If not ...
 </description>
-</header>
+</header> ----------------------------------------------------------------------
 
+<body> -------------------------------------------------------------------------
 <dir> docu
 <dir> posted
 <dir> posted/data
@@ -42,3 +43,4 @@ answer the question. If not ...
 <cmd> doedit "<abbrev>_main.do"
 <cmd> doedit "<abbrev>_dta01.do"
 <cmd> doedit "<abbrev>_ana01.do"
+</body> ------------------------------------------------------------------------
