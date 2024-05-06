@@ -236,5 +236,83 @@ chdir("..")
 rmdir("test")
 chdir(odir)
 
+
+//parse_pbody2_0_4()
+mata:
+totest=mkproject()
+totest.abbrev = "blup"
+fno = "bench/totesto.do"
+fho = fopen(fno, "w")
+fput(fho, "<dir> foo/bar")
+fput(fho, "<dir> foo\blup")
+fput(fho, "<dir> <abbrev>blup")
+fput(fho, "<file> dta <abbrev>_dta01.do")
+fput(fho, "<file> ana <abbrev>_ana01.do")
+fput(fho, "<cmd> dirtree")
+fput(fho, "<cmd> cd <abbrev>")
+fclose(fho)
+
+totest.mpfread(fno)
+totest.parse_pbody2_0_4()
+totest.mpfclose(totest.reading.fh)
+
+true =      "foo\" \  
+        "foo\bar\" \  
+       "foo\blup\" \  
+       "blupblup\" 
+assert(totest.dirs==true)
+
+true = "dirtree" \
+       "cd blup"
+assert(totest.cmds == true)
+
+true = "dta", "blup_dta01.do" \
+       "ana", "blup_ana01.do"
+assert(totest.files == true)
+ 
+unlink(fno) 
 end
 
+//parse_pbody()
+mata:
+totest=mkproject()
+totest.abbrev = "blup"
+fno = "bench/totesto.do"
+fho = fopen(fno, "w")
+fput(fho, "<dir> this should not appear")
+fput(fho, "<file> neither should this")
+fput(fho, "<cmd> nore this")
+fput(fho, "<body>")
+fput(fho, "<dir> foo/bar")
+fput(fho, "<dir> foo\blup")
+fput(fho, "<dir> <abbrev>blup")
+fput(fho, "<file> dta <abbrev>_dta01.do")
+fput(fho, "<file> ana <abbrev>_ana01.do")
+fput(fho, "<cmd> dirtree")
+fput(fho, "<cmd> cd <abbrev>")
+fput(fho, "</body>")
+fput(fho, "<dir> this should not appear")
+fput(fho, "<file> neither should this")
+fput(fho, "<cmd> nore this")
+fclose(fho)
+
+totest.mpfread(fno)
+totest.parse_pbody()
+totest.mpfclose(totest.reading.fh)
+
+true =      "foo\" \  
+        "foo\bar\" \  
+       "foo\blup\" \  
+       "blupblup\" 
+assert(totest.dirs==true)
+
+true = "dirtree" \
+       "cd blup"
+assert(totest.cmds == true)
+
+true = "dta", "blup_dta01.do" \
+       "ana", "blup_ana01.do"
+assert(totest.files == true)
+ 
+unlink(fno) 
+end
