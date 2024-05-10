@@ -21,8 +21,6 @@ how to use your presentation.
 This template creates a .do file with the following content: 
 
 {cmd}
-    
-    <body> -------------------------------------------------------------------------
     Readme
     ======
     
@@ -55,7 +53,6 @@ This template creates a .do file with the following content:
     o use -cd- to change to this directory
     o make the presentation by typing 
       -smclpres using presentation.do , dir(../presentation) replace-
-    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}

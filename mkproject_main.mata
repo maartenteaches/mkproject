@@ -177,6 +177,7 @@ class mpcreate extends mkproject {
 	void                            write_help()
 	void                            write_help_p()
 	void                            write_help_b()
+	void                            copy_b_help()
 	void                            write_help_header()
 	void                            write_help_footer()
 	void                            write_help_p_body()

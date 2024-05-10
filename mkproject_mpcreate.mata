@@ -285,12 +285,32 @@ void mpcreate::write_help_b(string scalar fn_in, string scalar templ, real scala
 	mpfclose(reading.fh)
 }
 
-void mpcreate::write_help_b_body(real scalar fh)
+void mpcreate::copy_b_help(real scalar fh)
 {
-	string scalar line, EOF
-
+	real scalar tocopy, old
+	string scalar line, EOF, first
 	EOF = J(0,0,"")
 	
+	old = lt(reading.fversion,(2,1,0))
+	tocopy = old
+	while ((line=mpfget())!= EOF) {
+		first = ""
+		if (old == 0 & line != "") {
+			first = tokens(line)[1]
+		}
+		if (first == "</body>") {
+			break
+		}
+		if (tocopy) {
+			mpfput(fh, "    " + line)
+		}
+		if (first == "<body>") {
+			tocopy = 1
+		}
+	}
+}
+void mpcreate::write_help_b_body(real scalar fh)
+{
 	mpfput(fh, "{title:Boilerplate}")
 	mpfput(fh, "")
 	mpfput(fh, "{pstd}")
@@ -298,9 +318,8 @@ void mpcreate::write_help_b_body(real scalar fh)
 	mpfput(fh, "")
 	mpfput(fh, "{cmd}")
 	
-	while ((line=mpfget())!= EOF) {
-		mpfput(fh, "    " + line)
-	}
+	copy_b_help(fh)
+	
 	mpfput(fh, "{txt}")
 	mpfput(fh,"")
 	mpfput(fh, "{title:Tags}")

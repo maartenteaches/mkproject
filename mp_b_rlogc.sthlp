@@ -21,8 +21,6 @@ course. Here you keep track of what you are doing and why.
 This template creates a .do file with the following content: 
 
 {cmd}
-    
-    <body> -------------------------------------------------------------------------
     # Research log: [project name]
     
     ## <date>: Preliminaries
@@ -49,7 +47,6 @@ This template creates a .do file with the following content:
     
     - deadline: 
     - max word count: 
-    </body> ------------------------------------------------------------------------
 {txt}
 
 {title:Tags}
