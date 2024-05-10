@@ -69,6 +69,12 @@ void mptools::collect_header_info()
             }
             return
         }
+		else if (first == "<body>" & header == 1) {
+			where_err()
+			errprintf("{p}A body was started while a header was still open; not a valid mkproject file{p_end}")
+			mpfclose(reading.fh)
+			exit(198)
+		}
         else if (header) {
             second = ustrtrim(tokenrest(t))
             parse_header(first, second, descopen)

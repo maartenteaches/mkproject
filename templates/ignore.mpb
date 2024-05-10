@@ -1,6 +1,6 @@
-<header>
+<header> -----------------------------------------------------------------------
 <mkproject> boilerplate
-<version> 2.0.0
+<version> 2.1.0
 <label> .ignore file for git, ignores everything in directory data, and all .dta and .csv files
 <description>
 {pstd}
@@ -9,7 +9,10 @@ uses to know what files it will not track. It will ignore anything in the direct
 {it:data}, and all .dta and .csv files. It prevents that someone accidentally puts
 individual level data on a place like github. 
 </description>
-</header>
+</header> ----------------------------------------------------------------------
+
+<body> -------------------------------------------------------------------------
 data/
 *.dta
 *.csv
+</body> ------------------------------------------------------------------------

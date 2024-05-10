@@ -102,6 +102,8 @@ class boilerplate extends mpdefaults{
     string                scalar     remove_usuffix()
     void                             parse_dest()
     void                             parse_bline()
+	void                             parse_bbody()
+	void                             parse_bbody2_0_4()
 }
 
 class mkproject extends boilerplate{
@@ -115,7 +117,9 @@ class mkproject extends boilerplate{
 	string                colvector  prcontent
 	real                  scalar     ppos
 	
-	void                             read_profile()	
+	void                             read_profile()
+	void                             parse_pbody()
+	void                             parse_pbody2_0_4()
 	string                scalar     parse_pline()
     void                             read_project()
     void                             parse_sline()
@@ -160,6 +164,7 @@ class mpquery extends mpdefaults {
 class mpcreate extends mkproject {
     string                scalar    newname()
     void                            chk_file()
+	void                            check_body()
     void                            create()
 	void                            remove()
     void                            header_defaults()
@@ -172,6 +177,7 @@ class mpcreate extends mkproject {
 	void                            write_help()
 	void                            write_help_p()
 	void                            write_help_b()
+	void                            copy_b_help()
 	void                            write_help_header()
 	void                            write_help_footer()
 	void                            write_help_p_body()

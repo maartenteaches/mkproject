@@ -92,31 +92,88 @@ void boilerplate::parse_bline(string scalar line, real scalar dh)
 
 void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
 {
-	string scalar orig, EOF, line
+	string scalar orig
 	real scalar dh
 	
     if (boiler == "") {
         read_defaults()
         boiler = defaults.boilerplate
     }
-    	
-	EOF = J(0,0,"")
-	
+
 	orig = find_file(boiler, "boilerplate")
 
 	parse_dest(dest)
-	
+
 	mpfread(orig)
     read_header("boilerplate")
 	chkreqs()
+
 	dh = mpfopen(dest, "w")
 	
-	while ((line=mpfget())!=EOF) {
-        parse_bline(line, dh)
+	if (lt(reading.fversion,(2,1,0))){
+		parse_bbody2_0_4(dh)
 	}
+	else{
+		parse_bbody(dh)
+	}
+}
+
+void boilerplate::parse_bbody(real scalar dh)
+{
+	real scalar body
+	string scalar line, EOF, first
+
+	EOF = J(0,0,"")
+	body = 0
+
+	while ((line=mpfget())!=EOF) {
+		reading.lnr = reading.lnr + 1
+		if (line != "") {
+			first = tokens(line)[1]
+		}
+		else {
+			first = ""
+		}
+		if (first == "</body>") {
+			if (body == 0) {
+				where_err()
+				errprintf("Tried to close a body when none was open")
+				exit(198)
+			}
+			body = 0
+			break
+		}
+		if (body == 1) parse_bline(line, dh)
+		if (first == "<body>") {
+			if (body == 1) {
+				where_err()
+				errprintf("{p}Tried to open a body when one was already open{p_end}")
+				exit(198)
+			}
+			body = 1
+		}
+	}
+	mpfclose(reading.fh)
+	mpfclose(dh)
+	if (body == 1) {
+		errprintf("{p}A body was open but never closed{p_end}")
+		exit(198)
+	}
+}
+
+void boilerplate::parse_bbody2_0_4(real scalar dh)
+{
+	string scalar line, EOF
+	
+	EOF = J(0,0,"")
+	while ((line=mpfget())!=EOF) {
+		parse_bline(line, dh)
+	}
+
 	mpfclose(reading.fh)
 	mpfclose(dh)
 
 }
+
 
 end

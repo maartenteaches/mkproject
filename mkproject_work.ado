@@ -1,4 +1,4 @@
-*! version 2.0.4 23Apr2024 MLB
+*! version 2.1.0 06May2024 MLB
 program define mkproject_work
     version 15.1
     syntax [anything], calling(string) [TEMPLate1(string) debug CREATE(string) query remove(string) default(string) RESETDEFault] *

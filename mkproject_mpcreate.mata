@@ -18,7 +18,7 @@ void mpcreate::header_defaults(string scalar what)
 void mpcreate::create(string scalar what)
 {
     string scalar fn_in, fn_out, EOF, line
-    real scalar fh_out, plus
+    real scalar fh_out, plus, body, everbody
 	string colvector reqs
     
     fn_in = st_local("create")
@@ -42,14 +42,56 @@ void mpcreate::create(string scalar what)
     if (reading.open == 0) { 
         mpfread(fn_in)
     }    
-        
+    
+    body = 0
+	everbody = lt(reading.fversion,(2,1,0))
     while((line=mpfget())!=EOF) {
+		reading.lnr = reading.lnr + 1
+		check_body(line, body, everbody)
         mpfput(fh_out, line)
     }
     mpfclose(reading.fh)
     mpfclose(fh_out)
 	
+	if (body == 1 & !lt(reading.fversion,(2,1,0))) {
+		errprintf("{p}The body was never closed{p_end}")
+		unlink(fn_out)
+		exit(198)
+	}
+	if(everbody == 0) {
+		errprintf("{p}No body found{p_end}")
+		unlink(fn_out)
+		exit(198)
+	}
+	
 	write_help(what, fn_out, plus)
+}
+
+void mpcreate::check_body(string scalar line, real scalar body, real scalar everbody)
+{
+	string scalar first
+	if (line != "") {
+		first = tokens(line)[1]
+	}
+	else {
+		first = ""
+	}
+	if (first == "<body>") {
+		if (body == 1) {
+			where_err()
+			errprintf("{p}Started a body when one was already open; not a valid mkproject file{p_end}")
+			exit(198)
+		}
+		body = 1
+		everbody = 1
+	}
+	else if (first == "</body>") {
+		if (body == 0) {
+			where_err()
+			errprintf("{p}closed a body when none was open; not a valid mkproject file{p_end}")
+		}
+		body = 0
+	}
 }
 
 string colvector mpcreate::integrate_reqs(string scalar fn)
@@ -104,12 +146,10 @@ void mpcreate::chk_file(string scalar line,
         fn = find_file(second, "boilerplate")
 		mpfread(fn)
 		read_header()
-		if (reading.open == 1) {
-			mpfclose(reading.fh)
-		}
 		for(i=1;i<=rows(reading.reqs); i++) {
 			parse_req_line(toreturn,reading.reqs[i],sversion)
 		}
+		mpfclose(reading.fh)
     }
 }
 
@@ -182,14 +222,14 @@ void mpcreate::write_help(string scalar what, string fn_in, real scalar plus ){
 	templ = substr(templ, 4)
 	
 	if (what == "project") {
-		write_help_p(fn_in, templ, plus)
+		write_help_p(templ, plus)
 	}
 	else {
 		write_help_b(fn_in, templ, plus)
 	}
 }
 
-void mpcreate::write_help_p(string scalar fn_in , string scalar templ, real scalar plus)
+void mpcreate::write_help_p(string scalar templ, real scalar plus)
 {
 	string scalar fn_out 
 	real scalar fh
@@ -245,12 +285,32 @@ void mpcreate::write_help_b(string scalar fn_in, string scalar templ, real scala
 	mpfclose(reading.fh)
 }
 
-void mpcreate::write_help_b_body(real scalar fh)
+void mpcreate::copy_b_help(real scalar fh)
 {
-	string scalar line, EOF
-
+	real scalar tocopy, old
+	string scalar line, EOF, first
 	EOF = J(0,0,"")
 	
+	old = lt(reading.fversion,(2,1,0))
+	tocopy = old
+	while ((line=mpfget())!= EOF) {
+		first = ""
+		if (old == 0 & line != "") {
+			first = tokens(line)[1]
+		}
+		if (first == "</body>") {
+			break
+		}
+		if (tocopy) {
+			mpfput(fh, "    " + line)
+		}
+		if (first == "<body>") {
+			tocopy = 1
+		}
+	}
+}
+void mpcreate::write_help_b_body(real scalar fh)
+{
 	mpfput(fh, "{title:Boilerplate}")
 	mpfput(fh, "")
 	mpfput(fh, "{pstd}")
@@ -258,9 +318,8 @@ void mpcreate::write_help_b_body(real scalar fh)
 	mpfput(fh, "")
 	mpfput(fh, "{cmd}")
 	
-	while ((line=mpfget())!= EOF) {
-		mpfput(fh, "    " + line)
-	}
+	copy_b_help(fh)
+	
 	mpfput(fh, "{txt}")
 	mpfput(fh,"")
 	mpfput(fh, "{title:Tags}")

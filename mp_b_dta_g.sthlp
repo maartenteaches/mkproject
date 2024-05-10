@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.4}{...}
+{* *! version 2.1.0}{...}
 {vieweralsosee "mkproject" "help mkproject"}{...}
 {vieweralsosee "boilerplate" "help boilerplate"}{...}
 {title:Title}
@@ -20,34 +20,6 @@ This is a template for a .do file that cleans the data.
 This template creates a .do file with the following content: 
 
 {cmd}
-    capture log close
-    log using <stub>.txt, replace text
-    
-    // What this .do file does
-    // Who wrote it
-    
-    version <stata_version>
-    clear all
-    macro drop _all
-    
-    *use ../data/[original_data_file.dta]
-    
-    *rename *, lower
-    *keep
-    
-    // prepare data
-    
-    *gen some_var = ...
-    *note some_var: based on [original vars] \ <fn> \ [author] TS
-    
-    *compress
-    *note: <abbrev>##.dta \ [description] \ <fn> \ [author] TS 
-    *label data [description]
-    *datasignature set, reset
-    *save <abbrev>##.dta, replace
-    
-    log close
-    exit
 {txt}
 
 {title:Tags}
