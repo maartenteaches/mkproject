@@ -99,14 +99,15 @@ void boilerplate::copy_boiler(string scalar dest, | string scalar boiler)
         read_defaults()
         boiler = defaults.boilerplate
     }
-    	
+
 	orig = find_file(boiler, "boilerplate")
 
 	parse_dest(dest)
-	
+
 	mpfread(orig)
     read_header("boilerplate")
 	chkreqs()
+
 	dh = mpfopen(dest, "w")
 	
 	if (lt(reading.fversion,(2,1,0))){
@@ -122,8 +123,9 @@ void boilerplate::parse_bbody(real scalar dh)
 	real scalar body
 	string scalar line, EOF, first
 
-	EOF == J(0,0,"")
+	EOF = J(0,0,"")
 	body = 0
+
 	while ((line=mpfget())!=EOF) {
 		reading.lnr = reading.lnr + 1
 		if (line != "") {
