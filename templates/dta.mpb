@@ -19,7 +19,7 @@ version <stata_version>
 clear all
 macro drop _all
 
-*use ../posted/data/[original_data_file.dta]
+*use ../../posted/data/[original_data_file.dta]
 
 *rename *, lower
 *keep

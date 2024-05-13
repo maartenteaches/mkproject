@@ -30,7 +30,7 @@ This template creates a .do file with the following content:
     clear all
     macro drop _all
     
-    *use ../posted/data/[original_data_file.dta]
+    *use ../../posted/data/[original_data_file.dta]
     
     *rename *, lower
     *keep
