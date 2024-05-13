@@ -169,3 +169,14 @@ assert(totest.mppathgetparent("c:\test\blup") == "c:\test\")
 assert(totest.mppathgetparent("c:\test\blup\") == "c:\test\blup\")
 assert(totest.mppathgetparent("c:\test/blup") == "c:\test/")
 end
+
+//gettoken()
+mata:
+totest = mptools()
+assert(totest.gettoken("foo bar") == "foo")
+assert(totest.gettoken("    ") == "")
+assert(totest.gettoken("") == "")
+assert(totest.gettoken("	")== "")
+assert(totest.gettoken("	bla blup")== "bla")
+assert(totest.gettoken("	bla	blup")== "bla")
+end

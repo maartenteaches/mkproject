@@ -70,12 +70,8 @@ void mpcreate::create(string scalar what)
 void mpcreate::check_body(string scalar line, real scalar body, real scalar everbody)
 {
 	string scalar first
-	if (line != "") {
-		first = tokens(line)[1]
-	}
-	else {
-		first = ""
-	}
+
+	first = gettoken(line)
 	if (first == "<body>") {
 		if (body == 1) {
 			where_err()
@@ -135,7 +131,7 @@ void mpcreate::chk_file(string scalar line,
 						real scalar sversion)
 {
     transmorphic scalar t
-    string scalar fn, first, second
+	string scalar fn, first, second
     real scalar i
 	
     t = tokeninit()
@@ -294,10 +290,7 @@ void mpcreate::copy_b_help(real scalar fh)
 	old = lt(reading.fversion,(2,1,0))
 	tocopy = old
 	while ((line=mpfget())!= EOF) {
-		first = ""
-		if (old == 0 & line != "") {
-			first = tokens(line)[1]
-		}
+		first = gettoken(line)
 		if (first == "</body>") {
 			break
 		}
