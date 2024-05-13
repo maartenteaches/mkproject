@@ -132,12 +132,9 @@ assert(fget(fh)==`""')
 ver = strofreal(st_numscalar("c(stata_version)"))
 assert(fget(fh)==`"version "' + ver)
 assert(fget(fh)==`"clear all"')
-if (st_numscalar("c(stata_version)") >= 16) {
-    assert(fget(fh)==`"frames reset"')
-}
 assert(fget(fh)==`"macro drop _all"')
 assert(fget(fh)==`""')
-assert(fget(fh)==`"*use ../posted/data/[original_data_file.dta]"')
+assert(fget(fh)==`"*use ../../posted/data/[original_data_file.dta]"')
 assert(fget(fh)==`""')
 assert(fget(fh)==`"*rename *, lower"')
 assert(fget(fh)==`"*keep"')
@@ -158,6 +155,46 @@ assert(fget(fh)==`"exit"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
-
 unlink(fn)
+
+// parse_bbody()
+mata:
+totest = boilerplate()
+fno = "bench/totesto.do"
+fnd = "bench/totestd.do"
+fho = fopen(fno, "w")
+fput(fho, "foo")
+fput(fho, "<body>")
+fput(fho, "bar")
+fput(fho, "</body>")
+fclose(fho)
+totest.mpfread(fno)
+fhd = fopen(fnd, "w")
+totest.parse_bbody(fhd)
+fh = fopen(fnd, "r")
+assert(fget(fh)=="bar")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink(fno)
+unlink(fnd)
+
+// parse_bbody2_0_4()
+mata:
+totest = boilerplate()
+fno = "bench/totesto.do"
+fnd = "bench/totestd.do"
+fho = fopen(fno, "w")
+fput(fho, "foo")
+fput(fho, "bar")
+fclose(fho)
+totest.mpfread(fno)
+fhd = fopen(fnd, "w")
+totest.parse_bbody2_0_4(fhd)
+fh = fopen(fnd, "r")
+assert(fget(fh)=="foo")
+assert(fget(fh)=="bar")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink(fno)
+unlink(fnd)
 end

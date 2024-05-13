@@ -11,7 +11,7 @@ rcof `"noisily mata totest.parse_version("1.22")"' == 198
 rcof `"noisily mata totest.parse_version("1.22.")"' == 198
 rcof `"noisily mata totest.parse_version("1.22.7.4")"' == 198
 rcof `"noisily mata totest.parse_version("1.22.a")"' == 198
-rcof `"noisily mata totest.parse_version("2.1.0")"' == 198
+rcof `"noisily mata totest.parse_version("20.1.0")"' == 198
 
 
 // header_version()
@@ -41,4 +41,4 @@ totest.reading.lnr = 3
 totest.toonew((1,2,0))
 totest.toonew((2,0,0))
 end
-rcof `"noisily mata totest.toonew((2,1,0))"' == 198
+rcof `"noisily mata totest.toonew((20,1,0))"' == 198

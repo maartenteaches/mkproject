@@ -70,24 +70,77 @@ void mkproject::parse_sline(string scalar line)
 
 void mkproject::read_project()
 {
-	string       scalar EOF, fn, line
+	string scalar fn
     
     if (project == "") {
         read_defaults()
         project = defaults.project
     }
 	
-	EOF = J(0,0,"")
-	
 	fn = find_file(project, "project")
 	
 	mpfread(fn)
 	read_header("project")
 	chkreqs()
+	if (lt(reading.fversion,(2,1,0))) {
+		parse_pbody2_0_4()
+	}
+	else {
+		parse_pbody()
+	}
+	
+	mpfclose(reading.fh)
+}
+
+void mkproject::parse_pbody()
+{
+	string scalar line, first, EOF
+	real scalar body
+
+	EOF = J(0,0,"")
+	body = 0
+	
+	while ((line=mpfget())!=EOF) {
+		reading.lnr = reading.lnr +1
+		if (line != "") {
+			first = tokens(line)[1]
+		}
+		else {
+			first = ""
+		}
+		if (first == "</body>") {
+			if (body == 0) {
+				where_err()
+				errprintf("Tried to close a body when none was open")
+				exit(198)
+			}
+			body = 0
+			break
+		}
+		if (body == 1) parse_sline(line)
+		if (first == "<body>") {
+			if (body == 1) {
+				where_err()
+				errprintf("{p}Tried to open a body when one was already open{p_end}")
+				exit(198)
+			}
+			body = 1
+		}
+	}
+	if (body == 1) {
+		errprintf("{p}Body was not closed{p_end}")
+		exit(198)
+	}
+}
+
+void mkproject::parse_pbody2_0_4() {
+	string scalar line, EOF
+	
+	EOF = J(0,0,"")
+	
 	while ((line=mpfget())!=EOF) {
 		parse_sline(line)
 	}
-	mpfclose(reading.fh)
 }
 
 void mkproject::read_dir(string scalar newdir)

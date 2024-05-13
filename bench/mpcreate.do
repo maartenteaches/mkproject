@@ -37,8 +37,8 @@ mata:
 totest = mpcreate()
 totest.header_defaults("boilerplate")
 assert(totest.reading.type=="boilerplate")
-assert(totest.reading.sversion=="2.0.1")
-assert(totest.reading.fversion==(2,0,1))
+assert(totest.reading.sversion==invtokens(strofreal(totest.current_version), "."))
+assert(totest.reading.fversion==totest.current_version)
 
 end
 
@@ -143,7 +143,7 @@ path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_bar.mpp")
 assert(totest.newname("bar.do", "project") == path)
 end
 
-//create()
+//create() old
 local create bench/test3.do
 local replace replace
 
@@ -151,6 +151,7 @@ mata:
 fh1 = fopen(fn5, "w")
 fput(fh1, "<header>")
 fput(fh1, "<mkproject> boilerplate")
+fput(fh1, "<version> 2.0.3")
 fput(fh1, "<label> minimalist boilerplate")
 fput(fh1, "<reqs> Stata 18")
 fput(fh1, "<reqs> smclpres")
@@ -167,7 +168,7 @@ assert(fileexists(path))
 fh = fopen(path, "r")
 assert(fget(fh)==`"<header>"')
 assert(fget(fh)==`"<mkproject> boilerplate"')
-assert(fget(fh)==`"<version> 2.0.1"')
+assert(fget(fh)==`"<version> 2.0.3"')
 assert(fget(fh)==`"<label> minimalist boilerplate"')
 assert(fget(fh)==`"<reqs> Stata 18.0"')
 assert(fget(fh)==`"<reqs> smclpres"')
@@ -175,7 +176,47 @@ assert(fget(fh)==`"</header>"')
 assert(fget(fh)==`"clear all"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+unlink(path)
+unlink(fn5)
+end
 
+//create() new
+local create bench/test3.do
+local replace replace
+
+mata:
+fh1 = fopen(fn5, "w")
+fput(fh1, "<header>")
+fput(fh1, "<mkproject> boilerplate")
+fput(fh1, "<version> 2.1.0")
+fput(fh1, "<label> minimalist boilerplate")
+fput(fh1, "<reqs> Stata 18")
+fput(fh1, "<reqs> smclpres")
+fput(fh1, "</header>")
+fput(fh1, "<body>")
+fput(fh1, "clear all")
+fput(fh1, "</body>")
+fclose(fh1)
+
+path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_test3.mpb")
+totest = mpcreate()
+totest.create("boilerplate")
+
+assert(fileexists(path))
+
+fh = fopen(path, "r")
+assert(fget(fh)==`"<header>"')
+assert(fget(fh)==`"<mkproject> boilerplate"')
+assert(fget(fh)==`"<version> 2.1.0"')
+assert(fget(fh)==`"<label> minimalist boilerplate"')
+assert(fget(fh)==`"<reqs> Stata 18.0"')
+assert(fget(fh)==`"<reqs> smclpres"')
+assert(fget(fh)==`"</header>"')
+assert(fget(fh)==`"<body>"')
+assert(fget(fh)==`"clear all"')
+assert(fget(fh)==`"</body>"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
 
 //project and inherrit some reqs  
 end

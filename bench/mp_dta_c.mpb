@@ -1,12 +1,15 @@
 <header>
 <mkproject> boilerplate
-<version> 2.0.0
+<version> 2.1.0
 <label> data preparation for course
 <description>
 {pstd} 
-This is a template of a .do file that cleans the data.
+This is a template of a .do file that cleans the data in a smaller project, like
+a project a student might do for a course.
 </description>
 </header>
+
+<body> -------------------------------------------------------------------------
 capture log close
 log using <stub>.txt, replace text
 
@@ -15,7 +18,6 @@ log using <stub>.txt, replace text
 
 version <stata_version>
 clear all
-<as of 16>frames reset
 macro drop _all
 
 *use ../data/[original_data_file.dta]
@@ -36,3 +38,4 @@ macro drop _all
 
 log close
 exit
+</body> ------------------------------------------------------------------------

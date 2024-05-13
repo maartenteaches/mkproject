@@ -1,13 +1,15 @@
-<header>
+<header> -----------------------------------------------------------------------
 <mkproject> boilerplate
-<version> 2.0.0
+<version> 2.1.0
 <label> analysis .do file
 <description>
 {pstd}
 This is a template for a .do file that performs an analysis of data that 
 was previously cleaned by another .do file.
 </description>
-</header>
+</header> ----------------------------------------------------------------------
+
+<body> -------------------------------------------------------------------------
 capture log close
 log using <stub>.txt, replace text
 
@@ -26,3 +28,4 @@ macro drop _all
 
 log close
 exit
+</body> ------------------------------------------------------------------------
