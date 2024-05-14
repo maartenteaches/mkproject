@@ -140,7 +140,9 @@ local create bar.do
 mata:
 totest = mpcreate()
 path = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_bar.mpp")
-assert(totest.newname("bar.do", "project") == path)
+assert(totest.newname("bar.do", "project",0) == path)
+path = pathjoin(pathsubsysdir("PLUS"), "m/mp_bar.mpp")
+assert(totest.newname("bar.do", "project",1) == path)
 end
 
 //create() old

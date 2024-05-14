@@ -22,9 +22,10 @@ void mpcreate::create(string scalar what)
 	string colvector reqs
     
     fn_in = st_local("create")
-    fn_out = newname(fn_in, what)
+    plus = (st_local("plus") != "")
+	fn_out = newname(fn_in, what, plus)
     EOF = J(0,0,"")
-	plus = (st_local("plus") != "")
+	
     
     if (fileexists(fn_in)==0) {
         errprintf("{p}file " + fn_in + " not found {p_end}")
@@ -164,13 +165,14 @@ void mpcreate::parse_req_line(string colvector toreturn,
 	}
 }
 
-string scalar mpcreate::newname(string scalar path, string scalar what)
+string scalar mpcreate::newname(string scalar path, string scalar what, real scalar plus)
 {
-    string scalar newpath, ext
+    string scalar newpath, ext, where
 
+	where = ( plus ? "PLUS" : "PERSONAL" )
 	ext = type2ext(what)
     newpath = pathrmsuffix(pathbasename(path)) + ext
-    newpath = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_" + newpath)
+    newpath = pathjoin(pathsubsysdir(where), "m/mp_" + newpath)
     
     if (st_local("replace") == "" & fileexists(newpath)) {
         errprintf(pathrmsuffix(pathbasename(newpath)) + " already exists" )
@@ -227,10 +229,11 @@ void mpcreate::write_help(string scalar what, string fn_in, real scalar plus ){
 
 void mpcreate::write_help_p(string scalar templ, real scalar plus)
 {
-	string scalar fn_out 
+	string scalar fn_out , where
 	real scalar fh
-	
-	fn_out = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_p_" + templ + ".sthlp")
+
+	where = (plus ? pathsubsysdir("PLUS"): pathsubsysdir("PERSONAL"))
+	fn_out = pathjoin(where, "m\mp_p_" + templ + ".sthlp")
 	
 	project = templ
 	abbrev = "proj_abbrev"
@@ -248,17 +251,18 @@ void mpcreate::write_help_p(string scalar templ, real scalar plus)
 	
 	write_help_header(fh, templ, "project")
 	write_help_p_body(fh)
-	write_help_footer(fh, plus)
+	write_help_footer(fh)
 	
 	mpfclose(fh)
 }
 
 void mpcreate::write_help_b(string scalar fn_in, string scalar templ, real scalar plus)
 {
-	string scalar fn_out
+	string scalar fn_out, where
 	real scalar fh
 	
-	fn_out = pathjoin(pathsubsysdir("PERSONAL"), "m\mp_b_" + templ + ".sthlp")
+	where = ( plus ? pathsubsysdir("PLUS") : pathsubsysdir("PERSONAL"))
+	fn_out = pathjoin(where, "m\mp_b_" + templ + ".sthlp")
 	
 	mpfread(fn_in)
 	collect_header_info()
@@ -275,7 +279,7 @@ void mpcreate::write_help_b(string scalar fn_in, string scalar templ, real scala
 	
 	write_help_header(fh, templ, "boilerplate")
 	write_help_b_body(fh)
-	write_help_footer(fh, plus)
+	write_help_footer(fh)
 	
 	mpfclose(fh)
 	mpfclose(reading.fh)
@@ -382,16 +386,11 @@ void mpcreate::write_help_p_body(real scalar fh)
 	mpfput(fh, "")
 }
 
-void mpcreate::write_help_footer(real scalar fh, real scalar plus)
+void mpcreate::write_help_footer(real scalar fh)
 {
-	string scalar fn
-	
-	fn = pathbasename(reading.fn)
-	if (plus) fn = pathjoin(pathsubsysdir("PLUS"), "m/" +fn)
-	
 	mpfput(fh, "{title:Source code}")
 	mpfput(fh, "")
-	mpfput(fh, `"    {view ""' + fn + `"":"' + pathbasename(reading.fn) + "}")
+	mpfput(fh, `"    {view ""' + reading.fn + `"":"' + pathbasename(reading.fn) + "}")
 }
 
 void mpcreate::create_tree(real scalar fh)
