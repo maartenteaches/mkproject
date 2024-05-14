@@ -1,6 +1,18 @@
 mata:
 mata set matastrict on
 
+string scalar mptools::gettoken(string scalar toparse)
+{
+	string       scalar first 
+	transmorphic scalar t
+	
+    t = tokeninit()
+    tokenset(t, toparse)
+    first = tokenget(t)
+		
+	return(first)
+}
+
 void mptools::write_header(real scalar fh )
 {
 	real scalar i

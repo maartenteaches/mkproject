@@ -1,7 +1,5 @@
-<head>
+<header>
 <mkproject> boilerplate
-<version> 2.1.0
-</head>
-<body>
-foo
-</body>
+<reqs> Stata 18
+<reqs> smclpres
+</header>

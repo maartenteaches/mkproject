@@ -128,12 +128,7 @@ void boilerplate::parse_bbody(real scalar dh)
 
 	while ((line=mpfget())!=EOF) {
 		reading.lnr = reading.lnr + 1
-		if (line != "") {
-			first = tokens(line)[1]
-		}
-		else {
-			first = ""
-		}
+		first = gettoken(line)
 		if (first == "</body>") {
 			if (body == 0) {
 				where_err()
