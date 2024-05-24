@@ -7,6 +7,8 @@
 This is a template for a .do file that cleans the data.
 </description>
 </header>
+
+<body>
 capture log close
 log using <stub>.txt, replace text
 
@@ -35,3 +37,4 @@ macro drop _all
 
 log close
 exit
+</body>
