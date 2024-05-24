@@ -1,8 +1,12 @@
 cscript
 mata: mata clear
 
+<<<<<<< HEAD
 cd "D:/mijn documenten/projecten/stata/mkproject"
 
+=======
+cd "c:/mijn documenten/projecten/stata/mkproject"
+>>>>>>> dev
 do mkproject_main.mata
 
 lmbuild lmkproject, replace
