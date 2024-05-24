@@ -16,6 +16,7 @@ F mp_ana.mpb
 F mp_b_ana.sthlp
 F mp_b_dta.sthlp
 F mp_b_dta_c.sthlp
+F mp_b_dta_g.sthlp
 F mp_b_excer.sthlp
 F mp_b_ignore.sthlp
 F mp_b_main.sthlp
@@ -28,6 +29,7 @@ F mp_course.mpp
 F mp_defaults.mpd
 F mp_dta.mpb
 F mp_dta_c.mpb
+F mp_dta_g.mpb
 F mp_excer.mpb
 F mp_excer.mpp
 F mp_ignore.mpb
