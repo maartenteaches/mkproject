@@ -198,3 +198,30 @@ fclose(fh)
 unlink(fno)
 unlink(fnd)
 end
+
+// old templates
+mata:
+totest = mpcreate()
+
+fh1 = fopen("test1.do", "w")
+fput(fh1, "<header>")
+fput(fh1, "<mkproject> boilerplate")
+fput(fh1, "<version> 2.0.4")
+fput(fh1, "</header>")
+fput(fh1, "bla")
+fclose(fh1)
+end
+boilerplate, create(test1.do)
+boilerplate bla.do, template(test1)
+
+tempname fh
+file open `fh' using `"bla.do"', read text
+file read `fh' line
+assert `"`line'"'==`"bla"'
+file read `fh' line
+assert r(eof)==1
+file close `fh'
+
+boilerplate, remove(test1)
+erase bla.do
+erase test1.do
