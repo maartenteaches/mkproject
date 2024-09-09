@@ -22,7 +22,7 @@ contributed packages. You can just install what you need using either {help ssc}
 {help net}, or {help github}, and those commands will install those packages in the 
 ado folder local to this project. This means that if you hand over your project
 folder to someone else, that person will automatically also get the community
-contributed packages you installed.  
+contributed packages you installed for this project.  
 </description>
 </header> ----------------------------------------------------------------------
 
@@ -37,6 +37,7 @@ cd "<basedir>"
 sysdir set PLUS     "`c(pwd)'/ado/plus"
 sysdir set PERSONAL "`c(pwd)'/ado/personal"
 sysdir set oldplace "`c(pwd)'/ado"
+mata: mata mlib index
 
 // set the working directory
 cd ana
