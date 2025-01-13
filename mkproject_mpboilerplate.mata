@@ -33,7 +33,6 @@ void boilerplate::parse_dest(string scalar dest)
 		dest = pathresolve(pwd(),dest)
 	}
 	torepl.basedir = mppathgetparent(dest)
-	torepl.basedirm1 = pathresolve(torepl.basedir, "..")
 }
 
 string scalar boilerplate::remove_usuffix(string scalar stub)
@@ -67,7 +66,8 @@ void boilerplate::parse_bline(string scalar line, real scalar dh)
 	line = usubinstr(line, "<stub>"         , torepl.stub                                , .)
 	line = usubinstr(line, "<basedir>"      , torepl.basedir                             , .)
 	line = usubinstr(line, "<abbrev>"       , torepl.abbrev                              , .)
-    line = usubinstr(line, "<basedir..>"    , torepl.basedirm1                           , .)
+    line = usubinstr(line, "<proj_basedir>" , torepl.proj_basedir                        , .)
+	line = usubinstr(line, "<proj_abbrev>"  , torepl.proj_abbrev                         , .)
 	
     tocopy = 1
     t = tokeninit(" ", "", "<>")

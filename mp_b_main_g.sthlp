@@ -44,7 +44,7 @@ This template creates a .do file with the following content:
     
     // use only community contributed packages from 
     // the ado directory local to this project
-    cd "<basedir..>"
+    cd "<proj_basedir>"
     sysdir set PLUS     "`c(pwd)'/ado/plus"
     sysdir set PERSONAL "`c(pwd)'/ado/personal"
     sysdir set OLDPLACE "`c(pwd)'/ado"

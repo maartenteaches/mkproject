@@ -2,10 +2,11 @@ mata:
 
 void mkproject::run(){
     
-    dir     = st_local("directory")
-    abbrev  = st_local("anything")
-    project = st_local("template1")
-
+    dir                = st_local("directory")
+    abbrev             = st_local("anything")
+    torepl.proj_abbrev = abbrev
+	project            = st_local("template1")
+	
 	parse_dir()
 	read_project()
 	mk_dirs()
@@ -33,6 +34,7 @@ void mkproject::parse_dir()
 		exit(errcode)
 	}
 	chdir(abbrev)
+	torepl.proj_basedir = pwd()
 }
 
 string scalar mkproject::getrest(transmorphic scalar t) 

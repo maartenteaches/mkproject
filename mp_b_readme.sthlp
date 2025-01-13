@@ -39,7 +39,7 @@ This template creates a .do file with the following content:
     
     1. fork this repository
     2. Obtain the raw data files [name1, name2, ...]  from  https://doi.org/######### and save those in the directory `data`
-    3. In ana/main.do change line 5 (`cd ..."`) to where your directory is
+    3. In ana/<proj_abbrev>_main.do change line 5 (`cd ..."`) to where your directory is
     4. run main.do 
 {txt}
 
