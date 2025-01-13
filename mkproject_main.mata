@@ -16,6 +16,7 @@ struct repl
 	string scalar abbrev
 	string scalar fn
 	string scalar basedir
+	string scalar basedirm1
 	string scalar stub
 }
 
