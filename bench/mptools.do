@@ -165,9 +165,9 @@ assert(_rc == 198)
 //mppathgetparent()
 mata:
 totest = mptools()
-assert(totest.mppathgetparent("c:\test\blup") == "c:\test\")
-assert(totest.mppathgetparent("c:\test\blup\") == "c:\test\blup\")
-assert(totest.mppathgetparent("c:\test/blup") == "c:\test/")
+assert(totest.mppathgetparent("c:\test\blup") == "c:\test")
+assert(totest.mppathgetparent("c:/test\blup\") == "c:/test")
+assert(totest.mppathgetparent("c:\test/blup") == "c:\test")
 end
 
 //gettoken()

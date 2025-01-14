@@ -1,8 +1,8 @@
 cscript
 mata: mata clear
 
-*local home "D"
-local home "C"
+local home "D"
+*local home "C"
 
 cd "`home':\mijn documenten\projecten\stata\mkproject"
 do mkproject_build.do

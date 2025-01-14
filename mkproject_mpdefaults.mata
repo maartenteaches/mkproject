@@ -1,15 +1,27 @@
 mata:
 mata set matastrict on
-void mpdefaults::new()
+void mpdefaults::fix_no_personal()
 {
 	string scalar path
+	real scalar ret
+	
 	path = pathsubsysdir("PERSONAL")
 	if(!direxists(path)) {
-		mkdir(path)
+		ret = _mkdir(path)
+		mkdirerr(ret, path)
 	}
 	path = pathjoin(path, "m") 
 	if (!direxists(path)) {
-		mkdir(path)
+		ret = _mkdir(path)
+		mkdirerr(ret, path)
+	}
+}
+
+void mpdefaults::mkdirerr(real scalar ret, string scalar path)
+{
+	if (ret!=0) {
+		errprintf("{p}could not create directory " + path + "{p_end}")
+		exit(ret)
 	}
 }
 
@@ -61,6 +73,7 @@ void mpdefaults::write_default(string scalar what, string scalar value)
         exit(198)
     }
  
+	fix_no_personal()
     fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_defaults.mpd")
     unlink(fn)
     fh = mpfopen(fn, "w")

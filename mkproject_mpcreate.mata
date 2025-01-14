@@ -25,7 +25,7 @@ void mpcreate::create(string scalar what)
     plus = (st_local("plus") != "")
 	fn_out = newname(fn_in, what, plus)
     EOF = J(0,0,"")
-	
+	fix_no_personal()
     
     if (fileexists(fn_in)==0) {
         errprintf("{p}file " + fn_in + " not found {p_end}")

@@ -160,7 +160,7 @@ assert `"`line'"'==`"clear all"'
 file read `fh' line
 assert `"`line'"'==`"macro drop _all"'
 file read `fh' line
-assert strlower(`"`line'"')==strlower(`"cd "`home':/mijn documenten/projecten/stata/mkproject/bench/test/""')
+assert strlower(`"`line'"')==strlower(`"cd "`home':/mijn documenten/projecten/stata/mkproject/bench/test""')
 file read `fh' line
 assert `"`line'"'==`""'
 file read `fh' line
