@@ -268,10 +268,10 @@ string scalar mptools::find_file(string scalar what, string scalar type, | strin
 }
 
 string scalar mptools::mppathgetparent(string scalar path) {
-	real scalar pos
+	string scalar path1, path2
 	
-	pos = max((strrpos(path,"/"),strrpos(path,"\")))
-	return(substr(path,1,pos))
+	pathsplit(path, path1, path2)
+	return(path1)
 }
 
 void mptools::graceful_exit() 
