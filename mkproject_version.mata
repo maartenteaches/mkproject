@@ -57,7 +57,7 @@ real scalar mpversion::lt(real rowvector a, real rowvector b)
 
 void mpversion::new()
 {
-	current_version = (2,1,3)
+	current_version = (2,1,4)
 }
 
 void mpversion::toonew(real rowvector val)
