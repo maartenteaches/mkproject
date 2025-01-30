@@ -21,19 +21,19 @@ This template sets up a directory for a medium sized research project that uses
 This template will create the following sub-directories and files:
 
     proj_abbrev /   
-    ├──  ado / 
-    |    ├── personal /
-    |    └── plus /
-    ├──  ana / 
-    |    ├── {help mp_b_ana:proj_abbrev_ana01.do} 
-    |    ├── {help mp_b_dta_g:proj_abbrev_dta01.do} 
-    |    └── {help mp_b_main_g:proj_abbrev_main.do} 
-    ├──  data / 
-    ├──  docu / 
-    |    └── {help mp_b_rlog:research_log.md} 
-    ├──  txt / 
-    ├──  {help mp_b_ignore:.ignore}  
-    └──  {help mp_b_readme:readme.md}  
+    {c LT}{c -}{c -}  ado / 
+    {c |}    {c LT}{c -}{c -} personal /
+    {c |}    {c BLC}{c -}{c -} plus /
+    {c LT}{c -}{c -}  ana / 
+    {c |}    {c LT}{c -}{c -} {help mp_b_ana:proj_abbrev_ana01.do} 
+    {c |}    {c LT}{c -}{c -} {help mp_b_dta_g:proj_abbrev_dta01.do} 
+    {c |}    {c BLC}{c -}{c -} {help mp_b_main_g:proj_abbrev_main.do} 
+    {c LT}{c -}{c -}  data / 
+    {c LT}{c -}{c -}  docu / 
+    {c |}    {c BLC}{c -}{c -} {help mp_b_rlog:research_log.md} 
+    {c LT}{c -}{c -}  txt / 
+    {c LT}{c -}{c -}  {help mp_b_ignore:.ignore}  
+    {c BLC}{c -}{c -}  {help mp_b_readme:readme.md}  
 
 
 {title:Commands}

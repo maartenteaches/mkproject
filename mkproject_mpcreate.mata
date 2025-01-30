@@ -479,8 +479,8 @@ void mpcreate::decorate_tree(string matrix toparse)
 	real scalar r, c, nextc, first
 	string scalar lastchild, child, dir
 	
-    lastchild = "└──"
-    child     = "├──"
+    lastchild = "{c BLC}{c -}{c -}"
+    child     = "{c LT}{c -}{c -}"
 	dir       = "/"
 	
 	for (c=1; c < cols(toparse); c++) {
@@ -491,7 +491,7 @@ void mpcreate::decorate_tree(string matrix toparse)
 			nextc = nextc + (toparse[r, nextc] == dir)
 			
 			if (toparse[r,c] == toparse[r-1,c]) {
-				toparse[r,c] = (first ? "   ": "|  " )
+				toparse[r,c] = (first ? "   ": "{c |}  " )
 				if (toparse[r, c+1] == dir) {
 					toparse[r, c+1] = ""
 				}
@@ -501,7 +501,7 @@ void mpcreate::decorate_tree(string matrix toparse)
 			}
 			
 			if (nextc > cols(toparse)) continue
-			if (toparse[r,nextc]!= toparse[r-1,nextc] & anyof(("|  ", "   "),toparse[r,c])) {
+			if (toparse[r,nextc]!= toparse[r-1,nextc] & anyof(("{c |}  ", "   "),toparse[r,c])) {
 				toparse[r,c] = (first ? lastchild : child)
 				first = 0
 				if (toparse[r,c+1] == dir) {
