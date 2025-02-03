@@ -20,7 +20,7 @@ void mpdefaults::fix_no_personal()
 void mpdefaults::mkdirerr(real scalar ret, string scalar path)
 {
 	if (ret!=0) {
-		errprintf("{p}could not create directory " + path + "{p_end}")
+		errprintf("{p}could not create directory " + displaypath(path) + "{p_end}")
 		exit(ret)
 	}
 }

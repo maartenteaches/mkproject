@@ -10,6 +10,13 @@ assert(totest.fhs.get(totest.reading.fh) == "closed")
 assert(totest.reading.open == 0)
 end
 
+//mkdirerr()
+mata:
+totest = mpdefaults()
+end
+rcof `"noi mata: totest.mkdirerr(2, "c:/temp" )"' == 2
+rcof `"noi mata: totest.mkdirerr(693, "c:\temp" )"' == 693
+
 //write_default
 mata:
 fn = pathjoin(pathsubsysdir("PERSONAL"), "m/mp_test.mpp")

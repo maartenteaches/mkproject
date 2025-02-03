@@ -8,7 +8,7 @@ void boilerplate::parse_anything()
 	
 	if (dir != "") {
 		if (pathisabs(dest)) {
-			errmsg = "{p}the filename " + dest + " is absolute{p_end}"
+			errmsg = "{p}the filename " + displaypath(dest) + " is absolute{p_end}"
 			errprintf(errmsg)
 			errmsg = "{p}you cannot combine the directory() option with an absolute path{p_end}"
 			errprintf(errmsg)

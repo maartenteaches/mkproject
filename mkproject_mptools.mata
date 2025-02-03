@@ -1,6 +1,11 @@
 mata:
 mata set matastrict on
 
+string scalar mptools::displaypath(string scalar path)
+{
+	return(usubinstr(path, "\", "/", .))
+}
+
 string scalar mptools::gettoken(string scalar toparse)
 {
 	string       scalar first 

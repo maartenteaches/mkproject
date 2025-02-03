@@ -180,3 +180,12 @@ assert(totest.gettoken("	")== "")
 assert(totest.gettoken("	bla blup")== "bla")
 assert(totest.gettoken("	bla	blup")== "bla")
 end
+
+//displaypath
+mata:
+totest = mptools()
+assert(totest.displaypath("c:\temp\foo") == "c:/temp/foo")
+assert(totest.displaypath("c:\temp/foo") == "c:/temp/foo")
+assert(totest.displaypath("c:/temp\foo") == "c:/temp/foo")
+assert(totest.displaypath("c:/temp/foo") == "c:/temp/foo")
+end

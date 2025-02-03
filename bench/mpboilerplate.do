@@ -69,6 +69,8 @@ end
 mata:
 totest = boilerplate()
 totest.parse_dest("bench/blä_föö_dta01.do")
+totest.torepl.proj_basedir = "c:\temp\test"
+totest.torepl.proj_abbrev  = "test"
 fn = "bench/totest.txt"
 fh = fopen(fn, "w")
 
@@ -96,6 +98,11 @@ totest.parse_bline(line,fh)
 line = "<as of 14>this should appear"
 totest.parse_bline(line,fh)
 
+line = "de boerderijen verspreid <proj_basedir> over het land"
+totest.parse_bline(line,fh)
+
+line = "boomgroepen, dorpen, geknotten <proj_abbrev> wilgen"
+totest.parse_bline(line,fh)
 fclose(fh)
 
 fh = fopen(fn, "r")
@@ -109,6 +116,8 @@ assert(fget(fh) == "als hoge " + ver +  " aan den einder staan")
 date = st_global("c(current_date)")  
 assert(fget(fh) == "en in het " + date + " landschap")
 assert(fget(fh) == "this should appear")
+assert(fget(fh) == "de boerderijen verspreid c:\temp\test over het land")
+assert(fget(fh) == "boomgroepen, dorpen, geknotten test wilgen")
 assert(fget(fh) == J(0,0,""))
 fclose(fh)
 unlink(fn)

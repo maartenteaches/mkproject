@@ -16,6 +16,7 @@ totest.abbrev = "test"
 totest.parse_dir()
 assert(strlower(pwd()) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\"))
 assert(strlower(totest.odir) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\"))
+assert(strlower(totest.torepl.proj_basedir) == strlower("`home'" + ":\mijn documenten\projecten\stata\mkproject\bench\test\"))
 end
 cd ..
 rmdir test
@@ -209,6 +210,7 @@ assert(dir(".", "files", "*") == ("test.stpr" \
                            "test_ana01.do" \
                            "test_dta01.do" \
                            "test_main.do" ))   
+assert(totest.torepl.proj_abbrev == "test")						   
 unlink("test.stpr")
 unlink("test_ana01.do")
 unlink("test_dta01.do")

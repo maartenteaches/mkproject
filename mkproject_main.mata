@@ -86,6 +86,7 @@ class mptools extends mpfile{
 	string                 scalar    mppathgetparent()
     void                             new() // sets default for odir
 	string                 scalar    gettoken()
+	string                 scalar    displaypath()
 }
 
 class mpdefaults extends mptools{

@@ -25,12 +25,12 @@ void mkproject::parse_dir()
 	
 	errcode = _chdir(dir)
 	if (errcode != 0) {
-		errprintf("{p}{err}unable to change to directory " + dir + "{p_end}")
+		errprintf("{p}{err}unable to change to directory " + displaypath(dir) + "{p_end}")
 		exit(errcode)
 	}
 	errcode = _mkdir(abbrev)
 	if (errcode != 0) {
-		errprintf("{p}{err}unable to create directory " + pathjoin(pwd(),abbrev) + "{p_end}")
+		errprintf("{p}{err}unable to create directory " + displaypath(pathjoin(pwd(),abbrev)) + "{p_end}")
 		exit(errcode)
 	}
 	chdir(abbrev)
