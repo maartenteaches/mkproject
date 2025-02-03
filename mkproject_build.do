@@ -2,6 +2,7 @@ cscript
 mata: mata clear
 
 cd "D:/mijn documenten/projecten/stata/mkproject"
+
 do mkproject_main.mata
 
 lmbuild lmkproject, replace
